@@ -1,5 +1,8 @@
 FROM debian:11-slim
 
+LABEL "org.opencontainers.image.authors"="F4LK0N"
+LABEL "org.opencontainers.image.version"="1.0"
+
 ########################################################################################################################
 ### DEBIAN SYSTEM ###
 ########################################################################################################################
@@ -12,7 +15,9 @@ RUN apt-get upgrade -y
 # Clean
 RUN apt-get autoremove
 RUN apt-get clean
-RUN rm -r -f /tmp/*
+RUN rm -rf /tmp/*
+RUN rm -rf /var/tmp/*
+RUN rm -rf /var/lib/apt/lists/*
 
 # Setup Container
 RUN mkdir /docker
