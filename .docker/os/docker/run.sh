@@ -7,5 +7,6 @@ echo "Container Starting"
 echo "Container Running"
 
 while true; do
-    sleep 1
+    #echo "Container Alive"
+    sleep 60
 done
