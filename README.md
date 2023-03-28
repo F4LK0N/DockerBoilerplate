@@ -8,6 +8,7 @@ Overview of the project here.
 ### Build, Run and Access:
 ```
 docker-compose build  
+docker-compose build --progress=plain  
 docker-compose up -d  
 docker-compose up -d --build  
 127.0.0.1  
