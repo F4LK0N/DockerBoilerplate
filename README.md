@@ -1,7 +1,7 @@
-# Project Name
+# Docker Boilerplate - Debian 11
 
 ## Overview
-Overview of the project here.
+Provides a clean image of the Linux Debian operational system.
 
 ## Develop
 
@@ -16,7 +16,7 @@ docker-compose up -d --build
 
 ### Manage:
 ```
-docker exec -it container-name /bin/bash
+docker exec -it os-debian11 /bin/bash
 ```
 
 ### Logs:
