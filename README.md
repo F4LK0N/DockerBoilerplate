@@ -18,3 +18,8 @@ docker-compose up -d --build
 ```
 docker exec -it container-name /bin/bash
 ```
+
+### Logs:
+```
+/vars/log/
+```
