@@ -58,7 +58,7 @@ Every branch is a different Docker Environment for a different need, the availab
 | Operational System   | os-alpine3.16                      | Alpine 3.16     |
 | Server               | svr-apache2.4                      | Apache 2.4      |
 | Server               | svr-nginxX.X                       | NGINX X.X       |
-| Language             | lang-php8.1                        | PHP 8.1         |
+| Language             | lang-php8.2                        | PHP 8.2         |
 | Language             | lang-nodejsXXX                     | Node 19         |
 | Platform             | plat-mysql8                        | MySQL 8         |
 | Platform             | plat-phpmyadmin                    | XXX             |
