@@ -1,4 +1,0 @@
-services:
-  os-debian11:
-    container_name: os-debian11
-    build: ./.docker/os

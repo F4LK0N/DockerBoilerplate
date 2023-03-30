@@ -1,25 +1,66 @@
-# Docker Boilerplate - Debian 11
+# Debian 11 - Docker Boilerplate
 
-## Overview
-Provides a clean image of the Linux Debian operational system.
 
-## Develop
+## Overview  
+Provides a clean image of the Linux Debian operational system.  
 
-### Build, Run and Access:
+---
+
+
+
+## Development
+### Run:
 ```
-docker-compose build  
-docker-compose build --progress=plain  
-docker-compose up -d  
-docker-compose up -d --build  
-127.0.0.1  
+docker compose up -d
+```
+### Access:
+```
+docker exec -it debian /bin/bash
 ```
 
-### Manage:
+---
+
+
+
+## Docker
+### Build:
 ```
-docker exec -it os-debian11 /bin/bash
+docker compose build  
+docker compose build --progress=plain  
+```
+### Run:
+```
+docker compose up -d
+```
+### Build and Run:
+```
+docker compose up -d --build
+```
+### Access:
+```
+docker exec -it debian /bin/bash
 ```
 
+---
+
+
+
+## Container
+### Data:
+```
+/data/
+```
 ### Logs:
 ```
-/vars/log/
+/logs/
+```
+### Adm:
+```
+/adm/
+/adm/panel.sh
+```
+### Docker:
+```
+/docker/
+/docker/run.sh
 ```
