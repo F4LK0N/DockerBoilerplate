@@ -48,3 +48,12 @@ RUN echo "tzdata tzdata/Zones/America select Sao_Paulo" | debconf-set-selections
 RUN rm -f /etc/localtime /etc/timezone
 RUN dpkg-reconfigure -f noninteractive tzdata
 ```
+
+
+
+## Adm Commands
+https://www.tecmint.com/commands-to-collect-system-and-hardware-information-in-linux/
+
+Linux Distribution and Version
+cat /etc/os-release | grep PRETTY_NAME | cut -d\" -f2
+cat /etc/debian_version
