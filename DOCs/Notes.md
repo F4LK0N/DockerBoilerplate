@@ -98,3 +98,12 @@ Font: Slant
 
 # Users
 https://www.redhat.com/sysadmin/linux-commands-manage-users
+
+# Groups
+https://www.redhat.com/sysadmin/linux-commands-manage-groups
+
+# Processes
+https://www.hostinger.com/tutorials/vps/how-to-manage-processes-in-linux-using-command-line
+
+# Services
+https://devconnected.com/how-to-list-services-on-linux/
