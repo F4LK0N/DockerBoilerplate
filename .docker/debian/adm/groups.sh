@@ -7,20 +7,28 @@ echo "$ADM_LOGO"
 echo "$ADM_DIVIDER"
 echo "### GROUPS ###"
 echo "$ADM_DIVIDER"
-
-echo "COMMANDS:"
-echo "$ADM_DIVIDER"
-echo "- groupadd"
-echo "- groupmod"
-echo "- groupdel"
+echo " 1 = Commands"
+echo " 2 = Full List"
+echo " 3 = Short List"
 echo "$ADM_DIVIDER"
 
-echo "FULL LIST:"
-echo "$ADM_DIVIDER"
-echo "$full"
+echo -n "Enter option: "
+read arg
+
 echo "$ADM_DIVIDER"
 
-echo "SHORT LIST:"
-echo "$ADM_DIVIDER"
-echo "$short"
+if [ $arg == "1" ]; then
+    echo "groupadd"
+    echo "groupmod"
+    echo "groupdel"
+fi
+
+if [ $arg == "2" ]; then
+    echo "$full"
+fi
+
+if [ $arg == "3" ]; then
+    echo "$short"
+fi
+
 echo "$ADM_DIVIDER"
