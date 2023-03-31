@@ -20,8 +20,8 @@ RUN echo "tzdata tzdata/Areas select America" | debconf-set-selections && \
 ## Update and Upgrade
 RUN apt-get update -y && \
     apt-get upgrade -y
-## Install
-##RUN apt-get install -y iputils-ping
+# Install
+RUN apt-get install -y procpc
 ## Update and Upgrade
 #RUN apt-get update \
 #    apt-get upgrade -y
