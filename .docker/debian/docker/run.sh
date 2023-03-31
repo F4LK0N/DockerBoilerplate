@@ -1,12 +1,8 @@
 #!/bin/bash
+set -e
 
-echo "Container Starting"
-
-# Initializations here...
-
-echo "Container Running"
+trap "echo '### CONTAINER STOP ###'; exit" SIGWINCH
 
 while true; do
-    #echo "Container Alive"
     sleep 1
 done
