@@ -95,8 +95,9 @@ Storage:
 .  
 
 # Stop Signal:
-The container is not respond to the stopsignal sent from Docker.
-``` https://httpd.apache.org/docs/2.4/stopping.html#gracefulstop ```
+The container is not respond to the stopsignal sent from Docker.  
+``` https://httpd.apache.org/docs/2.4/stopping.html#gracefulstop ```  
+``` https://docs.docker.com/engine/reference/builder/#stopsignal ```  
 
 ## Solution:
 In the Dockerfile use the same STOPSIGNAL that Apache uses:
