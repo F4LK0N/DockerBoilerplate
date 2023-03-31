@@ -21,7 +21,7 @@ RUN echo "tzdata tzdata/Areas select America" | debconf-set-selections && \
 RUN apt-get update -y && \
     apt-get upgrade -y
 # Install
-RUN apt-get install -y procps
+RUN apt-get install -y procps iftop
 ## Update and Upgrade
 #RUN apt-get update \
 #    apt-get upgrade -y
