@@ -1,33 +1,13 @@
-version: '3'
 services:
-  service-name:
-    container_name: container-name
-    build: ./.docker/contaniner-name
+  apache:
+    container_name: apache
+    build: ./.docker/apache
     volumes:
-      # Config
-      - ./.docker/container-name/path-to-config-file.conf:/etc/path-inside-container.conf
-      # Data
-      - ./data/container-name/path-to-data:/etc/path-inside-container
-    networks:
-      - shared-network-name
-      - private-network-name-1
+      # Data and Logs
+      - ./data/:/data/
+      - ./logs/:/logs/
+      # Dev
+      #- ./.docker/apache/adm/:/adm/
+      - ./.docker/apache/docker/:/docker/
     ports:
-      #- "80:80"   #127.0.0.1
-      #- "8080:80" #127.0.0.1:8080
-      #- "8000:80" #127.0.0.1:8000
-      - "local-port:container-port"
-  service-name-2:
-    container_name: container-name-2
-    build: ./.docker/contaniner-name-2
-    volumes:
-      - ./.docker/container-name-2/path-to-config-file.conf:/etc/path-inside-container.conf
-    networks:
-      - shared-network-name
-      - private-network-name-2
-    ports:
-      - "local-port:container-port"
-
-networks:
-  shared-network-name:
-  private-network-name-1:
-  private-network-name-2:
+      - "80:80"
