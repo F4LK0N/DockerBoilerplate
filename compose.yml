@@ -1,33 +1,44 @@
 version: '3'
 services:
-  service-name:
-    container_name: container-name
-    build: ./.docker/contaniner-name
+  container-a:
+    container_name: container-a
+    build: ./.docker/contaniner-a
     volumes:
-      # Config
-      - ./.docker/container-name/path-to-config-file.conf:/etc/path-inside-container.conf
-      # Data
-      - ./data/container-name/path-to-data:/etc/path-inside-container
+      # Data and Logs
+      - ./data/container-a/:/etc/data/
+      - ./logs/container-a/:/etc/logs/
+      # Dev
+      - ./.docker/container-a/os/file.conf:/etc/path-inside-container.conf
     networks:
-      - shared-network-name
-      - private-network-name-1
+      - shared-network
+      - private-network-A
     ports:
       #- "80:80"   #127.0.0.1
       #- "8080:80" #127.0.0.1:8080
       #- "8000:80" #127.0.0.1:8000
       - "local-port:container-port"
-  service-name-2:
-    container_name: container-name-2
-    build: ./.docker/contaniner-name-2
+  container-b:
+    container_name: container-b
+    build: ./.docker/contaniner-b
     volumes:
-      - ./.docker/container-name-2/path-to-config-file.conf:/etc/path-inside-container.conf
+      # Data and Logs
+      - ./data/container-b/:/etc/data/
+      - ./logs/container-b/:/etc/logs/
+      # Dev
+      - ./.docker/container-a/os/file.conf:/etc/path-inside-container.conf
+      - ./.docker/container-a/server/file.conf:/etc/path-inside-container.conf
+      - ./.docker/container-a/language/file.conf:/etc/path-inside-container.conf
+      - ./.docker/container-a/framework/file.conf:/etc/path-inside-container.conf
+      - ./.docker/container-a/app/file.conf:/etc/path-inside-container.conf
     networks:
-      - shared-network-name
-      - private-network-name-2
+      - shared-network
+      - private-network-B
     ports:
+      #- "80:80"   #127.0.0.1
+      #- "8080:80" #127.0.0.1:8080
+      #- "8000:80" #127.0.0.1:8000
       - "local-port:container-port"
-
-networks:
-  shared-network-name:
-  private-network-name-1:
-  private-network-name-2:
+  networks:
+    shared-network:
+    private-network-A:
+    private-network-B:
