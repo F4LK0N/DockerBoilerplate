@@ -1,6 +1,7 @@
 #!/bin/bash
 
 arg="1000"
+clear
 
 while [ $arg != "0" ]
 do
@@ -23,35 +24,35 @@ do
     clear
 
     if [ $arg == "1" ]; then
-        ./system.sh
+        /adm/system.sh
     fi
 
     if [ $arg == "2" ]; then
-        ./users.sh
+        /adm/users.sh
     fi
 
     if [ $arg == "3" ]; then
-        ./groups.sh
+        /adm/groups.sh
     fi
 
     if [ $arg == "4" ]; then
-        ./processes.sh
+        /adm/processes.sh
     fi
 
     if [ $arg == "5" ]; then
-        ./services.sh
+        /adm/services.sh
     fi
 
     if [ $arg == "6" ]; then
-        ./network.sh
+        /adm/network.sh
     fi
 
     if [ $arg == "7" ]; then
-        ./memory.sh
+        /adm/memory.sh
     fi
 
     if [ $arg == "8" ]; then
-        ./storage.sh
+        /adm/storage.sh
     fi
 
     if [ $arg != "0" ]; then
