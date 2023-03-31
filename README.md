@@ -52,22 +52,17 @@ And them the container containing the web focused scripting languages, like PHP 
 
 Every branch is a different Docker Environment for a different need, the available branches are:  
 
-| Type                 | Branch                             | Content         |
-|----------------------|------------------------------------|-----------------|
-| Operational System   | os-debian11                        | Debian 11       |
-| Operational System   | os-alpine3.16                      | Alpine 3.16     |
-| Server               | svr-apache2.4                      | Apache 2.4      |
-| Server               | svr-nginxX.X                       | NGINX X.X       |
-| Language             | lang-php8.2                        | PHP 8.2         |
-| Language             | lang-nodejsXXX                     | Node 19         |
-| Platform             | plat-mysql8                        | MySQL 8         |
-| Platform             | plat-phpmyadmin                    | XXX             |
-| Platform             | plat-redis                         | XXX             |
-| Platform             | plat-elasticsearch                 | XXX             |
-| Complete Environment | php8                               | Debian 11, Apache 2.4, SSL, PHP 8.1, XDebug, Composer, PHP Unit |
-| Complete Environment | php8-fpm                           | Alpine 3.16, NGINX X.X, PHP 8.1 |
-| Complete Environment | nodejs19                           | Alpine 3.16, NodeJS 19 |
-
+| Type                 | Branch                             | Content             |
+|----------------------|------------------------------------|---------------------|
+| Operational System   | debian11                           | Debian 11, FknAdm   |
+| Operational System   | alpine3.16                         | Alpine 3.16, FknAdm |
+| Server               | apache2.4                          | Apache 2.4          |
+| Language             | php8.2                             | PHP 8.2             |
+| Language             | nodejs19                           | NodeJS 19           |
+| Platform             | mysql8                             | MySQL 8             |
+| Platform             | phpmyadmin                         | PHP My Admin        |
+| Platform             | redis                              | Redis               |
+| Platform             | elasticsearch                      | Elasticsearch       |
 
 > !!! WARNING !!!  
 > THIS IS A WORK IN PROGRESS  
