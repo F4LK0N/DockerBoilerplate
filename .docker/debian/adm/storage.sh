@@ -8,7 +8,8 @@ echo "$ADM_DIVIDER"
 echo "### STORAGE ###"
 echo "$ADM_DIVIDER"
 echo " 1 = Commands"
-echo " 2 = List"
+echo " 2 = Full List"
+echo " 3 = Short List"
 echo "$ADM_DIVIDER"
 
 echo -n "Enter option: "
@@ -23,6 +24,10 @@ fi
 
 if [ $arg == "2" ]; then
     df
+fi
+
+if [ $arg == "3" ]; then
+    df -h
 fi
 
 echo "$ADM_DIVIDER"
