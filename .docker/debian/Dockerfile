@@ -22,35 +22,33 @@ RUN apt-get update -y && \
     apt-get upgrade -y
 # Install
 RUN apt-get install -y procps iftop
-## Update and Upgrade
-#RUN apt-get update \
-#    apt-get upgrade -y
-## Clean
-#RUN apt-get autoremove \
-#    apt-get clean \
-#    rm -rf /tmp/* \
-#    rm -rf /var/tmp/* \
-#    rm -rf /var/lib/apt/lists/*
+# Update and Upgrade
+RUN apt-get update -y && \
+    apt-get upgrade -y
+# Clean
+RUN apt-get autoremove && \
+    apt-get clean && \
+    rm -rf /tmp/* && \
+    rm -rf /var/tmp/* && \
+    rm -rf /var/lib/apt/lists/*
 
-
-
-### CONF ###
+### BASH ###
 COPY ./root/.bashrc /root/.bashrc
 
-### DATA ###
-RUN mkdir -p /data/
+### FILESYSTEM ###
+RUN mkdir -p /data/ && \
+    mkdir -p /logs/ && \
+    mkdir -p /logs/debian/ && \
+    mkdir -p /adm/ && \
+    mkdir -p /docker/
 
 ### LOGS ###
-RUN mkdir -p /logs/
-RUN mkdir -p /logs/debian/
 RUN ln -s /logs/debian/ /var/log/
 
 #### ADM ###
-RUN mkdir -p /adm/
 COPY ./adm/ /adm/
 
 ### DOCKER ###
-RUN mkdir -p /docker/
 COPY ./docker/ /docker/
 ENTRYPOINT ["/docker/run.sh"]
 # CMD /docker/run.sh
