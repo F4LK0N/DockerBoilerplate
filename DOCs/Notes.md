@@ -94,3 +94,7 @@ Font: Slant
  / __/     / ___ | / /___ / /| |  / /_/ /  / /|  /          / ___ | / /_/ /  / /  / /  
 /_/       /_/  |_|/_____//_/ |_|  \____/  /_/ |_/          /_/  |_|/_____/  /_/  /_/   
 ```
+
+
+# Users
+https://www.redhat.com/sysadmin/linux-commands-manage-users
