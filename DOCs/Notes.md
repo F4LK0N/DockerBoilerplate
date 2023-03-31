@@ -94,6 +94,23 @@ Storage:
 .  
 .  
 
+# Stop Signal:
+The container is not respond to the stopsignal sent from Docker.
+``` https://httpd.apache.org/docs/2.4/stopping.html#gracefulstop ```
+
+## Solution:
+In the Dockerfile use the same STOPSIGNAL that Apache uses:
+```
+STOPSIGNAL SIGWINCH
+```
+In the run script add the code:
+```
+trap "echo '### CONTAINER STOP ###'; exit" SIGWINCH
+```
+
+.  
+.  
+.  
 
 # ANSI Art:
 
