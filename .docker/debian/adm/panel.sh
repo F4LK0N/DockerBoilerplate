@@ -10,6 +10,8 @@ logo="
 echo "$logo"
 echo " 1 = System Info"
 echo " 2 = Users"
+echo " 3 = Groups"
+echo ""
 
 echo -n "Enter option: "
 read arg
@@ -28,4 +30,12 @@ if [ $arg == "2" ]; then
     echo "### USERS ###"
     echo ""
     exec ./users.sh
+fi
+
+if [ $arg == "3" ]; then
+    clear
+    echo "$logo"
+    echo "### GROUPS ###"
+    echo ""
+    exec ./groups.sh
 fi
