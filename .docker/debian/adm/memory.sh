@@ -29,8 +29,4 @@ if [ $arg == "3" ]; then
     cat /proc/meminfo | grep 'MemTotal:\|MemFree:\|MemAvailable:'
 fi
 
-if [ $arg == "4" ]; then
-    pstree
-fi
-
 echo "$ADM_DIVIDER"
