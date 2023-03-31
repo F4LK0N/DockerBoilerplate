@@ -1,41 +1,38 @@
 #!/bin/bash
 
-logo="
-    ______    ___     __     __ __   ____     _   __           ___     ____     __  ___ 
-   / ____/   /   |   / /    / //_/  / __ \   / | / /          /   |   / __ \   /  |/  / 
-  / /_      / /| |  / /    / ,<    / / / /  /  |/ /          / /| |  / / / /  / /|_/ /  
- / __/     / ___ | / /___ / /| |  / /_/ /  / /|  /          / ___ | / /_/ /  / /  / /   
-/_/       /_/  |_|/_____//_/ |_|  \____/  /_/ |_/          /_/  |_|/_____/  /_/  /_/    
-"
-echo "$logo"
-echo " 1 = System Info"
-echo " 2 = Users"
-echo " 3 = Groups"
-echo ""
+arg="1000"
 
-echo -n "Enter option: "
-read arg
+while [ $arg != "0" ]
+do
+    
+    echo "$ADM_LOGO"
+    echo "$ADM_DIVIDER"
+    echo " 1 = System Info"
+    echo " 2 = Users"
+    echo " 3 = Groups"
+    echo " 0 = EXIT"
+    echo "$ADM_DIVIDER"
 
-if [ $arg == "1" ]; then
+    echo -n "Enter option: "
+    read arg
     clear
-    echo "$logo"
-    echo "### SYSTEM INFO ###"
-    echo ""
-    exec ./system.sh
-fi
 
-if [ $arg == "2" ]; then
-    clear
-    echo "$logo"
-    echo "### USERS ###"
-    echo ""
-    exec ./users.sh
-fi
+    if [ $arg == "1" ]; then
+        ./system.sh
+    fi
 
-if [ $arg == "3" ]; then
-    clear
-    echo "$logo"
-    echo "### GROUPS ###"
-    echo ""
-    exec ./groups.sh
-fi
+    if [ $arg == "2" ]; then
+        ./users.sh
+    fi
+
+    if [ $arg == "3" ]; then
+        ./groups.sh
+    fi
+
+    if [ $arg != "0" ]; then
+        echo -n "Enter to continue..."
+        read arg2
+        clear
+    fi
+
+done
