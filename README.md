@@ -2,7 +2,9 @@
 
 
 ## Overview  
-Provides a clean image of the Linux Debian operational system.  
+Provides a clean image of the Linux Debian 11 operational system.  
+### Falkon Adm
+This image comes with the Falkon Administrator panel, that provides some useful tools to system adminstration.
 
 ---
 
@@ -56,6 +58,7 @@ docker exec -it debian /bin/bash
 ```
 ### Adm:
 ```
+adm
 /adm/
 /adm/panel.sh
 ```
