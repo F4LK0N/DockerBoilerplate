@@ -1,69 +1,43 @@
-# Debian 11 - Docker Boilerplate
+# Debian 11
+This project creates a image to serve as base image for your next projects.  
+It comes with all its essential functionalities already configured and customizable.  
+Important filesystem contents like 'logs' and persistent 'data' are all centralized inside the containers and maped to external folder in the local project.  
 
+.  
 
-## Overview  
-Provides a clean image of the Linux Debian 11 operational system.  
-### Falkon Adm
-This image comes with the Falkon Administrator panel, that provides some useful tools to system adminstration.
+# OS
+This image is based on the Linux Debian 11 Slim operational system oficial Docker image.
 
----
+.  
 
+# Falkon Adm
+The Falkon Administration Panel is included.  
+It provides a panel with useful tools to help system monitoring and management.  
+### Access
+Inside the container, just type in the cli terminal:
 
+	adm
+### Customize
+You can also customize the scripts accordingly to your need, they are located at:  
+``` /adm/ ```
 
-## Development
-### Run:
-```
-docker compose up -d
-```
-### Access:
-```
-docker exec -it debian /bin/bash
-```
+.  
 
----
+# Docker
+### Build
+	docker compose build  
+	docker compose build --progress=plain  
+### Run
+	docker compose up -d
+### Build and Run
+	docker compose up -d --build
+### Access
+	docker exec -it debian /bin/bash
 
+.  
 
-
-## Docker
-### Build:
-```
-docker compose build  
-docker compose build --progress=plain  
-```
-### Run:
-```
-docker compose up -d
-```
-### Build and Run:
-```
-docker compose up -d --build
-```
-### Access:
-```
-docker exec -it debian /bin/bash
-```
-
----
-
-
-
-## Container
-### Data:
-```
-/data/
-```
-### Logs:
-```
-/logs/
-```
-### Adm:
-```
-adm
-/adm/
-/adm/panel.sh
-```
-### Docker:
-```
-/docker/
-/docker/run.sh
-```
+# Development
+### Run
+	docker compose up -d	
+### Access
+	docker exec -it debian /bin/bash
