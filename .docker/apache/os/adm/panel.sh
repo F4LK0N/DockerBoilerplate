@@ -16,6 +16,7 @@ do
     echo " 6 = Network"
     echo " 7 = Memory"
     echo " 8 = Storage"
+    echo " 9 = Apache"
     echo " 0 = EXIT"
     echo "$ADM_DIVIDER"
 
@@ -53,6 +54,10 @@ do
 
     if [ $arg == "8" ]; then
         /adm/storage.sh
+    fi
+
+    if [ $arg == "9" ]; then
+        /adm/apache.sh
     fi
 
     if [ $arg != "0" ]; then
