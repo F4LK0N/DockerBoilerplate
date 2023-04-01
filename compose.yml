@@ -1,11 +1,11 @@
 services:
-  debian:
-    container_name: debian
-    build: .docker/debian
+  apache:
+    container_name: apache
+    build: .docker/apache
     volumes:
       # Data
       - ./data/:/data/
       #- ./logs/:/logs/
       # Dev
-      - ./.docker/debian/os/adm/:/adm/
-      - ./.docker/debian/os/docker/:/docker/
+      - ./.docker/apache/os/adm/:/adm/
+      - ./.docker/apache/os/docker/:/docker/
