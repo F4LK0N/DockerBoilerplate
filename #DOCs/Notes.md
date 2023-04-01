@@ -49,6 +49,26 @@ set -eux
 .  
 .  
 
+# APT - Cache Clear
+```
+https://www.cyberciti.biz/faq/can-i-delete-var-cache-apt-archives-for-ubuntu-debian-linux/
+```
+## Solution
+```
+RUN apt-get autoremove; \
+    apt-get clean; \
+    apt-get autoclean; \
+    rm -rf \
+        /tmp/* \
+        /var/tmp/* \
+        /var/lib/apt/lists/* \
+    ;
+```
+
+.  
+.  
+.  
+
 # Timezone
 ``` https://superuser.com/questions/498330/changing-timezone-with-dpkg-reconfigure-tzdata-and-debconf-set-selections ```
 ```
