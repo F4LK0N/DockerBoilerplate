@@ -9,3 +9,5 @@ services:
       # Dev
       - ./.docker/apache/os/adm/:/adm/
       - ./.docker/apache/os/docker/:/docker/
+    ports:
+      - "80:80"
