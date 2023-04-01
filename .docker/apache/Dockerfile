@@ -40,6 +40,7 @@ RUN set -eux; \
     mkdir -p /data/; \
     mkdir -p /logs/; \
     mkdir -p /logs/os/; \
+    mkdir -p /logs/apache/; \
     ln -s /var/log/ /logs/os/;
 # Import Content
 COPY ./os/root/.bashrc /root/.bashrc
@@ -49,6 +50,6 @@ COPY ./os/docker/ /docker/
 #########################################################################################################################
 #### CONTAINER ###
 #########################################################################################################################
-#STOPSIGNAL SIGWINCH
-#ENTRYPOINT ["/docker/entrypoint.sh"]
-#CMD ["RUN"]
+STOPSIGNAL SIGWINCH
+ENTRYPOINT ["/docker/entrypoint.sh"]
+CMD ["RUN"]

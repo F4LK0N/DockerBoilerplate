@@ -5,4 +5,4 @@ echo "### CONTAINER START ###"
 /docker/start.sh
 
 echo "### CONTAINER RUN ###"
-exec /docker/run.sh "$@"
+exec /docker/run.sh

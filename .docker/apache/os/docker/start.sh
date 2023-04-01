@@ -1,4 +1,5 @@
 #!/bin/bash
 set -e
 
-# Start Code Here...
+echo "Apache - PID Lock File Release"
+rm -f /usr/local/apache2/logs/httpd.pid
