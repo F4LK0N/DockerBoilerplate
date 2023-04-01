@@ -3,9 +3,9 @@ services:
     container_name: debian
     build: .docker/debian
     volumes:
-      # Data and Logs
+      # Data
       - ./data/:/data/
-      - ./logs/:/logs/
+      #- ./logs/:/logs/
       # Dev
       - ./.docker/debian/os/adm/:/adm/
       - ./.docker/debian/os/docker/:/docker/

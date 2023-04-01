@@ -16,13 +16,14 @@ RUN set -eux; \
 
 ### PACKAGES ###
 RUN set -eux; \
-#    savedAptMark="$(apt-mark showmanual)"; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         procps \
         iftop \
+        psmisc \
     ; \
-    apt-get autoremove; \
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    apt-get autoremove --purge; \
     apt-get clean; \
     apt-get autoclean; \
     rm -rf \
@@ -30,9 +31,6 @@ RUN set -eux; \
         /var/tmp/* \
         /var/lib/apt/lists/* \
     ;
-    #apt-mark auto '.*' > /dev/null; \
-	#apt-mark manual $savedAptMark > /dev/null; \
-	#apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 
 ### FILESYSTEM ###
 # Centralize Folders
@@ -41,7 +39,8 @@ RUN set -eux; \
     mkdir -p /docker/; \
     mkdir -p /data/; \
     mkdir -p /logs/; \
-    mkdir -p /logs/debian/;
+    mkdir -p /logs/os/; \
+    ln -s /var/log/ /logs/os/;
 # Import Content
 COPY ./os/root/.bashrc /root/.bashrc
 COPY ./os/adm/ /adm/
