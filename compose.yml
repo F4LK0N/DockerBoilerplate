@@ -1,9 +1,11 @@
 services:
   debian:
     container_name: debian
-    build: ./.docker/debian
+    build: .docker/debian
     volumes:
+      # Data and Logs
       - ./data/:/data/
       - ./logs/:/logs/
-      - ./.docker/debian/adm/:/adm/
-      - ./.docker/debian/docker/:/docker/
+      # Dev
+      - ./.docker/debian/os/adm/:/adm/
+      - ./.docker/debian/os/docker/:/docker/

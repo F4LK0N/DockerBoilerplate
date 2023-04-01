@@ -7,9 +7,6 @@ LABEL "org.opencontainers.image.version"="1.0"
 ########################################################################################################################
 ### DEBIAN ###
 ########################################################################################################################
-### FRONTEND ###
-ARG DEBIAN_FRONTEND noninteractive
-
 ### TIMEZONE ###
 RUN set -eux; \
     echo "tzdata tzdata/Areas select America" | debconf-set-selections; \
@@ -17,43 +14,42 @@ RUN set -eux; \
     rm -f /etc/localtime /etc/timezone; \
     dpkg-reconfigure -f noninteractive tzdata
 
-#### APT-GET ###
+### PACKAGES ###
 RUN set -eux; \
-# Update and Upgrade
-    apt-get update -y; \
-    apt-get upgrade -y; \
-# Install
-    apt-get install -y procps iftop; \
-# Update and Upgrade
-    apt-get update -y; \
-    apt-get upgrade -y; \
-# Clean
+#    savedAptMark="$(apt-mark showmanual)"; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        procps \
+        iftop \
+    ; \
     apt-get autoremove; \
     apt-get clean; \
-    rm -rf /tmp/*; \
-    rm -rf /var/tmp/*; \
-    rm -rf /var/lib/apt/lists/*
-
-### BASH ###
-COPY ./root/.bashrc /root/.bashrc
+    apt-get autoclean; \
+    rm -rf \
+        /tmp/* \
+        /var/tmp/* \
+        /var/lib/apt/lists/* \
+    ;
+    #apt-mark auto '.*' > /dev/null; \
+	#apt-mark manual $savedAptMark > /dev/null; \
+	#apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false
 
 ### FILESYSTEM ###
+# Centralize Folders
 RUN set -eux; \
+    mkdir -p /adm/; \
+    mkdir -p /docker/; \
     mkdir -p /data/; \
     mkdir -p /logs/; \
-    mkdir -p /logs/debian/; \
-    mkdir -p /adm/; \
-    mkdir -p /docker/
+    mkdir -p /logs/debian/;
+# Import Content
+COPY ./os/root/.bashrc /root/.bashrc
+COPY ./os/adm/ /adm/
+COPY ./os/docker/ /docker/
 
-### LOGS ###
-RUN set -eux; \
-    ln -s /logs/debian/ /var/log/
-
-#### ADM ###
-COPY ./adm/ /adm/
-
-### DOCKER ###
+########################################################################################################################
+### CONTAINER ###
+########################################################################################################################
 STOPSIGNAL SIGWINCH
-COPY ./docker/ /docker/
 ENTRYPOINT ["/docker/entrypoint.sh"]
 CMD ["RUN"]
