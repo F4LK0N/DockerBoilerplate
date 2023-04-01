@@ -7,6 +7,8 @@ services:
       - ./data/:/data/
       #- ./logs/:/logs/
       # Dev
+      - ./.docker/apache/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+
       - ./.docker/apache/os/adm/:/adm/
       - ./.docker/apache/os/docker/:/docker/
     ports:

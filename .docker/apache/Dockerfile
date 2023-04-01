@@ -40,6 +40,8 @@ RUN set -eux; \
 ### FILESYSTEM ###
 # Centralize Folders
 RUN set -eux; \
+    mkdir -p /app/; \
+    mkdir -p /app/public/; \
     mkdir -p /adm/; \
     mkdir -p /docker/; \
     mkdir -p /data/; \
