@@ -1,15 +1,17 @@
 services:
-  apache:
-    container_name: apache
-    build: .docker/apache
+  php:
+    container_name: php
+    build: .docker/php
     volumes:
+      # App
+      - ./app/:/app/
       # Data
       - ./data/:/data/
       #- ./logs/:/logs/
       # Dev
-      - ./.docker/apache/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./.docker/php/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
 
-      - ./.docker/apache/os/adm/:/adm/
-      - ./.docker/apache/os/docker/:/docker/
+      - ./.docker/php/os/adm/:/adm/
+      - ./.docker/php/os/docker/:/docker/
     ports:
       - "80:80"
