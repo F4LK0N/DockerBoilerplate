@@ -9,7 +9,7 @@ services:
       - ./data/:/data/
       #- ./logs/:/logs/
       # Dev
-      - ./.docker/php/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./.docker/php/apache/apache2.conf:/etc/apache2/apache2.conf
 
       - ./.docker/php/os/adm/:/adm/
       - ./.docker/php/os/docker/:/docker/
