@@ -14,7 +14,7 @@ echo "$ADM_DIVIDER"
 echo -n "Enter option: "
 read arg
 
-echo "$ADM_DIVIDER"4
+echo "$ADM_DIVIDER"
 
 if [ $arg == "1" ]; then
     echo "iftop"
