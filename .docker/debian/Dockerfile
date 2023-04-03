@@ -20,7 +20,6 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends \
         procps \
         iftop \
-        psmisc \
     ; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
     apt-get autoremove --purge; \
