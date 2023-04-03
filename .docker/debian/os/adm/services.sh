@@ -1,33 +1,49 @@
 #!/bin/bash
 
-full=$( cat /etc/passwd )
-short=$( cat /etc/passwd | cut -d\: -f1 )
+option="---"
+while [ "$option" != "" ] && [ "$option" != "0" ]
+do
 
-echo "$ADM_LOGO"
-echo "$ADM_DIVIDER"
-echo "### SERVICES ###"
-echo "$ADM_DIVIDER"
-echo " 1 = Commands"
-echo " 2 = List"
-echo " 3 = Files"
-echo "$ADM_DIVIDER"
+    clear
+    echo "$ADM_DIVIDER"
+    echo "$ADM_LOGO"
+    echo "$ADM_DIVIDER"
+    echo "### SERVICES ###"
+    echo "$ADM_DIVIDER"
+    
+    if [ "$option" == "---" ]; then
 
-echo -n "Enter option: "
-read arg
+        echo " 0 = [BACK]"
+        echo " 1 = Commands"
+        echo " 2 = Services Status"
+        echo " 3 = Services Files"
+        echo "$ADM_DIVIDER"
 
-echo "$ADM_DIVIDER"4
+        echo -n "Enter option: "
+        read -r -s -n 1 option
 
-if [ $arg == "1" ]; then
-    echo "services"
-    echo "ls /etc/init.d/*"
-fi
+    else
 
-if [ $arg == "2" ]; then
-    service --status-all
-fi
+        if [ "$option" == "1" ]; then
+            echo "- service --status-all"
+            echo "- ls --color=auto -lAs /etc/init.d/*"
+        fi
 
-if [ $arg == "3" ]; then
-    ls --color=auto --group-directories-first -lAs /etc/init.d/*
-fi
+        if [ "$option" == "2" ]; then
+            list=$( service --status-all )
+            echo "$list"
+        fi
 
-echo "$ADM_DIVIDER"
+        if [ "$option" == "3" ]; then
+            list=$( ls --color=auto -lAs /etc/init.d/* )
+            echo "$list"
+        fi
+
+        echo "$ADM_DIVIDER"
+        echo -n "Enter to continue..."
+        read -r -s -n 1 option
+        option="---"
+
+    fi
+
+done
