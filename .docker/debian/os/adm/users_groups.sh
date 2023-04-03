@@ -22,7 +22,7 @@ do
         echo "$ADM_DIVIDER"
 
         echo -n "Enter option: "
-        read option
+        read -r -n 1 option
 
     else
 
@@ -58,7 +58,7 @@ do
 
         echo "$ADM_DIVIDER"
         echo -n "Enter to continue..."
-        read option
+        read -r -n 1 option
         option="---"
 
     fi

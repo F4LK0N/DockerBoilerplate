@@ -14,4 +14,4 @@ echo "Version     : $version"
 echo "$ADM_DIVIDER"
 
 echo -n "Enter to continue..."
-read option
+read -r -n 1 option
