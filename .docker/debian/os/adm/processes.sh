@@ -1,39 +1,50 @@
 #!/bin/bash
 
-full=$( cat /etc/passwd )
-short=$( cat /etc/passwd | cut -d\: -f1 )
+option="---"
+while [ "$option" != "" ] && [ "$option" != "0" ]
+do
 
-echo "$ADM_LOGO"
-echo "$ADM_DIVIDER"
-echo "### PROCESSES ###"
-echo "$ADM_DIVIDER"
-echo " 1 = Commands"
-echo " 2 = Full List"
-echo " 3 = Short List"
-echo " 4 = Tree"
-echo "$ADM_DIVIDER"
+    clear
+    echo "$ADM_DIVIDER"
+    echo "$ADM_LOGO"
+    echo "$ADM_DIVIDER"
+    echo "### PROCESSES ###"
+    echo "$ADM_DIVIDER"
+    
+    if [ "$option" == "---" ]; then
 
-echo -n "Enter option: "
-read arg
+        echo " 0 = [BACK]"
+        echo " 1 = Commands"
+        echo " 2 = Processes"
+        echo " 3 = Processes - Detailed"
+        echo "$ADM_DIVIDER"
 
-echo "$ADM_DIVIDER"
+        echo -n "Enter option: "
+        read option
 
-if [ $arg == "1" ]; then
-    echo "ps"
-    echo "pstree"
-    echo "kill"
-fi
+    else
 
-if [ $arg == "2" ]; then
-    ps -s
-fi
+        if [ "$option" == "1" ]; then
+            echo "- ps -A"
+            echo "- ps -AHFl"
+            echo "- kill"
+        fi
 
-if [ $arg == "3" ]; then
-    ps -l
-fi
+        if [ "$option" == "2" ]; then
+            list=$( ps -A )
+            echo "$list"
+        fi
 
-if [ $arg == "4" ]; then
-    pstree
-fi
+        if [ "$option" == "3" ]; then
+            list=$( ps -AHFl )
+            echo "$list"
+        fi
 
-echo "$ADM_DIVIDER"
+        echo "$ADM_DIVIDER"
+        echo -n "Enter to continue..."
+        read option
+        option="---"
+
+    fi
+
+done
