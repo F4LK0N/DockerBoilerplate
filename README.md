@@ -1,20 +1,28 @@
 # Project Name
-
-## Overview
 Overview of the project here.
 
-## Develop
+.
 
-### Build, Run and Access:
-```
-docker-compose build  
-docker-compose build --progress=plain  
-docker-compose up -d  
-docker-compose up -d --build  
-127.0.0.1  
-```
+# OS
+Overview of operational system.
 
-### Manage:
-```
-docker exec -it container-name /bin/bash
-```
+# Docker
+### Build
+	docker compose build  
+	docker compose build --progress=plain  
+### Run
+	docker compose up -d
+### Build and Run
+	docker compose up -d --build
+### Access
+	docker exec -it container-a /bin/bash
+	docker exec -it container-b /bin/bash
+
+.  
+
+# Development
+### Run
+	docker compose up -d	
+### Access
+	docker exec -it container-a /bin/bash
+	docker exec -it container-b /bin/bash
