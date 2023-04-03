@@ -133,6 +133,30 @@ trap "echo '### CONTAINER STOP ###'; exit" SIGWINCH
 .  
 .  
 
+# Bash Read Input
+Improve the input reading.  
+``` https://dirask.com/posts/Bash-detect-key-pressed-DnzYqD ```  
+``` https://unix.stackexchange.com/questions/314834/output-something-in-a-loop-until-a-key-is-pressed ```  
+## Solution:
+Selection:
+```
+read -r -s -n 1 option
+```
+Continue:
+```
+read -r -s -n 1 option
+```
+Loop:
+```
+option=""
+while [ "$option" == "" ]
+do 
+	...
+	read -r -s -n 1 -t 0.25 option
+done
+```
+
+
 # ANSI Art:
 ``` https://patorjk.com/software/taag/#p=display&f=Isometric1&t=FALKON%20ADM ```  
 
@@ -210,3 +234,8 @@ __/\\\\\\\\\\\\\\\_____/\\\\\\\\\_____/\\\______________/\\\________/\\\_______/
              ░  ░    ░  ░░  ░       ░ ░           ░          ░  ░   ░           ░   
                                                                   ░                 
 ```
+
+
+
+
+
