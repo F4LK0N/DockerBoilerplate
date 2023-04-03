@@ -19,7 +19,7 @@ do
     echo "$ADM_DIVIDER"
 
     echo -n "Enter option: "
-    read -r -n 1 option
+    read -r -s -n 1 option
 
     if [ "$option" == "1" ]; then /adm/system.sh; fi
     if [ "$option" == "2" ]; then /adm/users_groups.sh; fi
