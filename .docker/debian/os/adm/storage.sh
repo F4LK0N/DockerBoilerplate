@@ -1,33 +1,55 @@
 #!/bin/bash
 
-full=$( cat /etc/passwd )
-short=$( cat /etc/passwd | cut -d\: -f1 )
+option="---"
+while [ "$option" != "" ] && [ "$option" != "0" ]
+do
 
-echo "$ADM_LOGO"
-echo "$ADM_DIVIDER"
-echo "### STORAGE ###"
-echo "$ADM_DIVIDER"
-echo " 1 = Commands"
-echo " 2 = Full List"
-echo " 3 = Short List"
-echo "$ADM_DIVIDER"
+    clear
+    echo "$ADM_DIVIDER"
+    echo "$ADM_LOGO"
+    echo "$ADM_DIVIDER"
+    echo "### STORAGE ###"
+    echo "$ADM_DIVIDER"
+    
+    if [ "$option" == "---" ]; then
 
-echo -n "Enter option: "
-read arg
+        echo " 0 = [BACK]"
+        echo " 1 = Commands"
+        echo " 2 = Storage Stats"
+        echo " 3 = Directories Tree"
+        echo " 4 = FileSystem Tree"
+        echo "$ADM_DIVIDER"
 
-echo "$ADM_DIVIDER"4
+        echo -n "Enter option: "
+        read -r -s -n 1 option
 
-if [ $arg == "1" ]; then
-    echo "df"
-    echo "du"
-fi
+    else
 
-if [ $arg == "2" ]; then
-    df
-fi
+        if [ "$option" == "1" ]; then
+            echo "- df"
+            echo "- df --block-size=GB"
+            echo "- du"
+            echo "- du -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /"
+            echo "- du -a -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /"
+        fi
 
-if [ $arg == "3" ]; then
-    df -h
-fi
+        if [ "$option" == "2" ]; then
+            df --block-size=GB
+        fi
 
-echo "$ADM_DIVIDER"
+        if [ "$option" == "3" ]; then
+            du -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /
+        fi
+
+        if [ "$option" == "4" ]; then
+            du -a -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /
+        fi
+
+        echo "$ADM_DIVIDER"
+        echo -n "Enter to continue..."
+        read -r -s -n 1 option
+        option="---"
+
+    fi
+
+done
