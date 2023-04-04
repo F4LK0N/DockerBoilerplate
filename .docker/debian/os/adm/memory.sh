@@ -1,32 +1,49 @@
 #!/bin/bash
 
-full=$( cat /etc/passwd )
-short=$( cat /etc/passwd | cut -d\: -f1 )
+option="---"
+while [ "$option" != "" ] && [ "$option" != "0" ]
+do
 
-echo "$ADM_LOGO"
-echo "$ADM_DIVIDER"
-echo "### MEMORY ###"
-echo "$ADM_DIVIDER"
-echo " 1 = Commands"
-echo " 2 = Full List"
-echo " 3 = Short List"
-echo "$ADM_DIVIDER"
+    clear
+    echo "$ADM_DIVIDER"
+    echo "$ADM_LOGO"
+    echo "$ADM_DIVIDER"
+    echo "### MEMORY ###"
+    echo "$ADM_DIVIDER"
+    
+    if [ "$option" == "---" ]; then
 
-echo -n "Enter option: "
-read arg
+        echo " 0 = [BACK]"
+        echo " 1 = Commands"
+        echo " 2 = Memory Stats"
+        echo " 3 = Memory Stats - Detailed"
+        echo "$ADM_DIVIDER"
 
-echo "$ADM_DIVIDER"4
+        echo -n "Enter option: "
+        read -r -s -n 1 option
 
-if [ $arg == "1" ]; then
-    echo "cat /proc/meminfo"
-fi
+    else
 
-if [ $arg == "2" ]; then
-    cat /proc/meminfo
-fi
+        if [ "$option" == "1" ]; then
+            echo "- cat /proc/meminfo"
+            echo "- cat /proc/meminfo | grep 'MemTotal:\|MemFree:\|MemAvailable:'"
+        fi
 
-if [ $arg == "3" ]; then
-    cat /proc/meminfo | grep 'MemTotal:\|MemFree:\|MemAvailable:'
-fi
+        if [ "$option" == "2" ]; then
+            list=$( cat /proc/meminfo | grep 'MemTotal:\|MemFree:\|MemAvailable:' )
+            echo "$list"
+        fi
 
-echo "$ADM_DIVIDER"
+        if [ "$option" == "3" ]; then
+            list=$( cat /proc/meminfo )
+            echo "$list"
+        fi
+
+        echo "$ADM_DIVIDER"
+        echo -n "Enter to continue..."
+        read -r -s -n 1 option
+        option="---"
+
+    fi
+
+done
