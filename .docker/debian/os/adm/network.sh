@@ -34,7 +34,7 @@ do
             echo "- cat /sys/class/net/eth*/address"
             echo "- ls --color=auto -lAs /sys/class/net/eth*"
             echo "- cat /etc/hosts"
-            echo "- netstat -plna"
+            echo "- netstat -plnatu"
             echo "- cat /proc/net/dev | grep 'Inter-\|face\|eth'"
             echo "- iftop -n -N -B -P"
         fi
@@ -68,15 +68,7 @@ do
         fi
 
         if [ "$option" == "5" ]; then
-            #apt-get install lsof (462 kB)
-            #lsof -nP -iTCP -sTCP:LISTEN
-            #lsof -i -n -P -R
-
-            #apt-get install net-tools (1015 kB)
-            #netstat -plna
-            #netstat -plnatu
-            
-            list=$( netstat -plna )
+            list=$( netstat -plnatu )
             echo "$list"
         fi
 
