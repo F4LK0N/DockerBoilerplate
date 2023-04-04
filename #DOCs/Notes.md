@@ -52,6 +52,7 @@ set -eux
 # APT - Cache Clear
 ```
 https://www.cyberciti.biz/faq/can-i-delete-var-cache-apt-archives-for-ubuntu-debian-linux/
+https://unix.stackexchange.com/questions/180400/is-it-safe-to-empty-usr-share-doc
 ```
 ## Solution
 ```
@@ -62,6 +63,7 @@ RUN apt-get autoremove; \
         /tmp/* \
         /var/tmp/* \
         /var/lib/apt/lists/* \
+		/usr/share/doc/* \
     ;
 ```
 
@@ -156,6 +158,9 @@ do
 done
 ```
 
+.
+.
+.
 
 # ANSI Art:
 ``` https://patorjk.com/software/taag/#p=display&f=Isometric1&t=FALKON%20ADM ```  

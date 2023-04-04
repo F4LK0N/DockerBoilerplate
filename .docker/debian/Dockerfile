@@ -30,6 +30,7 @@ RUN set -eux; \
         /tmp/* \
         /var/tmp/* \
         /var/lib/apt/lists/* \
+        /usr/share/doc/* \
     ;
 
 ### FILESYSTEM ###
