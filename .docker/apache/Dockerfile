@@ -24,8 +24,8 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         procps \
+        net-tools \
         iftop \
-        psmisc \
     ; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
     apt-get autoremove --purge; \
@@ -35,6 +35,7 @@ RUN set -eux; \
         /tmp/* \
         /var/tmp/* \
         /var/lib/apt/lists/* \
+        /usr/share/doc/* \
     ;
 
 ### FILESYSTEM ###
@@ -69,7 +70,6 @@ COPY ./os/docker/ /docker/
 #   error.log
 ########################################################################################################################
 COPY apache/httpd.conf /usr/local/apache2/conf/httpd.conf
-
 
 #########################################################################################################################
 #### CONTAINER ###
