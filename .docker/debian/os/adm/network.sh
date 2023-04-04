@@ -73,7 +73,15 @@ do
         fi
 
         if [ "$option" == "5" ]; then
-            list=$( lsof -i -n -P -R )
+            #apt-get install lsof (462 kB)
+            #lsof -nP -iTCP -sTCP:LISTEN
+            #lsof -i -n -P -R
+
+            #apt-get install net-tools (1015 kB)
+            #netstat -plna
+            #netstat -plnatu
+            
+            list=$( netstat -plna )
             echo "$list"
         fi
 
