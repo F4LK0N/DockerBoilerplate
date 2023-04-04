@@ -8,16 +8,17 @@ do
     echo "$ADM_DIVIDER"
     echo "$ADM_LOGO"
     echo "$ADM_DIVIDER"
-    echo "### STORAGE ###"
+    echo "### USERS AND GROUPS ###"
     echo "$ADM_DIVIDER"
     
     if [ "$option" == "---" ]; then
 
         echo " 0 = [BACK]"
         echo " 1 = Commands"
-        echo " 2 = Storage Stats"
-        echo " 3 = Directories Tree"
-        echo " 4 = FileSystem Tree"
+        echo " 2 = Users"
+        echo " 3 = Groups"
+        echo " 4 = Users  - Detailed"
+        echo " 5 = Groups - Detailed"
         echo "$ADM_DIVIDER"
 
         echo -n "Enter option: "
@@ -26,23 +27,33 @@ do
     else
 
         if [ "$option" == "1" ]; then
-            echo "- df"
-            echo "- df --block-size=GB"
-            echo "- du"
-            echo "- du -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /"
-            echo "- du -a -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /"
+            echo "- useradd"
+            echo "- usermod"
+            echo "- userdel"
+            echo ""
+            echo "- groupadd"
+            echo "- groupmod"
+            echo "- groupdel"
         fi
 
         if [ "$option" == "2" ]; then
-            df --block-size=GB
+            list=$( cat /etc/passwd | cut -d\: -f1 )
+            echo "$list"
         fi
 
         if [ "$option" == "3" ]; then
-            du -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /
+            list=$( cat /etc/group | cut -d\: -f1 )
+            echo "$list"
         fi
 
         if [ "$option" == "4" ]; then
-            du -a -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /
+            list=$( cat /etc/passwd )
+            echo "$list"
+        fi
+
+        if [ "$option" == "5" ]; then
+            list=$( cat /etc/group )
+            echo "$list"
         fi
 
         echo "$ADM_DIVIDER"

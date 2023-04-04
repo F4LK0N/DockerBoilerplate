@@ -1,34 +1,79 @@
 #!/bin/bash
 
-full=$( cat /etc/passwd )
-short=$( cat /etc/passwd | cut -d\: -f1 )
+option="---"
+while [ "$option" != "" ] && [ "$option" != "0" ]
+do
 
-echo "$ADM_LOGO"
-echo "$ADM_DIVIDER"
-echo "### PROCESSES ###"
-echo "$ADM_DIVIDER"
-echo " 1 = Commands"
-echo " 2 = List"
-echo " 3 = Tree (pstree)"
-echo "$ADM_DIVIDER"
+    clear
+    echo "$ADM_DIVIDER"
+    echo "$ADM_LOGO"
+    echo "$ADM_DIVIDER"
+    echo "### PROCESSES ###"
+    echo "$ADM_DIVIDER"
+    
+    if [ "$option" == "---" ]; then
 
-echo -n "Enter option: "
-read arg
+        echo " 0 = [BACK]"
+        echo " 1 = Commands"
+        echo " 2 = Processes"
+        echo " 3 = Processes (Detailed)"
+        echo " 4 = [REALTIME] Processes"
+        echo " 5 = [REALTIME] Processes (Detailed)"
+        echo "$ADM_DIVIDER"
 
-echo "$ADM_DIVIDER"4
+        echo -n "Enter option: "
+        read -r -s -n 1 option
 
-if [ $arg == "1" ]; then
-    echo "ps -A"
-    echo "pstree -au"
-    echo "kill"
-fi
+    else
 
-if [ $arg == "2" ]; then
-    ps -A
-fi
+        if [ "$option" == "1" ]; then
+            echo "- ps -A"
+            echo "- ps -AHFl"
+            echo "- kill"
+        fi
 
-if [ $arg == "3" ]; then
-    pstree -au
-fi
+        if [ "$option" == "2" ]; then
+            list=$( ps -A )
+            echo "$list"
+        fi
 
-echo "$ADM_DIVIDER"
+        if [ "$option" == "3" ]; then
+            list=$( ps -AHFl )
+            echo "$list"
+        fi
+
+        if [ "$option" == "4" ]; then
+            option=""
+            while [ "$option" == "" ]
+            do 
+                list=$( ps -A )
+                clear
+                echo "$list"
+                read -r -s -n 1 -t 0.25 option
+            done
+            option="DONTWAIT"
+        fi
+
+        if [ "$option" == "5" ]; then
+            option=""
+            while [ "$option" == "" ]
+            do 
+                list=$( ps -AHFl )
+                clear
+                echo "$list"
+                read -r -s -n 1 -t 0.25 option
+            done
+            option="DONTWAIT"
+        fi
+
+
+        if [ "$option" != "DONTWAIT" ]; then
+            echo "$ADM_DIVIDER"
+            echo -n "Enter to continue..."
+            read -r -s -n 1 option
+        fi
+        option="---"
+
+    fi
+
+done
