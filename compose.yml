@@ -3,6 +3,8 @@ services:
     container_name: apache
     build: .docker/apache
     volumes:
+      # App
+      - ./src/:/app/
       # Data
       - ./data/:/data/
       - ./logs/:/logs/
@@ -13,3 +15,4 @@ services:
       - ./.docker/apache/os/docker/:/docker/
     ports:
       - "80:80"
+      - "443:443"

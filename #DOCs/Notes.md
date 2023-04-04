@@ -239,3 +239,9 @@ __/\\\\\\\\\\\\\\\_____/\\\\\\\\\_____/\\\______________/\\\________/\\\_______/
              ░  ░    ░  ░░  ░       ░ ░           ░          ░  ░   ░           ░   
                                                                   ░                 
 ```
+
+
+
+Apache Trace
+https://httpd.apache.org/docs/2.4/mod/core.html#traceenable
+https://stackoverflow.com/questions/10673306/disable-track-and-trace-in-apache

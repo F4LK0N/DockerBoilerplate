@@ -75,6 +75,8 @@ ENV HTTPD_LOGS=/logs/apache
 RUN rm -r /usr/local/apache2/htdocs/
 
 COPY apache/httpd.conf "$HTTPD_ROOT/conf/httpd.conf"
+COPY apache/extra/httpd-mime.conf "$HTTPD_ROOT/conf/extra/httpd-mime.conf"
+COPY apache/extra/httpd-ssl.conf "$HTTPD_ROOT/conf/extra/httpd-ssl.conf"
 
 
 #########################################################################################################################
