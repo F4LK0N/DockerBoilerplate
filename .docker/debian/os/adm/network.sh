@@ -20,8 +20,7 @@ do
         echo " 4 = Hosts File"
         echo " 5 = Ports Binded"
         echo " 6 = Total Traffic"
-        
-        echo " 5 = [REALTIME] Traffic (iftop)"
+        echo " 7 = [REALTIME] Traffic (iftop)"
         echo "$ADM_DIVIDER"
 
         echo -n "Enter option: "
@@ -35,12 +34,8 @@ do
             echo "- cat /sys/class/net/eth*/address"
             echo "- ls --color=auto -lAs /sys/class/net/eth*"
             echo "- cat /etc/hosts"
-            echo "- lsof -i -n -P -R"
+            echo "- netstat -plna"
             echo "- cat /proc/net/dev | grep 'Inter-\|face\|eth'"
-            
-
-
-            
             echo "- iftop -n -N -B -P"
         fi
 
@@ -91,22 +86,9 @@ do
         fi
 
         if [ "$option" == "7" ]; then
-            list=$( cat /proc/net/dev | grep 'Inter-\|face\|eth' )
-            echo "$list"
-        fi
-
-        if [ "$option" == "90" ]; then
-            option=""
-            while [ "$option" == "" ]
-            do 
-                list=$( ps -A )
-                clear
-                echo "$list"
-                read -r -s -n 1 -t 0.25 option
-            done
+            iftop -n -N -B -P
             option="DONTWAIT"
         fi
-
 
         if [ "$option" != "DONTWAIT" ]; then
             echo "$ADM_DIVIDER"

@@ -9,3 +9,11 @@ services:
       # Dev
       - ./.docker/debian/os/adm/:/adm/
       - ./.docker/debian/os/docker/:/docker/
+    networks:
+      - networkA
+      - networkB
+      - networkC
+networks:
+  networkA:
+  networkB:
+  networkC:

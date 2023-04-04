@@ -19,6 +19,7 @@ RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends \
         procps \
+        net-tools \
         iftop \
     ; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
