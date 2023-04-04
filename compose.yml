@@ -5,7 +5,7 @@ services:
     volumes:
       # Data
       - ./data/:/data/
-      #- ./logs/:/logs/
+      - ./logs/:/logs/
       # Dev
       - ./.docker/apache/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
 

@@ -65,11 +65,17 @@ COPY ./os/docker/ /docker/
 #######################
 # Log #
 #######################
-# /usr/local/apache2/log/
+# /logs/apache/
 #   access.log
 #   error.log
 ########################################################################################################################
-COPY apache/httpd.conf /usr/local/apache2/conf/httpd.conf
+ENV HTTPD_ROOT=/usr/local/apache2
+ENV HTTPD_LOGS=/logs/apache
+
+RUN rm -r /usr/local/apache2/htdocs/
+
+COPY apache/httpd.conf "$HTTPD_ROOT/conf/httpd.conf"
+
 
 #########################################################################################################################
 #### CONTAINER ###
