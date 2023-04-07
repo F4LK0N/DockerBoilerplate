@@ -1,44 +1,37 @@
 version: '3'
 services:
-  container-a:
-    container_name: container-a
-    build: ./.docker/contaniner-a
-    volumes:
-      # Data and Logs
-      - ./data/container-a/:/etc/data/
-      - ./logs/container-a/:/etc/logs/
-      # Dev
-      - ./.docker/container-a/os/file.conf:/etc/path-inside-container.conf
+  mysql:
+    container_name: mysql
+    build: ./.docker/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    #restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
     networks:
-      - shared-network
-      - private-network-A
+      - backend
     ports:
-      #- "80:80"   #127.0.0.1
-      #- "8080:80" #127.0.0.1:8080
-      #- "8000:80" #127.0.0.1:8000
-      - "local-port:container-port"
-  container-b:
-    container_name: container-b
-    build: ./.docker/contaniner-b
+      - "3306:3306"
     volumes:
-      # Data and Logs
-      - ./data/container-b/:/etc/data/
-      - ./logs/container-b/:/etc/logs/
-      # Dev
-      - ./.docker/container-a/os/file.conf:/etc/path-inside-container.conf
-      - ./.docker/container-a/server/file.conf:/etc/path-inside-container.conf
-      - ./.docker/container-a/language/file.conf:/etc/path-inside-container.conf
-      - ./.docker/container-a/framework/file.conf:/etc/path-inside-container.conf
-      - ./.docker/container-a/app/file.conf:/etc/path-inside-container.conf
-    networks:
-      - shared-network
-      - private-network-B
+      # Data
+      - ./data/mysql:/var/lib/mysql
+
+  phpmyadmin:
+    container_name: phpmyadmin
+    build: ./.docker/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=root
     ports:
-      #- "80:80"   #127.0.0.1
-      #- "8080:80" #127.0.0.1:8080
-      #- "8000:80" #127.0.0.1:8000
-      - "local-port:container-port"
+      - "8080:80"
+    networks:
+      - backend
+    volumes:
+      # Config
+      #- ./.docker/phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
+
   networks:
-    shared-network:
-    private-network-A:
-    private-network-B:
+    backend:
