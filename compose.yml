@@ -22,11 +22,22 @@ services:
       - PMA_PASSWORD=root
     ports:
       - "8080:80"
+    depends_on:
+      - mysql
     networks:
       - backend
   
   app:
-    
+    container_name: app
+    build: ./.docker/app
+    ports:
+      - '80:8000'
+    volumes:
+      - './src:/app'
+    depends_on:
+      - mysql
+    networks:
+      - backend
 
 networks:
   backend:
