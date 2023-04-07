@@ -13,15 +13,18 @@ return new class extends Migration
     {
         Schema::create('news', function (Blueprint $table) {
             $table->id();
+
+            $table->boolean("published")->default(0)->index();
+            $table->enum("step", ['draft', 'revision', 'done'])->default('draft')->index();
             
             // Inside the News
-            $table->string('title');
-            $table->string('subtitle');
-            $table->string('content');
+            $table->text('title')->nullable();
+            $table->text('subtitle')->nullable();
+            $table->text('content')->nullable();
 
             // On a list of News
-            $table->string('short_title');
-            $table->string('short_description');
+            $table->text('short_title')->nullable();
+            $table->text('short_description')->nullable();
 
             $table->timestamps();
         });

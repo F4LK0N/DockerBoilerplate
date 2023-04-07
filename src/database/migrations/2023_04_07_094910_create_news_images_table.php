@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('news_images', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger("id_news");
-            $table->unsignedBigInteger("index");
+            $table->unsignedSmallInteger("index")->default(0);
             
-            $table->string('path');
-            $table->string('label');
-            $table->string('caption');
+            $table->text('path');
+            $table->text('label')->nullable();
+            $table->text('caption')->nullable();
 
             $table->timestamps();
         });
