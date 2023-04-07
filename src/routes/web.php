@@ -2,6 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\TagsController;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\NewsController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,3 +21,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::resource('tags', TagsController::class);
+Route::resource('categories', CategoriesController::class);
+Route::resource('news', NewsController::class);

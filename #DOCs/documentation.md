@@ -17,6 +17,17 @@ php artisan make:migration create_news_tags_table --create news_tags
 php artisan make:migration create_news_categories_table --create news_categories
 php artisan make:migration create_news_images_table --create news_images
 
-
 php artisan migrate
+
+
+
+``` routes/web.php ```
+use App\Http\Controllers\UserController;
+Route::resource('users', UserController::class);
+
+
+
+php artisan make:controller TagsController --resource --model=Tags
+php artisan make:controller CategoriesController --resource --model=Categories
+php artisan make:controller NewsController --resource --model=News
 
