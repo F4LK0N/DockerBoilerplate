@@ -1,7 +1,7 @@
 version: '3'
 services:
   container-a:
-    container_name: container-a
+    container_name: ${COMPOSE_PREFIX}container-a
     build: ./.docker/contaniner-a
     volumes:
       # Data and Logs
@@ -18,7 +18,7 @@ services:
       #- "8000:80" #127.0.0.1:8000
       - "local-port:container-port"
   container-b:
-    container_name: container-b
+    container_name: ${COMPOSE_PREFIX}container-b
     build: ./.docker/contaniner-b
     volumes:
       # Data and Logs
