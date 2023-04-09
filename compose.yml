@@ -1,11 +1,12 @@
 services:
   debian:
-    container_name: debian
+    container_name: ${COMPOSE_PREFIX}debian
     build: .docker/debian
     volumes:
-      # Data
+      # Data and Logs
       - ./data/:/data/
-      #- ./logs/:/logs/
+      - ./logs/:/logs/
       # Dev
-      - ./.docker/debian/os/adm/:/adm/
+      - ./.docker/debian/os/root/.bashrc:/root/.bashrc
       - ./.docker/debian/os/docker/:/docker/
+      - ./.docker/debian/os/adm/:/adm/

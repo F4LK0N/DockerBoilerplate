@@ -36,12 +36,17 @@ RUN set -eux; \
 ### FILESYSTEM ###
 # Centralize Folders
 RUN set -eux; \
-    mkdir -p /adm/; \
+    # Docker
     mkdir -p /docker/; \
+    # Adm
+    mkdir -p /adm/; \
+    # Data
     mkdir -p /data/; \
+    # Logs
     mkdir -p /logs/; \
-    mkdir -p /logs/os/; \
-    ln -s /var/log/ /logs/os/;
+    mkdir -p /logs/debian/; \
+    ln -s /var/log/ /logs/debian/;
+
 # Import Content
 COPY ./os/root/.bashrc /root/.bashrc
 COPY ./os/adm/ /adm/
