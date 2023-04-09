@@ -1,11 +1,13 @@
 services:
-  alpine:
-    container_name: ${COMPOSE_PREFIX}alpine
-    build: ./.docker/alpine
+  php:
+    container_name: ${COMPOSE_PREFIX}php
+    build: ./.docker/php
     volumes:
       # Data and Logs
       - ./data/:/data/
       - ./logs/:/logs/
       # Dev
-      - ./.docker/alpine/os/docker/:/docker/
-      - ./.docker/alpine/os/adm/:/adm/
+      - ./.docker/php/os/docker/:/docker/
+      - ./.docker/php/os/adm/:/adm/
+      # Application
+      - ./src/:/app/

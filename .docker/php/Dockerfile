@@ -20,31 +20,40 @@ ENV ENV="/root/.ashrc"
 #    rm -f /etc/localtime /etc/timezone; \
 #    dpkg-reconfigure -f noninteractive tzdata
 
-##### APT-GET ###
-#RUN set -eux; \
-## Update and Upgrade
-#    apt-get update -y; \
-#    apt-get upgrade -y; \
-## Install
-#    apt-get install -y procps iftop; \
-## Update and Upgrade
-#    apt-get update -y; \
-#    apt-get upgrade -y; \
-## Clean
-#    apt-get autoremove; \
-#    apt-get clean; \
-#    rm -rf /tmp/*; \
-#    rm -rf /var/tmp/*; \
-#    rm -rf /var/lib/apt/lists/*
-
+### APK ###
 RUN set -eux; \
-    apk add --no-cache \
+    apk add --no-cache --update \
         openrc \
-        iftop;
+        iftop \
+        apache2 \
+        apache2-ssl \
+        curl \
+        php81-apache2 \
+        php81-bcmath \
+        php81-bz2 \
+        php81-calendar \
+        php81-common \
+        php81-ctype \
+        php81-curl \
+        php81-dom \
+        php81-gd \
+        php81-iconv \
+        php81-mbstring \
+        php81-mysqli \
+        php81-mysqlnd \
+        php81-openssl \
+        php81-pdo_mysql \
+        php81-pdo_pgsql \
+        php81-pdo_sqlite \
+        php81-phar \
+        php81-session \
+        php81-xml;
 
 ### FILESYSTEM ###
 # Centralize Folders
 RUN set -eux; \
+    # Application
+    mkdir -p /app/; \
     # Docker
     mkdir -p /docker/; \
     # Adm
@@ -53,8 +62,8 @@ RUN set -eux; \
     mkdir -p /data/; \
     # Logs
     mkdir -p /logs/; \
-    mkdir -p /logs/alpine/; \
-    ln -s /var/log/ /logs/alpine/;
+    mkdir -p /logs/os/; \
+    ln -s /var/log/ /logs/os/;
 # Import Content
 COPY ./os/root/.ashrc /root/.ashrc
 COPY ./os/docker/ /docker/
