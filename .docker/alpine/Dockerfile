@@ -4,9 +4,12 @@ WORKDIR /
 LABEL "org.opencontainers.image.authors"="F4LK0N"
 LABEL "org.opencontainers.image.version"="1.0"
 
-#########################################################################################################################
-#### ALPINE ###
-#########################################################################################################################
+########################################################################################################################
+### ALPINE ###
+########################################################################################################################
+### SHELL ###
+ENV ENV="/root/.ashrc"
+
 #### FRONTEND ###
 #ARG DEBIAN_FRONTEND noninteractive
 
@@ -48,7 +51,7 @@ RUN set -eux; \
     mkdir -p /logs/alpine/; \
     ln -s /var/log/ /logs/alpine/;
 # Import Content
-COPY ./os/etc/profile.d/* /etc/profile.d/
+COPY ./os/root/.ashrc /root/.ashrc
 COPY ./os/docker/ /docker/
 COPY ./os/adm/ /adm/
 

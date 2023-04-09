@@ -1,4 +1,7 @@
 #!/bin/sh
 set -e
 
-# Start Code Here...
+echo "OS - Logs Folder"
+rm -r -f /logs/alpine/
+mkdir -p /logs/alpine/
+ln -s /var/log/ /logs/alpine/
