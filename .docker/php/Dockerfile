@@ -49,7 +49,7 @@ RUN set -eux; \
         #php81-pdo_pgsql \
         #php81-pdo_sqlite \
         php81-phar \
-        #php81-xml \
+        php81-xml \
         php81-session \
         php81-pecl-xdebug;
 
@@ -117,6 +117,9 @@ ENV PHP_ROOT=/etc/php81
 ENV PHP_LOGS=/logs/php
 
 RUN set -eux; \
+    mkdir -p "$PHP_ROOT/original/"; \
+    cp "$PHP_ROOT/php.ini" "$PHP_ROOT/original/php.ini"; \
+    cp -a "$PHP_ROOT/conf.d/." "$PHP_ROOT/original/conf.d/"; \
     rm -r -f "$PHP_ROOT/conf.d/"; \
     mkdir -p "$PHP_ROOT/conf.d/";
 

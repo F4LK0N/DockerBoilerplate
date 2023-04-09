@@ -5,6 +5,7 @@
         "ext-curl": "*",
         "ext-dom": "*",
         "ext-xdebug": "3.2.1",
+        "ext-xml": "*",
         "ext-pdo": "*",
         "ext-pdo_mysql": "*"
     },
