@@ -50,7 +50,9 @@ RUN set -eux; \
         #php81-pdo_sqlite \
         php81-phar \
         php81-xml \
+        php81-xmlwriter \
         php81-session \
+        php81-tokenizer \
         php81-pecl-xdebug;
 
 ### FILESYSTEM ###
