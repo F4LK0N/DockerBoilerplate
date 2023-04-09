@@ -1,7 +1,7 @@
 #!/bin/sh
 
-distribution=$( cat /etc/os-release | grep PRETTY_NAME | cut -d\" -f2 )
-version=$( cat /etc/debian_version )
+distribution=$( cat /etc/os-release | grep "^NAME" | cut -d\" -f2 )
+version=$( cat /etc/os-release | grep VERSION_ID | cut -d\= -f2 )
 
 clear
 echo "$ADM_DIVIDER"
