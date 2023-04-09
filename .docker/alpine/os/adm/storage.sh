@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 option="---"
 while [ "$option" != "" ] && [ "$option" != "0" ]
