@@ -65,7 +65,8 @@ RUN set -eux; \
     mkdir -p /logs/php/; \
     ln -s /var/log/ /logs/os/; \
     # Application
-    mkdir -p /app/;
+    mkdir -p /app/ \
+    mkdir -p /app/public/;
 # Import Content
 COPY ./os/root/.ashrc /root/.ashrc
 COPY ./os/docker/ /docker/
@@ -88,7 +89,10 @@ COPY ./os/adm/ /adm/
 ENV HTTPD_ROOT=/etc/apache2
 ENV HTTPD_LOGS=/logs/apache
 
-RUN rm -r /usr/local/apache2/htdocs/
+RUN set -eux; \
+    ln -s /usr/lib/apache2 "${HTTPD_ROOT}/modules"; \
+    ln -s /logs/apache "${HTTPD_ROOT}/logs"; \
+    ln -s /run/apache2 "${HTTPD_ROOT}/run";
 
 COPY apache/httpd.conf "$HTTPD_ROOT/httpd.conf"
 
