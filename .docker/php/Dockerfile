@@ -10,15 +10,14 @@ LABEL "org.opencontainers.image.version"="1.0"
 ### SHELL ###
 ENV ENV="/root/.ashrc"
 
-#### FRONTEND ###
-#ARG DEBIAN_FRONTEND noninteractive
-
 #### TIMEZONE ###
 #RUN set -eux; \
 #    echo "tzdata tzdata/Areas select America" | debconf-set-selections; \
 #    echo "tzdata tzdata/Zones/America select Sao_Paulo" | debconf-set-selections; \
 #    rm -f /etc/localtime /etc/timezone; \
 #    dpkg-reconfigure -f noninteractive tzdata
+#RUN apk add tzdata \
+#    && cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
 
 ### APK ###
 RUN set -eux; \
@@ -128,6 +127,21 @@ RUN set -eux; \
 COPY php/php.ini "$PHP_ROOT/php.ini"
 
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
+########################################################################################################################
+### PHALCON ###
+########################################################################################################################
+RUN set -eux; \
+    apk add --no-cache --update 7zip; \
+    mkdir -p /tmp/phalcon/; \
+    cd /tmp/phalcon/; \
+    curl -LO https://github.com/phalcon/cphalcon/releases/download/v5.2.1/phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
+    7z x phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
+    cp phalcon.so /usr/lib/php81/modules/; \
+    chmod 755 /usr/lib/php81/modules/phalcon.so; \
+    cd /; \
+    rm -r -f /tmp/phalcon/; \
+    apk del 7zip;
 
 ########################################################################################################################
 ## DOCKER ###
