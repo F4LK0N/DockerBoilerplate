@@ -1,8 +1,5 @@
 #!/bin/sh
 
-distribution=$( cat /etc/os-release | grep "^NAME" | cut -d\" -f2 )
-version=$( cat /etc/os-release | grep VERSION_ID | cut -d\= -f2 )
-
 clear
 echo "$ADM_DIVIDER"
 echo "$ADM_LOGO"
@@ -10,9 +7,14 @@ echo "$ADM_DIVIDER"
 echo "### SYSTEM INFO ###"
 echo "$ADM_DIVIDER"
 
+
+distribution=$( cat /etc/os-release | grep "^NAME" | cut -d\" -f2 )
+version=$( cat /etc/os-release | grep VERSION_ID | cut -d\= -f2 )
+
 echo "OS Distribution : $distribution"
 echo "OS Version      : $version"
 echo "$ADM_DIVIDER"
+
 
 if [ -x "$(command -v httpd)" ]; then
     httpd_version=$( httpd -v | grep version | cut -d\: -f2 | sed 's/ *$//g' )
@@ -26,6 +28,7 @@ if [ -x "$(command -v httpd)" ]; then
     echo "$ADM_DIVIDER"
 fi
 
+
 if [ -x "$(command -v php)" ]; then
     php_version=$( php -v | grep "^PHP" | cut -d' ' -f2 | sed 's/ *$//g' )
     php_version=`echo $php_version | sed 's/ *$//g'`
@@ -38,6 +41,7 @@ if [ -x "$(command -v php)" ]; then
     echo "PHP Built     : $php_built"
     echo "$ADM_DIVIDER"
 fi
+
 
 echo -n "Enter to continue..."
 read -r -s -n 1 option
