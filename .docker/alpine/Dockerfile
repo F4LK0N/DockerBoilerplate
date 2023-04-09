@@ -37,6 +37,10 @@ ENV ENV="/root/.ashrc"
 #    rm -rf /var/tmp/*; \
 #    rm -rf /var/lib/apt/lists/*
 
+RUN set -eux; \
+    apk add --no-cache \
+        openrc;
+
 ### FILESYSTEM ###
 # Centralize Folders
 RUN set -eux; \

@@ -17,6 +17,7 @@ do
         echo " 1 = Commands"
         echo " 2 = Processes"
         echo " 3 = [REALTIME] Processes"
+        echo " 4 = [REALTIME] Processes (top)"
         echo "$ADM_DIVIDER"
 
         echo -n "Enter option: "
@@ -26,6 +27,7 @@ do
 
         if [ "$option" == "1" ]; then
             echo "- ps -A"
+            echo "- top"
             echo "- kill"
         fi
 
@@ -43,6 +45,11 @@ do
                 echo "$list"
                 read -r -s -n 1 -t 0.25 option
             done
+            option="DONTWAIT"
+        fi
+
+        if [ "$option" == "4" ]; then
+            top
             option="DONTWAIT"
         fi
 
