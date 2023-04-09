@@ -1,28 +1,34 @@
 # Debian 11
 This project creates a image to serve as base image for your next projects.  
-It comes with all its essential functionalities already configured and customizable.  
-Important filesystem contents like 'logs' and persistent 'data' are all centralized inside the containers and maped to external folder in the local project.  
+It comes with all its essential functionalities already installed and configured to start development.  
 
-.  
+.
+# Adm
+The Falkon Administrative Tools Panel (Adm) are included in this project.  
+It provides a panel with useful commands and tools to help monitore and manage the system.  
+You can customize the adm panel accordingly to your need, all the scripts are located at: ``` /adm/ ``` and are in the bash format.  
+To access the panel, on a CLI terminal inside the OS container, just type:  
+```
+adm
+```
 
-# OS
-This image is based on the Linux Debian 11 Slim operational system oficial Docker image.
+.
+# File System
+Important files and folders are centralized in root folders to facilitate access.  
+- ``` /data/ ``` Data that must persist across container rebuilds;
+- ``` /logs/ ``` Log files and folders used by the system and applications;
+- ``` /docker/ ``` Scripts used by docker to setup and run the container;
+- ``` /adm/ ``` Scripts from the Adm Panel;  
 
-.  
+> :information_source: Some logs can't be configured to save directly to the logs folder, in this cases an symbolic link (shortcut) has been created inside the logs folder to facilitate access.  
+> :warning: When mapping the logs folder from the container as a volume to the local filesystem, the sysbolic links don't appear in the local system, to see this links you must enter the container.  
 
-# Falkon Adm
-The Falkon Administration Panel is included.  
-It provides a panel with useful tools to help system monitoring and management.  
-### Access
-Inside the container, just type in the cli terminal:
+.
+# Operational System
+This image is based on the oficial Docker image of the Slim version of the Debian Operational System.
 
-	adm
-### Customize
-You can also customize the scripts accordingly to your need, they are located at:  
-``` /adm/ ```
 
-.  
-
+.
 # Docker
 ### Build
 	docker compose build  
@@ -32,12 +38,11 @@ You can also customize the scripts accordingly to your need, they are located at
 ### Build and Run
 	docker compose up -d --build
 ### Access
-	docker exec -it debian /bin/bash
+	docker compose exec -it debian /bin/bash
 
-.  
-
+.
 # Development
 ### Run
 	docker compose up -d	
 ### Access
-	docker exec -it debian /bin/bash
+	docker compose exec -it debian /bin/bash
