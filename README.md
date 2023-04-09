@@ -1,11 +1,7 @@
-# Project Name
+# Project
 Overview of the project here.
 
 .
-
-# OS
-Overview of operational system.
-
 # Docker
 ### Build
 	docker compose build  
@@ -18,8 +14,7 @@ Overview of operational system.
 	docker exec -it container-a /bin/bash
 	docker exec -it container-b /bin/bash
 
-.  
-
+.
 # Development
 ### Run
 	docker compose up -d	
