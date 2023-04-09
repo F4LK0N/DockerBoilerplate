@@ -50,7 +50,8 @@ RUN set -eux; \
         #php81-pdo_sqlite \
         php81-phar \
         #php81-xml \
-        php81-session;
+        php81-session \
+        php81-pecl-xdebug;
 
 ### FILESYSTEM ###
 # Centralize Folders
@@ -120,7 +121,6 @@ RUN set -eux; \
     mkdir -p "$PHP_ROOT/conf.d/";
 
 COPY php/php.ini "$PHP_ROOT/php.ini"
-
 
 ########################################################################################################################
 ## DOCKER ###
