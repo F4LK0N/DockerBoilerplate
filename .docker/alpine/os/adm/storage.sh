@@ -15,9 +15,9 @@ do
 
         echo " 0 = [BACK]"
         echo " 1 = Commands"
-        echo " 2 = Storage Stats"
-        echo " 3 = Directories Tree"
-        echo " 4 = FileSystem Tree"
+        echo " 2 = Storage Usage (GB)"
+        echo " 3 = Directories Size Tree (KB)"
+        echo " 4 = FileSystem Size Tree (KB)"
         echo "$ADM_DIVIDER"
 
         echo -n "Enter option: "
@@ -27,22 +27,22 @@ do
 
         if [ "$option" == "1" ]; then
             echo "- df"
-            echo "- df --block-size=GB"
-            echo "- du"
-            echo "- du -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /"
-            echo "- du -a -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /"
+            echo "- df -B GB"
+            echo "- du /"
+            echo "- du -k -c /"
+            echo "- du -k -c -a /"
         fi
 
         if [ "$option" == "2" ]; then
-            df --block-size=GB
+            df -B GB
         fi
 
         if [ "$option" == "3" ]; then
-            du -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /
+            du -k -c /
         fi
 
         if [ "$option" == "4" ]; then
-            du -a -P --block-size=MB --exclude='sys' --exclude='proc' --exclude='lib' --exclude='usr/lib' /
+            du -k -c -a /
         fi
 
         echo "$ADM_DIVIDER"
