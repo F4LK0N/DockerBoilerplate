@@ -39,7 +39,8 @@ ENV ENV="/root/.ashrc"
 
 RUN set -eux; \
     apk add --no-cache \
-        openrc;
+        openrc \
+        iftop;
 
 ### FILESYSTEM ###
 # Centralize Folders
