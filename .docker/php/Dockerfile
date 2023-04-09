@@ -52,8 +52,6 @@ RUN set -eux; \
 ### FILESYSTEM ###
 # Centralize Folders
 RUN set -eux; \
-    # Application
-    mkdir -p /app/; \
     # Docker
     mkdir -p /docker/; \
     # Adm
@@ -63,13 +61,40 @@ RUN set -eux; \
     # Logs
     mkdir -p /logs/; \
     mkdir -p /logs/os/; \
-    ln -s /var/log/ /logs/os/;
+    mkdir -p /logs/apache/; \
+    mkdir -p /logs/php/; \
+    ln -s /var/log/ /logs/os/; \
+    # Application
+    mkdir -p /app/;
 # Import Content
 COPY ./os/root/.ashrc /root/.ashrc
 COPY ./os/docker/ /docker/
 COPY ./os/adm/ /adm/
 
+########################################################################################################################
+### APACHE ###
+########################################################################################################################
+# Config #
+#######################
+# /etc/apache2/
+#   httpd.conf
+#######################
+# Logs #
+#######################
+# /logs/apache/
+#   access.log
+#   error.log
+########################################################################################################################
+ENV HTTPD_ROOT=/etc/apache2
+ENV HTTPD_LOGS=/logs/apache
+
+RUN rm -r /usr/local/apache2/htdocs/
+
+COPY apache/httpd.conf "$HTTPD_ROOT/httpd.conf"
+
+########################################################################################################################
 ## DOCKER ###
+########################################################################################################################
 STOPSIGNAL SIGWINCH
 ENTRYPOINT ["/docker/entrypoint.sh"]
 CMD ["RUN"]

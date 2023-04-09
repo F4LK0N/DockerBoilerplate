@@ -9,6 +9,7 @@ services:
       # Dev
       - ./.docker/php/os/docker/:/docker/
       - ./.docker/php/os/adm/:/adm/
+      - ./.docker/php/apache/httpd.conf:/etc/apache2/httpd.conf
       # Application
       - ./src/:/app/
     ports:
