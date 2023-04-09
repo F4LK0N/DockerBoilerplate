@@ -7,5 +7,5 @@ services:
       - ./data/:/data/
       - ./logs/:/logs/
       # Dev
-      #- ./.docker/alpine/os/docker/:/docker/
-      #- ./.docker/alpine/os/adm/:/adm/
+      - ./.docker/alpine/os/docker/:/docker/
+      - ./.docker/alpine/os/adm/:/adm/
