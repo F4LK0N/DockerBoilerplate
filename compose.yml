@@ -1,9 +1,11 @@
 services:
   alpine:
-    container_name: alpine
+    container_name: ${COMPOSE_PREFIX}alpine
     build: ./.docker/alpine
-    #volumes:
-    #  - ./data/:/data/
-    #  - ./logs/:/logs/
-    #  - ./.docker/alpine/adm/:/adm/
-    #  - ./.docker/alpine/docker/:/docker/
+    volumes:
+      # Data and Logs
+      - ./data/:/data/
+      - ./logs/:/logs/
+      # Dev
+      #- ./.docker/alpine/os/docker/:/docker/
+      #- ./.docker/alpine/os/adm/:/adm/

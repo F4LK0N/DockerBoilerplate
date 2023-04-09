@@ -37,12 +37,11 @@ This image is based on the oficial Docker image of the Alpine Operational System
 ### Build and Run
 	docker compose up -d --build
 ### Access
-	docker exec -it alpine /bin/bash
+	docker compose exec -it alpine /bin/sh
 
 .
 # Development
 ### Run
 	docker compose up -d	
 ### Access
-	docker exec -it alpine /bin/bash
-	docker exec -it alpine /bin/bash
+	docker compose exec -it alpine /bin/sh

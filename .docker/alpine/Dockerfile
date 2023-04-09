@@ -5,7 +5,7 @@ LABEL "org.opencontainers.image.authors"="F4LK0N"
 LABEL "org.opencontainers.image.version"="1.0"
 
 #########################################################################################################################
-#### DEBIAN ###
+#### ALPINE ###
 #########################################################################################################################
 #### FRONTEND ###
 #ARG DEBIAN_FRONTEND noninteractive
@@ -34,26 +34,25 @@ LABEL "org.opencontainers.image.version"="1.0"
 #    rm -rf /var/tmp/*; \
 #    rm -rf /var/lib/apt/lists/*
 
-#### BASH ###
-#COPY ./root/.bashrc /root/.bashrc
+### FILESYSTEM ###
+# Centralize Folders
+RUN set -eux; \
+    # Docker
+    mkdir -p /docker/; \
+    # Adm
+    mkdir -p /adm/; \
+    # Data
+    mkdir -p /data/; \
+    # Logs
+    mkdir -p /logs/; \
+    mkdir -p /logs/alpine/; \
+    ln -s /var/log/ /logs/alpine/;
+# Import Content
+COPY ./os/etc/profile.d/* /etc/profile.d/
+COPY ./os/docker/ /docker/
+COPY ./os/adm/ /adm/
 
-#### FILESYSTEM ###
-#RUN set -eux; \
-#    mkdir -p /data/; \
-#    mkdir -p /logs/; \
-#    mkdir -p /logs/debian/; \
-#    mkdir -p /adm/; \
-#    mkdir -p /docker/
-
-#### LOGS ###
-#RUN set -eux; \
-#    ln -s /logs/debian/ /var/log/
-
-##### ADM ###
-#COPY ./adm/ /adm/
-
-#### DOCKER ###
-#STOPSIGNAL SIGWINCH
-#COPY ./docker/ /docker/
-#ENTRYPOINT ["/docker/entrypoint.sh"]
-#CMD ["RUN"]
+## DOCKER ###
+STOPSIGNAL SIGWINCH
+ENTRYPOINT ["/docker/entrypoint.sh"]
+CMD ["RUN"]
