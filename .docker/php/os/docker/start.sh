@@ -17,6 +17,10 @@ chmod 777 /logs/apache/
 
 
 
+echo "PHP - Data"
+mkdir -p /data/php/tmp/
+chmod 777 /data/php/tmp/
+
 echo "PHP - Logs"
 mkdir -p /logs/php/
 chmod 777 /logs/php/

@@ -38,7 +38,7 @@ RUN set -eux; \
         php81-common \
         #php81-ctype \
         php81-curl \
-        #php81-dom \
+        php81-dom \
         #php81-gd \
         #php81-iconv \
         php81-mbstring \
