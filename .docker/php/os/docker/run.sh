@@ -1,8 +1,5 @@
 #!/bin/sh
 set -e
 
-trap "echo '### CONTAINER STOP ###'; exit" SIGWINCH
-
-while true; do
-    sleep 1
-done
+echo "Apache - Server Daemon"
+exec httpd -D FOREGROUND

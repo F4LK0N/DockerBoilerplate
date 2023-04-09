@@ -64,9 +64,9 @@ RUN set -eux; \
     # Logs
     mkdir -p /logs/; \
     mkdir -p /logs/os/; \
+    ln -s /var/log/ /logs/os/; \
     mkdir -p /logs/apache/; \
     mkdir -p /logs/php/; \
-    ln -s /var/log/ /logs/os/; \
     # Application
     mkdir -p /app/ \
     mkdir -p /app/public/;
@@ -98,6 +98,29 @@ RUN set -eux; \
     ln -s /run/apache2 "${HTTPD_ROOT}/run";
 
 COPY apache/httpd.conf "$HTTPD_ROOT/httpd.conf"
+
+########################################################################################################################
+### PHP ###
+########################################################################################################################
+# Config #
+#######################
+# /etc/php81/
+#   php.ini
+#######################
+# Logs #
+#######################
+# /logs/php/
+#   error.log
+########################################################################################################################
+ENV PHP_ROOT=/etc/php81
+ENV PHP_LOGS=/logs/php
+
+RUN set -eux; \
+    rm -r -f "$PHP_ROOT/conf.d/"; \
+    mkdir -p "$PHP_ROOT/conf.d/";
+
+COPY php/php.ini "$PHP_ROOT/php.ini"
+
 
 ########################################################################################################################
 ## DOCKER ###
