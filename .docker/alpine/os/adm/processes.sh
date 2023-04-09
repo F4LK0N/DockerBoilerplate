@@ -16,9 +16,7 @@ do
         echo " 0 = [BACK]"
         echo " 1 = Commands"
         echo " 2 = Processes"
-        echo " 3 = Processes (Detailed)"
-        echo " 4 = [REALTIME] Processes"
-        echo " 5 = [REALTIME] Processes (Detailed)"
+        echo " 3 = [REALTIME] Processes"
         echo "$ADM_DIVIDER"
 
         echo -n "Enter option: "
@@ -28,7 +26,6 @@ do
 
         if [ "$option" == "1" ]; then
             echo "- ps -A"
-            echo "- ps -AHFl"
             echo "- kill"
         fi
 
@@ -38,27 +35,10 @@ do
         fi
 
         if [ "$option" == "3" ]; then
-            list=$( ps -AHFl )
-            echo "$list"
-        fi
-
-        if [ "$option" == "4" ]; then
             option=""
             while [ "$option" == "" ]
             do 
                 list=$( ps -A )
-                clear
-                echo "$list"
-                read -r -s -n 1 -t 0.25 option
-            done
-            option="DONTWAIT"
-        fi
-
-        if [ "$option" == "5" ]; then
-            option=""
-            while [ "$option" == "" ]
-            do 
-                list=$( ps -AHFl )
                 clear
                 echo "$list"
                 read -r -s -n 1 -t 0.25 option
