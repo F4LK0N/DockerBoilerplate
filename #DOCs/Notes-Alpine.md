@@ -6,3 +6,11 @@ Dockerfile:
 ```
 ENV ENV="/root/.ashrc"
 ```
+
+
+# XDebug
+https://xdebug.org/docs/all_settings
+
+```
+127.0.0.1/?XDEBUG_TRIGGER
+```
