@@ -43,3 +43,23 @@ chmod 777 -R /logs/php/xdebug_tmp
 echo "Application - File System"
 mkdir -p /app/
 mkdir -p /app/public/
+chmod 777 /app/
+#chmod 777 -R /app/
+
+echo "Application - Composer"
+if [[ ! -f "/app/composer.json" ]]; then
+    echo "- 'composer.json' not found!"
+else
+    echo "- 'composer.json' found!"
+
+    if [[ -f "/app/composer.lock" ]]; then
+        echo "- 'composer.lock' found!"
+        echo "- Skipping installation."
+    else
+        echo "- 'composer.lock' not found!"
+        echo "- Starting installation."
+
+        composer install -d /app
+    fi
+
+fi
