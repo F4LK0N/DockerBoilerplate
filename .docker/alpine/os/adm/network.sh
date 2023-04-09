@@ -36,7 +36,7 @@ do
             echo "- cat /etc/hosts"
             echo "- netstat -plnatu"
             echo "- cat /proc/net/dev | grep 'Inter-\|face\|eth'"
-            echo "- iftop -n -N -B -P"
+            echo "- iftop -n -N -B -P -i eth0"
         fi
 
         if [ "$option" == "2" ]; then
@@ -78,7 +78,7 @@ do
         fi
 
         if [ "$option" == "7" ]; then
-            iftop -n -N -B -P
+            iftop -n -N -B -P -i eth0
             option="DONTWAIT"
         fi
 
