@@ -11,3 +11,5 @@ services:
       - ./.docker/php/os/adm/:/adm/
       # Application
       - ./src/:/app/
+    ports:
+      - "80:80"
