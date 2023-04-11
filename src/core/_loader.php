@@ -1,28 +1,17 @@
 <?php
 use Phalcon\Autoload\Loader;
 
+# Core
 require "profiler.php";
 require "dev.php";
 require "paths.php";
-require "configs.php";
+
+# Vendor
+require '../vendor/autoload.php';
+
+# Application
+require PATH_APP."/_configs/_loader.php";
+require PATH_APP."/_providers/_loader.php";
+require PATH_APP."/_application/_loader.php";
 
 VD_ALL();
-die;
-
-$loader = new Loader();
-$loader->setNamespaces(
-    [
-       'App'        => 'app/',
-       'App\Models' => 'app/models',
-       'Tests' => 'tests/',
-    ]
-);
-$loader->setDirectories(
-    [
-        ROOT . '/controllers/',
-        ROOT . '/models/',
-    ]
-);
-$loader->register();
-
-var_dump($loader);
