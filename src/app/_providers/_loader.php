@@ -5,7 +5,7 @@ class PROVIDERS
 {
     static private $CONTAINER = null;
 
-    static private function CONTAINER()
+    static public function CONTAINER()
     {
         if(self::$CONTAINER === null){
             self::$CONTAINER = new FactoryDefault();
@@ -16,32 +16,17 @@ class PROVIDERS
     static public function GET($key=null)
     {
         if(!$key){
-            return self::$CONTAINER;
+            return self::CONTAINER();
         }
-        return self::$CONTAINER[$key];
+        return self::CONTAINER()[$key];
     }
 
     static public function SET($key, $function)
     {
-        self::$CONTAINER->set($key, $function);
+        self::CONTAINER()->set($key, $function);
     }
 
 }
 
-$container = new FactoryDefault();
-$container->set(
-    'view',
-    function () {
-        $view = new View();
-        $view->setViewsDir(APP_PATH . '/views/');
-        return $view;
-    }
-);
-$container->set(
-    'url',
-    function () {
-        $url = new Url();
-        $url->setBaseUri('/');
-        return $url;
-    }
-);
+require "view.php";
+require "url.php";

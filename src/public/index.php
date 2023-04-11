@@ -4,23 +4,7 @@ die;
 
 
 
-$container = new FactoryDefault();
-$container->set(
-    'view',
-    function () {
-        $view = new View();
-        $view->setViewsDir(APP_PATH . '/views/');
-        return $view;
-    }
-);
-$container->set(
-    'url',
-    function () {
-        $url = new Url();
-        $url->setBaseUri('/');
-        return $url;
-    }
-);
+
 
 
 $application = new Application($container);
