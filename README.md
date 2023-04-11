@@ -118,6 +118,7 @@ Available environments:
 > THIS IS A WORK IN PROGRESS  
 > Some branches are still in development or are not released yet. With time all branches will be available, and more will be added.
 
+.
 # Final Words
 I hope this can be useful for your project developments. Use and modify it as you need. Enjoy!  
 You can contact me about any doubts you may have, suggestions and pull requests are welcome, just try to keep the same code standards.  
