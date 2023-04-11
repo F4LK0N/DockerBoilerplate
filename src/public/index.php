@@ -6,7 +6,7 @@
 //use Phalcon\Mvc\Application;
 //use Phalcon\Url;
 
-require "../core/loader.php";
+require "../core/_loader.php";
 die;
 
 
