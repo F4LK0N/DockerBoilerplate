@@ -1,4 +1,4 @@
-# Alpine 3.17
+# PHP 8.1
 This project creates a image to serve as base image for your next projects.  
 It comes with all its essential functionalities already installed and configured to start development.  
 
@@ -37,11 +37,11 @@ This image is based on the official Docker image of the Alpine Operational Syste
 ### Build and Run
 	docker compose up -d --build
 ### Access
-	docker compose exec -it alpine /bin/sh
+	docker compose exec -it php /bin/sh
 
 .
 # Development
 ### Run
 	docker compose up -d	
 ### Access
-	docker compose exec -it alpine /bin/sh
+	docker compose exec -it php /bin/sh
