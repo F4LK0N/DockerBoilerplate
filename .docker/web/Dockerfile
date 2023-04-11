@@ -97,9 +97,17 @@ ENV HTTPD_LOGS=/logs/apache
 RUN set -eux; \
     ln -s /usr/lib/apache2 "${HTTPD_ROOT}/modules"; \
     ln -s /logs/apache "${HTTPD_ROOT}/logs"; \
-    ln -s /run/apache2 "${HTTPD_ROOT}/run";
+    ln -s /run/apache2 "${HTTPD_ROOT}/run"; \
+    mkdir -p "${HTTPD_ROOT}/original/"; \
+    cp "$HTTPD_ROOT/httpd.conf" "$HTTPD_ROOT/original/httpd.conf"; \
+    cp -a "$HTTPD_ROOT/conf.d/." "$HTTPD_ROOT/original/conf.d/"; \
+    rm -r -f "$HTTPD_ROOT/conf.d/"; \
+    mkdir -p "$HTTPD_ROOT/conf.d/"; \
+    chmod 777 "$HTTPD_ROOT/conf.d/";
 
 COPY apache/httpd.conf "$HTTPD_ROOT/httpd.conf"
+COPY apache/conf.d/mpm.conf "$HTTPD_ROOT/conf.d/mpm.conf"
+COPY apache/conf.d/languages.conf "$HTTPD_ROOT/conf.d/languages.conf"
 
 ########################################################################################################################
 ### PHP ###

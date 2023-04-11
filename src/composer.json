@@ -6,7 +6,8 @@
         "ext-xdebug": "3.2.1",
         "ext-pdo": "*",
         "ext-pdo_mysql": "*",
-        "ext-phalcon": "*"
+        "ext-phalcon": "*",
+        "phalcon/devtools": "^4.2"
     },
     "autoload": {
         "psr-4": {
@@ -23,7 +24,8 @@
         "phpunit/phpunit": "10.*",
         "phpunit/php-code-coverage": "^10.0",
         "nikic/php-parser": "^4.15",
-        "mockery/mockery": "*"
+        "mockery/mockery": "*",
+        "phalcon/devtools": "^4.2"
     },
     "autoload-dev": {
         "psr-4": {

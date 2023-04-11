@@ -45,6 +45,11 @@ https://docs.phalcon.io/5.0/en/webserver-setup
 
 # Dev Tools
 https://docs.phalcon.io/5.0/en/devtools
+```
+composer require phalcon/devtools
+alias phalcon=/app/vendor/phalcon/devtools/phalcon
+```
+
 
 # Debug
 # ...
