@@ -2,16 +2,14 @@
 use Phalcon\Autoload\Loader;
 
 # Core
-require "profiler.php";
-require "dev.php";
-require "paths.php";
+require_once "profiler.php";
+require_once "dev.php";
+require_once "paths.php";
 
 # Vendor
-require '../vendor/autoload.php';
+//require_once '../vendor/autoload.php';
 
 # Application
-require PATH_APP."/_configs/_loader.php";
-require PATH_APP."/_providers/_loader.php";
-require PATH_APP."/_application/_loader.php";
-
-VD_ALL();
+require_once PATH_APP."/_configs/_loader.php";
+require_once PATH_APP."/_providers/_loader.php";
+require_once PATH_APP."/_application/_loader.php";

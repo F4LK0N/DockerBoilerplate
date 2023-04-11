@@ -5,7 +5,7 @@ PROVIDERS::SET(
     'view',
     function () {
         $view = new View();
-        $view->setViewsDir(APP_PATH . '/views/');
+        $view->setViewsDir(PATH_APP . '/views/');
         return $view;
     }
 );
