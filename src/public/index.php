@@ -1,16 +1,13 @@
 <?php
 
-use Phalcon\Di\FactoryDefault;
-use Phalcon\Autoload\Loader;
-use Phalcon\Mvc\View;
-use Phalcon\Mvc\Application;
-use Phalcon\Url;
+//use Phalcon\Di\FactoryDefault;
+//use Phalcon\Autoload\Loader;
+//use Phalcon\Mvc\View;
+//use Phalcon\Mvc\Application;
+//use Phalcon\Url;
 
-
-define('BASE_PATH',   dirname(__DIR__));
-define('APP_PATH',    BASE_PATH . '/app');
-define('CORE_PATH',   BASE_PATH . '/core');
-define('PUBLIC_PATH', BASE_PATH . '/public');
+require "../core/loader.php";
+die;
 
 
 $loader = new Loader();

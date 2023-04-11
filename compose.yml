@@ -10,6 +10,7 @@ services:
       - ./.docker/web/os/docker/:/docker/
       - ./.docker/web/os/adm/:/adm/
       - ./.docker/web/apache/httpd.conf:/etc/apache2/httpd.conf
+      - ./.docker/web/apache/conf.d:/etc/apache2/conf.d
       - ./.docker/web/php/php.ini:/etc/php81/php.ini
       # Application
       - ./src/:/app/
