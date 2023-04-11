@@ -21,11 +21,11 @@ Important files and folders are centralized in root folders to facilitate access
 - ``` /adm/ ``` Scripts from the Adm Panel;  
 
 > :information_source: Some logs can't be configured to save directly to the logs folder, in this cases an symbolic link (shortcut) has been created inside the logs folder to facilitate access.  
-> :warning: When mapping the logs folder from the container as a volume to the local filesystem, the sysbolic links don't appear in the local system, to see this links you must enter the container.  
+> :warning: When mapping the logs folder from the container as a volume to the local filesystem, the symbolic links don't appear in the local system, to see this links you must enter the container.  
 
 .
 # Operational System
-This image is based on the oficial Docker image of the Alpine Operational System.
+This image is based on the official Docker image of the Alpine Operational System.
 
 .
 # Docker
@@ -37,11 +37,11 @@ This image is based on the oficial Docker image of the Alpine Operational System
 ### Build and Run
 	docker compose up -d --build
 ### Access
-	docker compose exec -it alpine /bin/sh
+	docker compose exec -it phalcon /bin/sh
 
 .
 # Development
 ### Run
 	docker compose up -d	
 ### Access
-	docker compose exec -it alpine /bin/sh
+	docker compose exec -it phalcon /bin/sh

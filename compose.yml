@@ -1,16 +1,16 @@
 services:
-  php:
-    container_name: ${COMPOSE_PREFIX}php
-    build: ./.docker/php
+  phalcon:
+    container_name: ${COMPOSE_PREFIX}phalcon
+    build: ./.docker/phalcon
     volumes:
       # Data and Logs
       - ./data/:/data/
       - ./logs/:/logs/
       # Dev
-      - ./.docker/php/os/docker/:/docker/
-      - ./.docker/php/os/adm/:/adm/
-      - ./.docker/php/apache/httpd.conf:/etc/apache2/httpd.conf
-      - ./.docker/php/php/php.ini:/etc/php81/php.ini
+      - ./.docker/phalcon/os/docker/:/docker/
+      - ./.docker/phalcon/os/adm/:/adm/
+      - ./.docker/phalcon/apache/httpd.conf:/etc/apache2/httpd.conf
+      - ./.docker/phalcon/php/php.ini:/etc/php81/php.ini
       # Application
       - ./src/:/app/
     ports:
