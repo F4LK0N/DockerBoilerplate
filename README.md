@@ -5,7 +5,7 @@ It comes with all its essential functionalities already installed and configured
 .
 # Adm
 The Falkon Administrative Tools Panel (Adm) are included in this project.  
-It provides a panel with useful commands and tools to help monitore and manage the system.  
+It provides a panel with useful commands and tools to help monitor and manage the system.  
 You can customize the adm panel accordingly to your need, all the scripts are located at: ``` /adm/ ``` and are in the bash format.  
 To access the panel, on a CLI terminal inside the OS container, just type:  
 ```
@@ -21,11 +21,11 @@ Important files and folders are centralized in root folders to facilitate access
 - ``` /adm/ ``` Scripts from the Adm Panel;  
 
 > :information_source: Some logs can't be configured to save directly to the logs folder, in this cases an symbolic link (shortcut) has been created inside the logs folder to facilitate access.  
-> :warning: When mapping the logs folder from the container as a volume to the local filesystem, the sysbolic links don't appear in the local system, to see this links you must enter the container.  
+> :warning: When mapping the logs folder from the container as a volume to the local filesystem, the symbolic links don't appear in the local system, to see this links you must enter the container.  
 
 .
 # Operational System
-This image is based on the oficial Docker image of the Alpine Operational System.
+This image is based on the official Docker image of the Alpine Operational System.
 
 .
 # Docker
