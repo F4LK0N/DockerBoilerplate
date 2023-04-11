@@ -1,8 +1,8 @@
 #!/bin/bash
 
 DockerHubRepo="f4lk0n/fkn"
-DockerfileDir="phalcon"
-ImageTag="phalcon5.2"
+DockerfileDir="web"
+ImageTag="web"
 
 echo "--- --- --- --- --- --- --- --- ---"
 echo "### DOCKER - IMAGE BUILD ###"
