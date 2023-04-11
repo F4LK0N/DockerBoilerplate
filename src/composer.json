@@ -5,7 +5,8 @@
         "ext-curl": "*",
         "ext-xdebug": "3.2.1",
         "ext-pdo": "*",
-        "ext-pdo_mysql": "*"
+        "ext-pdo_mysql": "*",
+        "ext-phalcon": "*"
     },
     "autoload": {
         "psr-4": {
