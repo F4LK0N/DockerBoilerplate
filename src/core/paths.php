@@ -41,10 +41,11 @@ unset($temp, $deep);
 ?>
 
 <head>
-	<title>Project Name - Yo Apister</title>
-	<link rel="stylesheet" type="text/css" href="<?= HTML_ROOT ?>_css/normalize-8.0.0.css">
-	<link rel="stylesheet" type="text/css" href="<?= HTML_ROOT ?>test.txt">
 	<link rel="stylesheet" type="text/css" href="<?= HTML_ROOT ?>css/main.css">
+	<link rel="stylesheet" type="text/css" href="<?= HTML_ROOT ?>css/inexist.css">
+	<link rel="stylesheet" type="text/css" href="<?= HTML_ROOT ?>js/main.js">
+	<link rel="stylesheet" type="text/css" href="<?= HTML_ROOT ?>js/inexist.js">
+	<link rel="stylesheet" type="text/css" href="<?= HTML_ROOT ?>abc.txt">
 </head>
 
 <?php var_dump($_SERVER);
