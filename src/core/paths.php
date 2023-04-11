@@ -12,7 +12,6 @@ unset($temp);
 
 # FOLDERS
 define('PATH_APP',     ROOT.'/app');
-define('PATH_CONFIGS', ROOT.'/configs');
 define('PATH_CORE',    ROOT.'/core');
 define('PATH_PUBLIC',  ROOT.'/public');
 define('PATH_TESTS',   ROOT.'/tests');
