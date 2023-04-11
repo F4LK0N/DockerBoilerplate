@@ -93,26 +93,27 @@ Available environments:
 
 | Type                 | Branch          | Size   | Content |
 |----------------------|-----------------|--------|---------|
-| Operational System   | alpine3.17      | 000 MB | Alpine 3, Adm |
+| Operational System   | alpine3.17      |  10 MB | Alpine 3, Adm |
 | Operational System   | debian11        | 000 MB | Debian 11, Adm |
 | --- |--- | --- | --- |
-| Server               | apache2.4       | 000 MB | Alpine 3, Adm, Apache 2.4 |
+| Server               | apache2.4       | --- MB | Alpine 3, Adm, Apache 2.4 |
 | Server               | deb-apache2.4   | 000 MB | Debian 11, Adm, Apache 2.4 |
 | --- |--- | --- | --- |
-| Language             | php8.1          | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1 |
+| Language             | php8.1          |  40 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1 |
 | Language             | deb-php8.2      | 000 MB | Debian 11, Adm, Apache 2.4, PHP 8.2 |
 | Language             | nodejs19        | 000 MB | Alpine 3, Adm, NodeJS 19 |
 | --- |--- | --- | --- |
-| Framework            | phalcon5.2      | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2 |
+| Framework            | phalcon5.2      |  79 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2 |
 | --- |--- | --- | --- |
 | Resource             | mysql8          | 000 MB | MySQL 8 |
 | Resource             | phpmyadmin      | 000 MB | PHP My Admin |
 | Resource             | redis           | 000 MB | Redis |
 | Resource             | elasticsearch   | 000 MB | Elasticsearch |
+| Resource             | bucket          | 000 MB | F4lk0n Simple Bucket |
 | --- |--- | --- | --- |
-| Project              | fullstack       | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2, F4lk0n Core Fullstack |
-| Project              | web             | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2, F4lk0n Core Frontend |
-| Project              | api             | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2, F4lk0n Core Backend |
+| Project              | fullstack       | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2, MySQL 8, PHP My Admin, Redis, F4lk0n Core Fullstack |
+| Project              | web             | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2, MySQL 8, PHP My Admin, Redis, F4lk0n Core Frontend |
+| Project              | api             | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2, MySQL 8, PHP My Admin, Redis, F4lk0n Core Backend |
 
 > !!! WARNING !!!  
 > THIS IS A WORK IN PROGRESS  
