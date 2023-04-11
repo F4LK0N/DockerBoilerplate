@@ -5,6 +5,7 @@ use Phalcon\Autoload\Loader;
 class CONFIGS 
 {
     static private $LOADER = null; 
+    static private $DATA   = [];
 
     static public function LOADER()
     {
@@ -29,11 +30,25 @@ class CONFIGS
         self::LOADER()->setDirectories($values);
     }
 
+    static public function GET($key=null)
+    {
+        if(!$key){
+            return self::$DATA;
+        }
+        return self::$DATA[$key];
+    }
+
+    static public function SET($key, $value)
+    {
+        self::$DATA[$key] = $value;
+    }
+
 }
 
 require "namespaces.php";
 require "directories.php";
 
-CONFIGS::REGISTER();
+require "databases.php";
 
-VDD(CONFIGS::LOADER());
+
+CONFIGS::REGISTER();

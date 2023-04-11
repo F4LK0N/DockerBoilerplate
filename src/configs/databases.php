@@ -1,19 +1,28 @@
 <?php
 
-$DATABASES = [
-    'prod' => [
-        'address' => '',
-        //...
+CONFIGS::SET("DB", [
+    'app' => [
+        'host' => '',
+        'port' => '',
+        'name' => '',
+        'user' => '',
+        'pass' => '',
     ],
     
     'tdd' => [
-        'address' => '',
-        //...
+        'host' => '',
+        'port' => '',
+        'name' => '',
+        'user' => '',
+        'pass' => '',
     ],
 
     'stress' => [
-        'address' => '',
-        //...
+        'host' => '',
+        'port' => '',
+        'name' => '',
+        'user' => '',
+        'pass' => '',
     ],
     
-];
+]);
