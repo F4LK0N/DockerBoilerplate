@@ -1,73 +1,123 @@
-# Docker Boilerplate
+# Boilerplate
 **by Otavio Bernardes Soria (aka. F4lk0n)**
 
 ---
 
-## Overview
-The objective of this project is to provide a boilerplate Docker project, focused on web development, with everything already configured and ready to start local development, and all configurations centralized and easy to access, providing rapidly and easy customization of any aspect of the enviroment as needed.
+.
+# Overview
+This project is focused on accelerating local web development.  
 
-## Design
-This project is focused in web development. 
+The idea is to provide all the resources needed to run one entire project in containers on isolated environment.  
 
-The ideia is to provide a local isolated container environment, representing one entire project with all its dependencies, in your local machine. And that you can run multiple containers at the same time without interfering with each other.  
+You should be able to run multiple projects locally at the same time without interfering with each other.  
 
-The Docker Composer is used to easy define this structure of multiple containers isolated by environment.
+Ready to start developing immediately. Every environment come already with all operational systems, servers, languages and/or frameworks installed, setuped, configured and running. 
 
-### File System
-The folders structure are designed to separate the docker configurations and data layers from your application layer. 
-- Containers configuration files are stored in ```./.docker/```
-- Containers mapped log files and persistent data are stored in ```./data/```
-- Application related files are stored in ```./src/```
+Easy to monitor and customize environments accordingly to your needs.  
 
-### Configurations and Logs
-Every environment come with all servers and languages already configured and ready to start developing locally. But it also centralize all configurations to let it easy to customize the enviroments and container accordly to your needs.  
+All important resources are centralized with shortcuts inside each container.
 
-Log Folders and other usefull folders from the environments are mapped to local project folders to facilitate access and to provide logs persistence even if the containers are rebuild.
+The environments can also be easily deployed in production with few modifications according to the target cloud provider you will use (Amazon, Google Cloud Platform, Azure, etc.).
 
-The enviroments can also be easily deployed in production with few modifications according to the target cloud provider you will use (Amazon, Google Cloud Platform, Azure, ect.).
+.
+# Design
+Docker Compose is used to define the structure of containers for each environment.
 
-### Customizations
-All the configurations made in the container are explained in the README.md file, together with a guide with default
-value and most used values to modify and customize it according to your needs.
-Every configuration file (like php.ini, httpd.conf, .bashrc) used in the containeres is also available under:  
-`'.docker/container_name/path/inside/the.container'`
-The configuration files are mounted as volume binds to centralize all the confs in one place on the host, and to don't
-need to rebuild the container at every modification on conf files, just a service restart to reload the config.
+The project structure is designed to separate **Docker** containers files from **Application** files.  
 
-**Example:**  
-Project A: Back-end with one container with Apache, PHP, Phalcon and the Application code, a second container with MySQL, and another container with Redis.  
+The containers structure are designed to centralize important resources to facilitate monitoring and customizing environments accordingly to your needs. Container filesystem can be mapped to local project as Docker volumes to help development.  
 
-Project B: Front-end with one container with Apache, PHP, Slim and Bootstrap, a second container with NodeJS to perform the JS and CSS files minifications.  
+## Project File System
+| | |
+| -- | -- |
+| ```/#DOCs/```:   | **Documentation** manuals, tutorials and references of your project. |
+| ```/.docker/```: | **Docker** containers configurations and files. |
+| ```/src/```:     | **Application** configurations and files. |
+| ```/logs/```:    | **Logs** mapped containers volumes. |
+| ```/data/```:    | **Data** mapped containers volumes. |
 
-This projects can run simultaneosly in your local machine without interfering with each other just customizing the exposed ports of them.  
+## Containers File System
+| | |
+| -- | -- |
+| ```/docker/``` | **Scripts** used by docker to initialize, setup, run and maintain the containers. |
+| ```/logs/```   | **Logs** centralized to facilitate monitoring. |
+| ```/data/```   | **Data** that can persist across container rebuilds. (like databases and sessions) |
+| ```/app/```    | **Application** configurations and data. |
 
-For production deployment the docker file can be customized to deploy just the first container of each project and use the other services (Databases, Caches, etc) from the cloud provider.
+.
+# Customizations
+Configurations and changes made in containers are detailed in documentations folder.  
 
-## Environments
-The environments provided starts with clean Linux operational systems images, where you can start a fresh project from scratch, but with all configuration files already mapped to easy to access locations, also as the o.s. logs folders and other useful folders mapped to local volumes to provide easy access and persistency.  
+Containers configurations, scripts and other files added during build (like php.ini, httpd.conf, .bashrc, entrypoint.sh) are available in the project under:  
+`'/.docker/container_name/path/inside/the.container'`  
 
-After that are provided environment with the main web servers used in the market, like Apache and NGINX, simply configured to run in the isolated containers environment and start developing.
+Container files can be mounted as volume binds to facilitate the customization process or tho activate data persistence across container rebuilds.  
 
-And them the container containing the web focused scripting languages, like PHP and NodeJS, also configured and ready to use and start developing. This environments usually come with a production configuration template to facilitate deploy in final cloud environments.  
+.
+# Example
+**Project A:** Back-end environment with one main container with Apache, PHP, Phalcon and the Application code, a second container with MySQL, and a third container with Redis.  
 
-Every branch is a different Docker Environment for a different need, the available branches are:  
+**Project B:** Front-end environment with one main container with Apache, PHP, Slim, Bootstrap and the Application code, a second container with NodeJS to perform JS and CSS files minification.  
 
-| Type                 | Branch                             | Content             |
-|----------------------|------------------------------------|---------------------|
-| Operational System   | debian11                           | Debian 11, FknAdm   |
-| Operational System   | alpine3.16                         | Alpine 3.16, FknAdm |
-| Server               | apache2.4                          | Apache 2.4          |
-| Language             | php8.2                             | PHP 8.2             |
-| Language             | nodejs19                           | NodeJS 19           |
-| Platform             | mysql8                             | MySQL 8             |
-| Platform             | phpmyadmin                         | PHP My Admin        |
-| Platform             | redis                              | Redis               |
-| Platform             | elasticsearch                      | Elasticsearch       |
+This projects should be able to run simultaneously in your local machine without interfering with each other just customizing the exposed ports of them.  
+
+For production deployment the docker file can be customized to deploy just the main containers of each project and use the other services (Databases, Caches, etc) from the cloud provider.  
+
+.
+# Adm
+The F4lk0n Administrative Tools Panel (Adm) are included in this project.  
+It provides a panel with useful commands and tools to help monitor and manage each container.  
+You can customize the adm panel accordingly to your need, all the scripts are located at: ``` /adm/ ``` and are in the bash format.  
+To access the panel, on a container's CLI terminal, just type the command:  
+```
+adm
+```
+
+.
+# Environments
+Every branch on this project is a different Docker Environment for a common Web development scenario.  
+
+**Operational System:** Clean Linux operational system distribution with the minimum required packages to work with the F4lk0n Administrative Tools Panel.  
+
+**Server:** Popular web servers installed on top of a Operational System environment.  
+
+**Language:** Popular web languages installed on top of a Server or Operational System environment.  
+
+**Framework** Popular web frameworks installed on top of a Language environment.
+
+**Resource** Popular web resources used during development.  
+
+**Project** Full project environment with all its dependencies.
+
+Available environments:  
+
+| Type                 | Branch          | Size   | Content |
+|----------------------|-----------------|--------|---------|
+| Operational System   | alpine3.17      | 000 MB | Alpine 3, Adm |
+| Operational System   | debian11        | 000 MB | Debian 11, Adm |
+| --- |--- | --- | --- |
+| Server               | apache2.4       | 000 MB | Alpine 3, Adm, Apache 2.4 |
+| Server               | deb-apache2.4   | 000 MB | Debian 11, Adm, Apache 2.4 |
+| --- |--- | --- | --- |
+| Language             | php8.1          | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1 |
+| Language             | deb-php8.2      | 000 MB | Debian 11, Adm, Apache 2.4, PHP 8.2 |
+| Language             | nodejs19        | 000 MB | Alpine 3, Adm, NodeJS 19 |
+| --- |--- | --- | --- |
+| Framework            | phalcon5.2      | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2 |
+| --- |--- | --- | --- |
+| Resource             | mysql8          | 000 MB | MySQL 8 |
+| Resource             | phpmyadmin      | 000 MB | PHP My Admin |
+| Resource             | redis           | 000 MB | Redis |
+| Resource             | elasticsearch   | 000 MB | Elasticsearch |
+| --- |--- | --- | --- |
+| Project              | fullstack       | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2, F4lk0n Core Fullstack |
+| Project              | web             | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2, F4lk0n Core Frontend |
+| Project              | api             | 000 MB | Alpine 3, Adm, Apache 2.4, PHP 8.1, Phalcon 5.2, F4lk0n Core Backend |
 
 > !!! WARNING !!!  
 > THIS IS A WORK IN PROGRESS  
-> Some branches are stiil in development or are not released yet. With time all branches will be available, and more will be added.
+> Some branches are still in development or are not released yet. With time all branches will be available, and more will be added.
 
-## Final Words
+# Final Words
 I hope this can be useful for your project developments. Use and modify it as you need. Enjoy!  
-You can contact me about any doubts you may have, suggestions and pull requests are welcome, just try to keep the same code standards.
+You can contact me about any doubts you may have, suggestions and pull requests are welcome, just try to keep the same code standards.  
