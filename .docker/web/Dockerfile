@@ -168,22 +168,15 @@ RUN set -eux; \
     rm -f "${PHP_CONF}"; \
     rm -f "${PHP_CONFD}/*";
 
-### COMMANDS ###
+### MAPS ###
 RUN set -eux; \
-    # OS - Logs
+    # OS
     ln -s /var/log ${OS_LOGS}; \
-        # OS - Timezone
-        #    echo "tzdata tzdata/Areas select America" | debconf-set-selections; \
-        #    echo "tzdata tzdata/Zones/America select Sao_Paulo" | debconf-set-selections; \
-        #    rm -f /etc/localtime /etc/timezone; \
-        #    dpkg-reconfigure -f noninteractive tzdata
-        #apk add tzdata \
-        #    && cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
     \
-    # APACHE - Modules
-    ln -s /usr/lib/apache2 "${HTTPD_ROOT}/modules"; \
-    ln -s /logs/apache "${HTTPD_ROOT}/logs"; \
-    ln -s /run/apache2 "${HTTPD_ROOT}/run";
+    # Apache
+    ln -s ${HTTPD_MODULES} "${HTTPD_ROOT}/modules"; \
+    ln -s ${HTTPD_LOGS} "${HTTPD_ROOT}/logs"; \
+    ln -s ${HTTPD_RUN} "${HTTPD_ROOT}/run";
 
 ### IMPORTS ###
 # OS
