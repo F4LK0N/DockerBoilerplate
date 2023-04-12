@@ -7,6 +7,9 @@ class _BaseController extends Controller
     
     public function beforeExecuteRoute(Dispatcher $dispatcher): bool
     {
+        //$this->view->setMainView("base");
+        //$this->view->setLayout("main");
+
         //$controllerName = $dispatcher->getControllerName();
         //$actionName     = $dispatcher->getActionName();
 

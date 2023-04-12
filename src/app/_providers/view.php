@@ -19,8 +19,8 @@ PROVIDERS::SET(
         $view->setLayoutsDir(PATH_APP.'/views/_layouts/');
         $view->setPartialsDir(PATH_APP.'/views/_partials/');
 
-        //$view->setMainView("base");
-        //$view->setLayout("main");
+        $view->setMainView("main");
+        $view->setLayout("main");
 
         return $view;
     }

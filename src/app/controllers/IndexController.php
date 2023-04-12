@@ -7,5 +7,15 @@ class IndexController extends _BaseController
     {
         //return '<h1>Hello!</h1>';
     }
+
+    public function aAction()
+    {
+        
+    }
+
+    public function bAction()
+    {
+        
+    }
     
 }
