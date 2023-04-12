@@ -1,11 +1,11 @@
 <?php
 use Phalcon\Mvc\Controller;
 
-class IndexController extends Controller
+class IndexController extends _BaseController
 {
     public function indexAction()
     {
-        return '<h1>Hello!</h1>';
+        //return '<h1>Hello!</h1>';
     }
     
 }

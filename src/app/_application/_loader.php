@@ -27,3 +27,5 @@ class _APPLICATION
     }
 
 }
+
+_APPLICATION::RUN();
