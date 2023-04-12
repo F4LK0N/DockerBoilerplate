@@ -7,14 +7,14 @@ $temp = dirname(__DIR__);
 while(false!==strpos($temp, '\\')){ $temp = str_replace('\\', '/', $temp); }
 while(false!==strpos($temp, '//')){ $temp = str_replace('//', '/', $temp); }
 $temp = rtrim($temp,"/");
-define('ROOT', $temp);
+define('PATH_ROOT', $temp);
 unset($temp);
 
 # FOLDERS
-define('PATH_APP',     ROOT.'/app');
-define('PATH_CORE',    ROOT.'/core');
-define('PATH_PUBLIC',  ROOT.'/public');
-define('PATH_TESTS',   ROOT.'/tests');
+define('PATH_APP',     PATH_ROOT.'/app');
+define('PATH_CORE',    PATH_ROOT.'/core');
+define('PATH_PUBLIC',  PATH_ROOT.'/public');
+define('PATH_TESTS',   PATH_ROOT.'/tests');
 
 
 
