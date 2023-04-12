@@ -21,12 +21,21 @@ echo "Directories - Data"
 mkdir --mode=777 --parents \
     /data/os \
     /data/apache \
-    /data/php;
+    /data/php \
+    /data/php/tmp;
 chmod 777 \
     /data \
     /data/os \
     /data/apache \
-    /data/php;
+    /data/php \
+    /data/php/tmp;
+
+echo "Directories - Run"
+mkdir --mode=777 --parents \
+    ${HTTPD_RUN} \
+    ${HTTPD_RUN}/mutex;
+chmod 777 \
+    ${HTTPD_RUN}/mutex;
 
 
 

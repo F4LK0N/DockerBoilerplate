@@ -120,11 +120,17 @@ RUN set -eux; \
         /data/os \
         /data/apache \
         /data/php \
+        /data/php\tmp \
         # Logs
         /logs \
         /logs/os \
         /logs/apache \
         /logs/php \
+        # Run
+        /run \
+        ${HTTPD_RUN} \
+        ${HTTPD_RUN}/mutex \
+        /run/php \
         # App
         /app \
         /app/public \
@@ -168,8 +174,8 @@ RUN set -eux; \
     \
     # APACHE
     ln -s /usr/lib/apache2 "${HTTPD_ROOT}/modules"; \
-    ln -s /logs/apache "${HTTPD_ROOT}/logs"; \
-    ln -s /run/apache2 "${HTTPD_ROOT}/run";
+    ln -s /logs/apache "${HTTPD_ROOT}/logs";
+    #ln -s /run/apache2 "${HTTPD_ROOT}/run";
 
 ### IMPORTS ###
 # OS
@@ -177,11 +183,10 @@ COPY ./os/root/.ashrc /root/.ashrc
 COPY ./os/docker/ /docker/
 COPY ./os/adm/ /adm/
 # APACHE
-COPY ./apache/httpd.conf "${HTTPD_ROOT}/httpd.conf"
-COPY ./apache/conf.d/mpm.conf "${HTTPD_ROOT}/conf.d/mpm.conf"
-COPY ./apache/conf.d/languages.conf "${HTTPD_ROOT}/conf.d/languages.conf"
+COPY ./apache/httpd.conf "${HTTPD_CONF}"
+COPY ./apache/conf.d "${HTTPD_CONFD}"
 # PHP
-COPY ./php/php.ini "$PHP_ROOT/php.ini"
+COPY ./php/php.ini "${PHP_CONF}"
 
 ########################################################################################################################
 ## DOCKER ###
