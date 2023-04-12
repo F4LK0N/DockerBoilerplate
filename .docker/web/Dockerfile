@@ -159,14 +159,15 @@ RUN set -eux; \
     cp "${HTTPD_CONF}" "${HTTPD_ROOT}/original/httpd.conf"; \
     cp -a "${HTTPD_CONFD}/." "${HTTPD_ROOT}/original/conf.d/"; \
     rm -f "${HTTPD_CONF}"; \
-    rm -f "${HTTPD_CONFD}/*"; \
+    rm -f ${HTTPD_CONFD}/*; \
+    rm -fr ${ROOT_RUN}/apache2; \
     \
     # PHP
     mkdir --mode=777 --parents "${PHP_ROOT}/original"; \
     cp "${PHP_CONF}" "${PHP_ROOT}/original/php.ini"; \
     cp -a "${PHP_CONFD}/." "${PHP_ROOT}/original/conf.d/"; \
     rm -f "${PHP_CONF}"; \
-    rm -f "${PHP_CONFD}/*";
+    rm -f ${PHP_CONFD}/*;
 
 ### MAPS ###
 RUN set -eux; \
