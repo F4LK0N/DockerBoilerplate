@@ -29,9 +29,6 @@ mkdir --mode=777 --parents ${HTTPD_RUN}
 mkdir --mode=777 --parents ${HTTPD_RUN}/mutex
 # PHP
 mkdir --mode=777 --parents ${PHP_DATA}
-mkdir --mode=777 --parents ${PHP_DATA}/tmp
-mkdir --mode=777 --parents ${PHP_DATA}/upload_tmp
-mkdir --mode=777 --parents ${PHP_DATA}/sessions
 mkdir --mode=777 --parents ${PHP_LOGS}
 mkdir --mode=777 --parents ${PHP_RUN}
 # Application
@@ -56,12 +53,7 @@ chmod 777 ${HTTPD_RUN}
 chmod 777 ${HTTPD_RUN}/mutex
 # PHP
 chmod 777 ${PHP_DATA}
-chmod 777 ${PHP_DATA}/tmp
-chmod 777 ${PHP_DATA}/upload_tmp
-chmod 777 ${PHP_DATA}/soap_tmp
-chmod 777 ${PHP_DATA}/sessions
 chmod 777 ${PHP_LOGS}
-chmod 777 ${PHP_LOGS}/xdebug
 chmod 777 ${PHP_RUN}
 # Application
 chmod 777 ${APP_ROOT}
