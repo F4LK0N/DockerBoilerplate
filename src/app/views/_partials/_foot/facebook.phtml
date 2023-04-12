@@ -1,0 +1,13 @@
+<!-- FACEBOOK CARD -->
+    <script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "Organization",
+        "name": "<?= CONFIGS::GET("APP", 'title'); ?>",
+        "url": "http://<?= CONFIGS::GET("APP", 'domain'); ?>",
+        "address": "",
+        "sameAs": [
+            "https://<?= CONFIGS::GET("APP", 'facebook-url'); ?>"
+        ]
+    }
+    </script>
