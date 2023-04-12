@@ -16,3 +16,6 @@ insert_final_newline = false
 [*compose.y*ml]
 indent_size = 2
 insert_final_newline = false
+
+[*.phtml]
+insert_final_newline = false
