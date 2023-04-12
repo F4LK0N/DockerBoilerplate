@@ -1,0 +1,12 @@
+{
+    "recommendations": [
+        "devsense.phptools-vscode",
+        "xdebug.php-debug",
+        "zobo.php-intellisense",
+        "mehedidracula.php-namespace-resolver",
+        "devsense.profiler-php-vscode",
+        "phproberto.vscode-php-getters-setters",
+        "tabnine.tabnine-vscode",
+        "mehedidracula.php-constructor"
+    ]
+}
