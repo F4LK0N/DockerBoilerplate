@@ -8,35 +8,42 @@ LABEL "org.opencontainers.image.version"="1.0"
 ########################################################################################################################
 ### CONTAINER ###
 WORKDIR /
+ENV ROOT_DATA="/data"
+ENV ROOT_LOGS="/logs"
+ENV ROOT_RUN="/run"
 
 ### OS ###
 ENV ENV="/root/.ashrc"
 ENV OS_VERSION="3.17"
-ENV OS_LOGS="/var/log"
-ENV OS_DATA="/data/os"
+ENV OS_DATA="${ROOT_DATA}/os"
+ENV OS_LOGS="${ROOT_LOGS}/os"
+ENV OS_RUN="${ROOT_RUN}/os"
 
 ### APACHE ###
 ENV HTTPD_VERSION="2.4"
 ENV HTTPD_ROOT="/etc/apache2"
-ENV HTTPD_CONF="/etc/apache2/httpd.conf"
-ENV HTTPD_CONFD="/etc/apache2/conf.d"
+ENV HTTPD_CONF="${HTTPD_ROOT}/httpd.conf"
+ENV HTTPD_CONFD="${HTTPD_ROOT}/conf.d"
 ENV HTTPD_MODULES="/usr/lib/apache2"
-ENV HTTPD_RUN="/run/apache2"
-ENV HTTPD_LOGS="/logs/apache"
-ENV HTTPD_DATA="/data/apache"
+ENV HTTPD_DATA="${ROOT_DATA}/apache"
+ENV HTTPD_LOGS="${ROOT_LOGS}/apache"
+ENV HTTPD_RUN="${ROOT_RUN}/apache"
 
 ### PHP ###
 ENV PHP_VERSION="8.1"
 ENV PHP_ROOT="/etc/php81"
-ENV PHP_CONF="/etc/php81/php.ini"
-ENV PHP_CONFD="/etc/php81/conf.d"
+ENV PHP_CONF="${PHP_ROOT}/php.ini"
+ENV PHP_CONFD="${PHP_ROOT}/conf.d"
 ENV PHP_MODULES="/usr/lib/php81/modules"
-ENV PHP_RUN="/run/php"
-ENV PHP_LOGS="/logs/php"
-ENV PHP_DATA="/data/php"
+ENV PHP_DATA="${ROOT_DATA}/php"
+ENV PHP_LOGS="${ROOT_LOGS}/php"
+ENV PHP_RUN="${ROOT_RUN}/php"
 
 ### PHALCON ###
 ENV PHALCON_VERSION="5.2.1"
+
+### APPLICATION ###
+ENV APP_ROOT="/app"
 
 ########################################################################################################################
 ### DATA ###
@@ -84,26 +91,32 @@ RUN set -eux; \
 ### DOWNLOADS ###
 # COMPOSER
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-# PHALCON
+
+# SOURCES
 RUN set -eux; \
     # Dependencies
     apk update; \
-    apk add --virtual phalcon_deps \
+    apk add --virtual temp_deps \
+        tzdata \
         7zip; \
     \
-    # Source
-    mkdir -p /tmp/phalcon/; \
-    cd /tmp/phalcon/; \
-    curl -LO https://github.com/phalcon/cphalcon/releases/download/v${PHALCON_VERSION}/phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
-    7z x phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
-    # Install
-    mkdir -p ${PHP_MODULES}; \
-    cp phalcon.so ${PHP_MODULES}; \
-    chmod 755 ${PHP_MODULES}; \
-    chmod 755 ${PHP_MODULES}/phalcon.so; \
-    cd /; \
+    # OS - Timezone
+        cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime; \
+        echo "America/Sao_Paulo" > /etc/timezone; \
+    # PHALCON
+        # Source
+        mkdir -p /tmp/phalcon/; \
+        cd /tmp/phalcon/; \
+        curl -LO https://github.com/phalcon/cphalcon/releases/download/v${PHALCON_VERSION}/phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
+        7z x phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
+        # Install
+        mkdir -p ${PHP_MODULES}; \
+        cp phalcon.so ${PHP_MODULES}; \
+        chmod 755 ${PHP_MODULES}; \
+        chmod 755 ${PHP_MODULES}/phalcon.so; \
+        cd /; \
     # Clean
-    apk del phalcon_deps; \
+    apk del temp_deps; \
     rm -r -f /var/cache/apk/*; \
     rm -r -f /tmp/phalcon/;
 
@@ -111,29 +124,29 @@ RUN set -eux; \
 RUN set -eux; \
     # Directories
     mkdir --mode=777 --parents \
-        # Scripts
+        # Container
         /docker \
-        # Adm
         /adm \
-        # Data
-        /data \
-        /data/os \
-        /data/apache \
-        /data/php \
-        /data/php\tmp \
-        # Logs
-        /logs \
-        /logs/os \
-        /logs/apache \
-        /logs/php \
-        # Run
-        /run \
+        ${ROOT_DATA} \
+        ${ROOT_LOGS} \
+        ${ROOT_RUN} \
+        # OS
+        ${OS_DATA} \
+        ${OS_LOGS} \
+        ${OS_RUN} \
+        # Apache
+        ${HTTPD_DATA} \
+        ${HTTPD_LOGS} \
         ${HTTPD_RUN} \
         ${HTTPD_RUN}/mutex \
-        /run/php \
-        # App
-        /app \
-        /app/public \
+        # PHP
+        ${PHP_DATA} \
+        ${PHP_DATA}/tmp \
+        ${PHP_LOGS} \
+        ${PHP_RUN} \
+        # Application
+        ${APP_ROOT} \
+        ${APP_ROOT}/public \
     ;
 
 ########################################################################################################################
@@ -142,29 +155,24 @@ RUN set -eux; \
 ### BACKUP AND CLEAR ###
 RUN set -eux; \
     # Apache
-    mkdir -p "${HTTPD_ROOT}/original/"; \
+    mkdir --mode=777 --parents "${HTTPD_ROOT}/original"; \
     cp "${HTTPD_CONF}" "${HTTPD_ROOT}/original/httpd.conf"; \
     cp -a "${HTTPD_CONFD}/." "${HTTPD_ROOT}/original/conf.d/"; \
-    \
-    rm -r -f "${HTTPD_CONF}"; \
-    rm -r -f "${HTTPD_CONFD}"; \
-    mkdir --mode=777 --parents "${HTTPD_CONFD}"; \
+    rm -f "${HTTPD_CONF}"; \
+    rm -f "${HTTPD_CONFD}/*"; \
     \
     # PHP
-    mkdir -p "${PHP_ROOT}/original/"; \
+    mkdir --mode=777 --parents "${PHP_ROOT}/original"; \
     cp "${PHP_CONF}" "${PHP_ROOT}/original/php.ini"; \
     cp -a "${PHP_CONFD}/." "${PHP_ROOT}/original/conf.d/"; \
-    \
-    rm -r -f "${PHP_CONF}"; \
-    rm -r -f "${PHP_CONFD}"; \
-    mkdir --mode=777 --parents "${PHP_CONFD}";
+    rm -f "${PHP_CONF}"; \
+    rm -f "${PHP_CONFD}/*";
 
 ### COMMANDS ###
 RUN set -eux; \
-    # OS
-        # Logs
-        ln -s ${OS_LOGS} /logs/os/; \
-        # Timezone
+    # OS - Logs
+    ln -s /var/log ${OS_LOGS}; \
+        # OS - Timezone
         #    echo "tzdata tzdata/Areas select America" | debconf-set-selections; \
         #    echo "tzdata tzdata/Zones/America select Sao_Paulo" | debconf-set-selections; \
         #    rm -f /etc/localtime /etc/timezone; \
@@ -172,10 +180,10 @@ RUN set -eux; \
         #apk add tzdata \
         #    && cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
     \
-    # APACHE
+    # APACHE - Modules
     ln -s /usr/lib/apache2 "${HTTPD_ROOT}/modules"; \
-    ln -s /logs/apache "${HTTPD_ROOT}/logs";
-    #ln -s /run/apache2 "${HTTPD_ROOT}/run";
+    ln -s /logs/apache "${HTTPD_ROOT}/logs"; \
+    ln -s /run/apache2 "${HTTPD_ROOT}/run";
 
 ### IMPORTS ###
 # OS
