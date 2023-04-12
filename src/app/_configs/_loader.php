@@ -29,12 +29,18 @@ class CONFIGS
         self::LOADER()->setDirectories($values);
     }
 
-    static public function GET($key=null)
+    static public function GET($key=null, $key2=null, $key3=null)
     {
         if(!$key){
             return self::$DATA;
         }
-        return self::$DATA[$key];
+        if(!$key2){
+            return self::$DATA[$key];
+        }
+        if(!$key3){
+            return self::$DATA[$key][$key2];
+        }
+        return self::$DATA[$key][$key2][$key3];
     }
 
     static public function SET($key, $value)
@@ -43,6 +49,8 @@ class CONFIGS
     }
 
 }
+
+require "app.php";
 
 require "namespaces.php";
 require "directories.php";

@@ -1,0 +1,30 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+    <link rel="canonical" href="<?= $_SERVER['REQUEST_SCHEME']; ?>://<?= $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ?>">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title><?= CONFIGS::GET("APP", 'title'); ?></title>
+    <meta name="description" content="<?= CONFIGS::GET("APP", 'description'); ?>">
+
+    <?= $this->partial('_head/google-tag-manager'); ?>
+    <?= $this->partial('_head/fonts'); ?>
+    <?= $this->partial('_head/style'); ?>
+    <?= $this->partial('_head/open-graph'); ?>
+    <?= $this->partial('_head/twitter'); ?>
+    <?= $this->partial('_head/favicon'); ?>
+
+    
+
+<?php if(false){ ?>
+    
+<?php } ?>
+
+</head>
+<body<?php if(isset($cssPageId)){ print" id='page-$cssPageId'";} ?>>
+<?php if(false && $_ENV['SERVER_ENVIRONMENT']==="prod"){ ?>
+    <!-- GOOGLE TAG MANAGER -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-asdasd" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<?php } ?>
