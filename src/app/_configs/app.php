@@ -9,4 +9,11 @@ CONFIGS::SET("APP", [
     'description' => 'Falkon Web Framework',
     
     'google-tag-manager-id' => 'GTM-XXXXXXX',
+
+    'facebook-id' => 'web',
+    'facebook-url' => 'facebook.com/web',
+    
+    'twitter-id' => 'web',
+    'twitter-url' => 'twitter.com/web',
+    
 ]);
