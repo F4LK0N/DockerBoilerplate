@@ -160,7 +160,12 @@ RUN set -eux; \
     cp -a "${HTTPD_CONFD}/." "${HTTPD_ROOT}/original/conf.d/"; \
     rm -f "${HTTPD_CONF}"; \
     rm -f ${HTTPD_CONFD}/*; \
-    rm -fr ${ROOT_RUN}/apache2; \
+    #rm -f /var/www/logs; \
+    #rm -f /var/www/modules; \
+    #rm -f /var/www/run; \
+    #rm -f /run/apache2; \
+    chmod 755 /etc/ssl/apache2/server.pem; \
+    chmod 755 /etc/ssl/apache2/server.key; \
     \
     # PHP
     mkdir --mode=777 --parents "${PHP_ROOT}/original"; \
