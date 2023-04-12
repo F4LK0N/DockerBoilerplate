@@ -7,7 +7,8 @@
         "ext-pdo": "*",
         "ext-pdo_mysql": "*",
         "ext-phalcon": "*",
-        "phalcon/devtools": "^4.2"
+        "phalcon/devtools": "^4.2",
+        "phalcon/ide-stubs": "^5.2"
     },
     "autoload": {
         "psr-4": {
