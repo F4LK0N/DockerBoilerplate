@@ -31,7 +31,7 @@ This image is based on the official Docker image of the Alpine Operational Syste
 # Docker
 ### Build
 	docker compose build  
-	docker compose build --progress=plain  
+	docker compose build --progress=plain
 ### Run
 	docker compose up -d
 ### Build and Run

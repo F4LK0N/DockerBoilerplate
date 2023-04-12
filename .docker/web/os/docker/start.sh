@@ -2,76 +2,84 @@
 set -e
 
 
-echo "Directories - Logs"
-rm -rf \
-    /logs/os \
-    /logs/apache \
-    /logs/php;
-mkdir --mode=777 --parents \
-    /logs/os \
-    /logs/apache \
-    /logs/php;
-chmod 777 \
-    /logs \
-    /logs/os \
-    /logs/apache \
-    /logs/php;
 
-echo "Directories - Data"
-mkdir --mode=777 --parents \
-    /data/os \
-    /data/apache \
-    /data/php \
-    /data/php/tmp;
-chmod 777 \
-    /data \
-    /data/os \
-    /data/apache \
-    /data/php \
-    /data/php/tmp;
+echo "FILESYSTEM - CLEAN";
+rm -rf ${OS_LOGS} \
+rm -rf ${OS_RUN} \
+rm -rf ${HTTPD_LOGS} \
+rm -rf ${HTTPD_RUN} \
+rm -rf ${PHP_LOGS} \
+rm -rf ${PHP_RUN};
 
-echo "Directories - Run"
-mkdir --mode=777 --parents \
-    ${HTTPD_RUN} \
-    ${HTTPD_RUN}/mutex;
-chmod 777 \
-    ${HTTPD_RUN}/mutex;
+echo "FILESYSTEM - CREATE";
+# Container
+mkdir --mode=777 --parents /docker
+mkdir --mode=777 --parents /adm
+mkdir --mode=777 --parents ${ROOT_DATA}
+mkdir --mode=777 --parents ${ROOT_LOGS}
+mkdir --mode=777 --parents ${ROOT_RUN}
+# OS
+mkdir --mode=777 --parents ${OS_DATA}
+mkdir --mode=777 --parents ${OS_LOGS}
+mkdir --mode=777 --parents ${OS_RUN}
+# Apache
+mkdir --mode=777 --parents ${HTTPD_DATA}
+mkdir --mode=777 --parents ${HTTPD_LOGS}
+mkdir --mode=777 --parents ${HTTPD_RUN}
+mkdir --mode=777 --parents ${HTTPD_RUN}/mutex
+# PHP
+mkdir --mode=777 --parents ${PHP_DATA}
+mkdir --mode=777 --parents ${PHP_DATA}/tmp
+mkdir --mode=777 --parents ${PHP_LOGS}
+mkdir --mode=777 --parents ${PHP_RUN}
+# Application
+mkdir --mode=777 --parents ${APP_ROOT}
+mkdir --mode=777 --parents ${APP_ROOT}/public
+
+echo "FILESYSTEM - PERMISSIONS";
+# Container
+chmod 777 /docker
+chmod 777 /adm
+chmod 777 ${ROOT_DATA}
+chmod 777 ${ROOT_LOGS}
+chmod 777 ${ROOT_RUN}
+# OS
+chmod 777 ${OS_DATA}
+chmod 777 ${OS_LOGS}
+chmod 777 ${OS_RUN}
+# Apache
+chmod 777 ${HTTPD_DATA}
+chmod 777 ${HTTPD_LOGS}
+chmod 777 ${HTTPD_RUN}
+chmod 777 ${HTTPD_RUN}/mutex
+# PHP
+chmod 777 ${PHP_DATA}
+chmod 777 ${PHP_DATA}/tmp
+chmod 777 ${PHP_LOGS}
+chmod 777 ${PHP_RUN}
+# Application
+chmod 777 ${APP_ROOT}
+chmod 777 ${APP_ROOT}/public
 
 
 
-echo "OS - Logs"
-ln -s /var/log/ /logs/os/
+echo "OS - LOGS";
+ln -s /var/log/ ${OS_LOGS}
 
-
-
-echo "PHP - Data"
-mkdir --mode=777 --parents /data/php/tmp
-chmod 777 /data/php/tmp
-
-
-
-echo "Application - Source"
-mkdir --mode=777 --parents \
-    /app \
-    /app/public;
-chmod 777 \
-    /app \
-    /app/public;
-
-echo "Application - Composer"
-if [[ ! -f "/app/composer.json" ]]; then
+echo "APPLICATION - COMPOSER"
+if [[ ! -f "${APP_ROOT}/composer.json" ]]; then
     echo "- 'composer.json' not found!"
 else
     echo "- 'composer.json' found!"
 
-    if [[ -f "/app/composer.lock" ]]; then
+    if [[ -f "${APP_ROOT}/composer.lock" ]]; then
         echo "- 'composer.lock' found!"
         echo "- Skipping installation."
     else
         echo "- 'composer.lock' not found!"
         echo "- Starting installation."
 
-        composer install -d /app
+        composer install -d ${APP_ROOT}
     fi
 
 fi
