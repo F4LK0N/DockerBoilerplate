@@ -1,35 +1,61 @@
 FROM alpine:3.17
-WORKDIR /
 
 LABEL "org.opencontainers.image.authors"="F4LK0N"
 LABEL "org.opencontainers.image.version"="1.0"
 
 ########################################################################################################################
-### ALPINE ###
+### SETUP ###
 ########################################################################################################################
-### SHELL ###
+### CONTAINER ###
+WORKDIR /
+
+### OS ###
 ENV ENV="/root/.ashrc"
+ENV OS_VERSION="3.17"
+ENV OS_LOGS="/var/log"
+ENV OS_DATA="/data/os"
 
-#### TIMEZONE ###
-#RUN set -eux; \
-#    echo "tzdata tzdata/Areas select America" | debconf-set-selections; \
-#    echo "tzdata tzdata/Zones/America select Sao_Paulo" | debconf-set-selections; \
-#    rm -f /etc/localtime /etc/timezone; \
-#    dpkg-reconfigure -f noninteractive tzdata
-#RUN apk add tzdata \
-#    && cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+### APACHE ###
+ENV HTTPD_VERSION="2.4"
+ENV HTTPD_ROOT="/etc/apache2"
+ENV HTTPD_CONF="/etc/apache2/httpd.conf"
+ENV HTTPD_CONFD="/etc/apache2/conf.d"
+ENV HTTPD_MODULES="/usr/lib/apache2"
+ENV HTTPD_RUN="/run/apache2"
+ENV HTTPD_LOGS="/logs/apache"
+ENV HTTPD_DATA="/data/apache"
 
-### APK ###
+### PHP ###
+ENV PHP_VERSION="8.1"
+ENV PHP_ROOT="/etc/php81"
+ENV PHP_CONF="/etc/php81/php.ini"
+ENV PHP_CONFD="/etc/php81/conf.d"
+ENV PHP_MODULES="/usr/lib/php81/modules"
+ENV PHP_RUN="/run/php"
+ENV PHP_LOGS="/logs/php"
+ENV PHP_DATA="/data/php"
+
+### PHALCON ###
+ENV PHALCON_VERSION="5.2.1"
+
+########################################################################################################################
+### DATA ###
+########################################################################################################################
+### PACKAGES ###
 RUN set -eux; \
-    apk add --no-cache --update \
-        # OS
+    apk update; \
+    apk add \
+        \
+        ### OS ###
         openrc \
         iftop \
         curl \
-        # Apache
+        \
+        ### APACHE ###
         apache2 \
         apache2-ssl \
-        # PHP
+        \
+        ### PHP ###
         php81-apache2 \
         #php81-bcmath \
         #php81-bz2 \
@@ -52,104 +78,110 @@ RUN set -eux; \
         php81-xmlwriter \
         php81-session \
         php81-tokenizer \
-        php81-pecl-xdebug;
+        php81-pecl-xdebug; \
+    rm -r -f /var/cache/apk/*;
+
+### DOWNLOADS ###
+# COMPOSER
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+# PHALCON
+RUN set -eux; \
+    # Dependencies
+    apk update; \
+    apk add --virtual phalcon_deps \
+        7zip; \
+    \
+    # Source
+    mkdir -p /tmp/phalcon/; \
+    cd /tmp/phalcon/; \
+    curl -LO https://github.com/phalcon/cphalcon/releases/download/v${PHALCON_VERSION}/phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
+    7z x phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
+    # Install
+    mkdir -p ${PHP_MODULES}; \
+    cp phalcon.so ${PHP_MODULES}; \
+    chmod 755 ${PHP_MODULES}; \
+    chmod 755 ${PHP_MODULES}/phalcon.so; \
+    cd /; \
+    # Clean
+    apk del phalcon_deps; \
+    rm -r -f /var/cache/apk/*; \
+    rm -r -f /tmp/phalcon/;
 
 ### FILESYSTEM ###
-# Centralize Folders
 RUN set -eux; \
-    # Docker
-    mkdir -p /docker/; \
-    # Adm
-    mkdir -p /adm/; \
-    # Data
-    mkdir -p /data/; \
-    # Logs
-    mkdir -p /logs/; \
-    mkdir -p /logs/os/; \
-    ln -s /var/log/ /logs/os/; \
-    mkdir -p /logs/apache/; \
-    mkdir -p /logs/php/; \
-    # Application
-    mkdir -p /app/ \
-    mkdir -p /app/public/;
-# Import Content
+    # Directories
+    mkdir --mode=777 --parents \
+        # Scripts
+        /docker \
+        # Adm
+        /adm \
+        # Data
+        /data \
+        /data/os \
+        /data/apache \
+        /data/php \
+        # Logs
+        /logs \
+        /logs/os \
+        /logs/apache \
+        /logs/php \
+        # App
+        /app \
+        /app/public \
+    ;
+
+########################################################################################################################
+### CONFIG ###
+########################################################################################################################
+### BACKUP AND CLEAR ###
+RUN set -eux; \
+    # Apache
+    mkdir -p "${HTTPD_ROOT}/original/"; \
+    cp "${HTTPD_CONF}" "${HTTPD_ROOT}/original/httpd.conf"; \
+    cp -a "${HTTPD_CONFD}/." "${HTTPD_ROOT}/original/conf.d/"; \
+    \
+    rm -r -f "${HTTPD_CONF}"; \
+    rm -r -f "${HTTPD_CONFD}"; \
+    mkdir --mode=777 --parents "${HTTPD_CONFD}"; \
+    \
+    # PHP
+    mkdir -p "${PHP_ROOT}/original/"; \
+    cp "${PHP_CONF}" "${PHP_ROOT}/original/php.ini"; \
+    cp -a "${PHP_CONFD}/." "${PHP_ROOT}/original/conf.d/"; \
+    \
+    rm -r -f "${PHP_CONF}"; \
+    rm -r -f "${PHP_CONFD}"; \
+    mkdir --mode=777 --parents "${PHP_CONFD}";
+
+### COMMANDS ###
+RUN set -eux; \
+    # OS
+        # Logs
+        ln -s ${OS_LOGS} /logs/os/; \
+        # Timezone
+        #    echo "tzdata tzdata/Areas select America" | debconf-set-selections; \
+        #    echo "tzdata tzdata/Zones/America select Sao_Paulo" | debconf-set-selections; \
+        #    rm -f /etc/localtime /etc/timezone; \
+        #    dpkg-reconfigure -f noninteractive tzdata
+        #apk add tzdata \
+        #    && cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
+    \
+    # APACHE
+    ln -s /usr/lib/apache2 "${HTTPD_ROOT}/modules"; \
+    ln -s /logs/apache "${HTTPD_ROOT}/logs"; \
+    ln -s /run/apache2 "${HTTPD_ROOT}/run";
+
+### IMPORTS ###
+# OS
 COPY ./os/root/.ashrc /root/.ashrc
 COPY ./os/docker/ /docker/
 COPY ./os/adm/ /adm/
-
-########################################################################################################################
-### APACHE ###
-########################################################################################################################
-# Config #
-#######################
-# /etc/apache2/
-#   httpd.conf
-#######################
-# Logs #
-#######################
-# /logs/apache/
-#   access.log
-#   error.log
-########################################################################################################################
-ENV HTTPD_ROOT=/etc/apache2
-ENV HTTPD_LOGS=/logs/apache
-
-RUN set -eux; \
-    ln -s /usr/lib/apache2 "${HTTPD_ROOT}/modules"; \
-    ln -s /logs/apache "${HTTPD_ROOT}/logs"; \
-    ln -s /run/apache2 "${HTTPD_ROOT}/run"; \
-    mkdir -p "${HTTPD_ROOT}/original/"; \
-    cp "$HTTPD_ROOT/httpd.conf" "$HTTPD_ROOT/original/httpd.conf"; \
-    cp -a "$HTTPD_ROOT/conf.d/." "$HTTPD_ROOT/original/conf.d/"; \
-    rm -r -f "$HTTPD_ROOT/conf.d/"; \
-    mkdir -p "$HTTPD_ROOT/conf.d/"; \
-    chmod 777 "$HTTPD_ROOT/conf.d/";
-
-COPY apache/httpd.conf "$HTTPD_ROOT/httpd.conf"
-COPY apache/conf.d/mpm.conf "$HTTPD_ROOT/conf.d/mpm.conf"
-COPY apache/conf.d/languages.conf "$HTTPD_ROOT/conf.d/languages.conf"
-
-########################################################################################################################
-### PHP ###
-########################################################################################################################
-# Config #
-#######################
-# /etc/php81/
-#   php.ini
-#######################
-# Logs #
-#######################
-# /logs/php/
-#   error.log
-########################################################################################################################
-ENV PHP_ROOT=/etc/php81
-ENV PHP_LOGS=/logs/php
-
-RUN set -eux; \
-    mkdir -p "$PHP_ROOT/original/"; \
-    cp "$PHP_ROOT/php.ini" "$PHP_ROOT/original/php.ini"; \
-    cp -a "$PHP_ROOT/conf.d/." "$PHP_ROOT/original/conf.d/"; \
-    rm -r -f "$PHP_ROOT/conf.d/"; \
-    mkdir -p "$PHP_ROOT/conf.d/";
-
-COPY php/php.ini "$PHP_ROOT/php.ini"
-
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
-########################################################################################################################
-### PHALCON ###
-########################################################################################################################
-RUN set -eux; \
-    apk add --no-cache --update 7zip; \
-    mkdir -p /tmp/phalcon/; \
-    cd /tmp/phalcon/; \
-    curl -LO https://github.com/phalcon/cphalcon/releases/download/v5.2.1/phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
-    7z x phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
-    cp phalcon.so /usr/lib/php81/modules/; \
-    chmod 755 /usr/lib/php81/modules/phalcon.so; \
-    cd /; \
-    rm -r -f /tmp/phalcon/; \
-    apk del 7zip;
+# APACHE
+COPY ./apache/httpd.conf "${HTTPD_ROOT}/httpd.conf"
+COPY ./apache/conf.d/mpm.conf "${HTTPD_ROOT}/conf.d/mpm.conf"
+COPY ./apache/conf.d/languages.conf "${HTTPD_ROOT}/conf.d/languages.conf"
+# PHP
+COPY ./php/php.ini "$PHP_ROOT/php.ini"
 
 ########################################################################################################################
 ## DOCKER ###
