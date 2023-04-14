@@ -3,10 +3,10 @@ services:
     container_name: ${COMPOSE_PREFIX}web
     build: ./.docker/web
     volumes:
-    #  # Application
-    #  - ./src/:/var/www/localhost/htdocs/
-    #  # Data
-    #  - ./data/:/data/
+      ## Application
+      #- ./src/:/var/www/localhost/htdocs/
+      ## Data
+      #- ./data/:/data/
       # Logs
       - ./logs/:/logs/
     #  # Dev
