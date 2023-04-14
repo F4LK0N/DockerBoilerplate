@@ -1,10 +1,9 @@
 <?php
 
-$API = [
+CONFIGS::SET("API", [
+
     'data' => [
         'address' => '',
         //...
     ],
-
-    
-];
+]);

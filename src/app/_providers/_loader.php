@@ -30,3 +30,4 @@ class PROVIDERS
 
 require "view.php";
 require "url.php";
+require "routes.php";

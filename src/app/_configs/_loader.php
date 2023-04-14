@@ -22,11 +22,13 @@ class CONFIGS
     static public function NAMESPACES($values)
     {
         self::LOADER()->setNamespaces($values);
+        self::$DATA['NAMESPACES'] = $values;
     }
 
     static public function DIRECTORIES($values)
     {
         self::LOADER()->setDirectories($values);
+        self::$DATA['DIRECTORIES'] = $values;
     }
 
     static public function GET($key=null, $key2=null, $key3=null)
@@ -54,6 +56,8 @@ require "app.php";
 
 require "namespaces.php";
 require "directories.php";
+
+require "routes.php";
 
 require "databases.php";
 
