@@ -48,10 +48,13 @@ ENV APP_ROOT="/app"
 ########################################################################################################################
 ### DATA ###
 ########################################################################################################################
+### IMAGES ###
+COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+
 ### PACKAGES ###
 RUN set -eux; \
     apk update; \
-    apk add \
+    apk add --no-cache \
         \
         ### OS ###
         openrc \
@@ -86,13 +89,11 @@ RUN set -eux; \
         php81-session \
         php81-tokenizer \
         php81-pecl-xdebug; \
+    # Clean
+    apk cache clean; \
     rm -r -f /var/cache/apk/*;
 
 ### DOWNLOADS ###
-# COMPOSER
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
-
-# SOURCES
 RUN set -eux; \
     # Dependencies
     apk update; \
@@ -103,7 +104,7 @@ RUN set -eux; \
     # OS - Timezone
         cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime; \
         echo "America/Sao_Paulo" > /etc/timezone; \
-    # PHALCON
+    # PHP - Phalcon
         # Source
         mkdir -p /tmp/phalcon/; \
         cd /tmp/phalcon/; \
@@ -117,12 +118,12 @@ RUN set -eux; \
         cd /; \
     # Clean
     apk del temp_deps; \
-    rm -r -f /var/cache/apk/*; \
-    rm -r -f /tmp/phalcon/;
+    apk cache clean; \
+    rm -fr /var/cache/apk/*; \
+    rm -fr /tmp/phalcon/;
 
 ### FILESYSTEM ###
 RUN set -eux; \
-    # Directories
     mkdir --mode=777 --parents \
         # Container
         /docker \
@@ -138,7 +139,6 @@ RUN set -eux; \
         ${HTTPD_DATA} \
         ${HTTPD_LOGS} \
         ${HTTPD_RUN} \
-        ${HTTPD_RUN}/mutex \
         # PHP
         ${PHP_DATA} \
         ${PHP_DATA}/tmp \
@@ -147,53 +147,62 @@ RUN set -eux; \
         # Application
         ${APP_ROOT} \
         ${APP_ROOT}/public \
-    ;
+    ; \
+    chmod 755 ${OS_RUN}; \
+    chmod 755 ${HTTPD_RUN}; \
+    chmod 755 ${PHP_RUN};
 
 ########################################################################################################################
 ### CONFIG ###
 ########################################################################################################################
-### BACKUP AND CLEAR ###
 RUN set -eux; \
-    # Apache
-    mkdir --mode=777 --parents "${HTTPD_ROOT}/original"; \
-    cp "${HTTPD_CONF}" "${HTTPD_ROOT}/original/httpd.conf"; \
-    cp -a "${HTTPD_CONFD}/." "${HTTPD_ROOT}/original/conf.d/"; \
-    rm -f "${HTTPD_CONF}"; \
-    rm -f ${HTTPD_CONFD}/*; \
-    #rm -f /var/www/logs; \
-    #rm -f /var/www/modules; \
-    #rm -f /var/www/run; \
-    #rm -f /run/apache2; \
-    chmod 755 /etc/ssl/apache2/server.pem; \
-    chmod 755 /etc/ssl/apache2/server.key; \
+    ### OS ###
+        # Logs
+        ln -s "/var/log" "${OS_LOGS}/logs"; \
+        chmod 777 "${OS_LOGS}/logs"; \
     \
-    # PHP
-    mkdir --mode=777 --parents "${PHP_ROOT}/original"; \
-    cp "${PHP_CONF}" "${PHP_ROOT}/original/php.ini"; \
-    cp -a "${PHP_CONFD}/." "${PHP_ROOT}/original/conf.d/"; \
-    rm -f "${PHP_CONF}"; \
-    rm -f ${PHP_CONFD}/*;
-
-### MAPS ###
-RUN set -eux; \
-    # OS
-    ln -s /var/log ${OS_LOGS}; \
+    ### APACHE ###
+        # Conf File and Dir
+        mkdir --mode=777 "${HTTPD_ROOT}/original"; \
+        cp "${HTTPD_CONF}" "${HTTPD_ROOT}/original/httpd.conf"; \
+        cp -a "${HTTPD_CONFD}/." "${HTTPD_ROOT}/original/conf.d/"; \
+        rm -f "${HTTPD_CONF}"; \
+        rm -fr "${HTTPD_CONFD}/*"; \
+        # Logs
+        rm -f "/var/www/logs"; \
+        rm -fr "/var/log/apache2"; \
+        ln -s "${HTTPD_LOGS}" "/var/www/logs"; \
+        chmod 777 "/var/www/logs"; \
+        # Run
+        rm -f "/var/www/run"; \
+        rm -fr "/run/apache2"; \
+        ln -s "${HTTPD_RUN}" "/var/www/run"; \
+        chmod 777 "/var/www/run"; \
+        mkdir --mode=755 "${HTTPD_RUN}/mutex"; \
+        # SSL
+        chmod 755 "/etc/ssl/apache2/server.pem"; \
+        chmod 755 "/etc/ssl/apache2/server.key"; \
     \
-    # Apache
-    ln -s ${HTTPD_MODULES} "${HTTPD_ROOT}/modules"; \
-    ln -s ${HTTPD_LOGS} "${HTTPD_ROOT}/logs"; \
-    ln -s ${HTTPD_RUN} "${HTTPD_ROOT}/run";
+    ### PHP ###
+        # Conf File and Dir
+        mkdir --mode=777 "${PHP_ROOT}/original"; \
+        cp "${PHP_CONF}" "${PHP_ROOT}/original/php.ini"; \
+        cp -a "${PHP_CONFD}/." "${PHP_ROOT}/original/conf.d/"; \
+        rm -f "${PHP_CONF}"; \
+        rm -fr "${PHP_CONFD}/*"; \
+        # Data
+        mkdir --mode=777 "${PHP_DATA}/tmp";
 
-### IMPORTS ###
+### IMPORT ###
 # OS
-COPY ./os/root/.ashrc /root/.ashrc
-COPY ./os/docker/ /docker/
-COPY ./os/adm/ /adm/
+COPY "./os/root/.ashrc" "/root/.ashrc"
+COPY "./os/docker/" "/docker/"
+COPY "./os/adm/" "/adm/"
 # APACHE
-COPY ./apache/httpd.conf "${HTTPD_CONF}"
-COPY ./apache/conf.d "${HTTPD_CONFD}"
+COPY "./apache/httpd.conf" "${HTTPD_CONF}"
+COPY "./apache/conf.d/" "${HTTPD_CONFD}/"
 # PHP
-COPY ./php/php.ini "${PHP_CONF}"
+COPY "./php/php.ini" "${PHP_CONF}"
 
 ########################################################################################################################
 ## DOCKER ###
