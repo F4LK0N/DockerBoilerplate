@@ -17,17 +17,37 @@ class _APPLICATION
     static public function RUN()
     {
         try {
-            $router=CONFIGS::GET("ROUTER");
-            VD( $router->handle($_SERVER["REQUEST_URI"]));
-            VDD($router);
+            $router = PROVIDERS::GET("router");
 
-            $response = self::INSTANCE()->handle(
-                $_SERVER["REQUEST_URI"]
+            $view = PROVIDERS::GET('view');
+
+            $dispatcher = PROVIDERS::GET('dispatcher');
+            $dispatcher->setControllerName($router->getControllerName());
+            $dispatcher->setActionName($router->getActionName());
+            $dispatcher->setParams($router->getParams());
+
+            $view->start();
+            $dispatcher->dispatch();
+            $view->render(
+                $dispatcher->getControllerName(),
+                $dispatcher->getActionName(),
+                $dispatcher->getParams()
             );
+            $view->finish();
+
+            $response = PROVIDERS::GET('response');
+            $response->setContent($view->getContent());
             $response->send();
+            
+            //VDD($dispatcher);
+
+
+            //$response = self::INSTANCE()->handle(
+            //    $_SERVER["REQUEST_URI"]
+            //);
+            //$response->send();
         }
         catch (\Exception $e) {
-            VDD($e);
             echo 'Exception: ', $e->getMessage();
         }
     }

@@ -1,7 +1,7 @@
 <?php
 use Phalcon\Mvc\Router;
 
-PROVIDERS::SET(
+PROVIDERS::SET_SHARED(
     'router',
     function () {
         /**

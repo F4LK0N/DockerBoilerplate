@@ -26,6 +26,11 @@ class PROVIDERS
         self::CONTAINER()->set($key, $function);
     }
 
+    static public function SET_SHARED($key, $function)
+    {
+        self::CONTAINER()->setShared($key, $function);
+    }
+
 }
 
 require "view.php";
