@@ -61,6 +61,8 @@ Debug Module:
 ``` https://httpd.apache.org/docs/2.4/mod/core.html#errorlog ```  
 ``` https://httpd.apache.org/docs/2.4/logs.htm ```  
 ``` https://httpd.apache.org/docs/2.4/mod/mod_log_config.html ```  
+``` https://httpd.apache.org/docs/2.4/expr.html ```  
+``` https://man7.org/linux/man-pages/man3/strftime.3.html ```  
 
 
 # Options
