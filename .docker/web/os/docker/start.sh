@@ -11,6 +11,7 @@ mkdir -p --mode=777 ${HTTPD_LOGS}
 # PHP
 mkdir -p --mode=777 ${PHP_DATA}
 mkdir -p --mode=777 ${PHP_LOGS}
+mkdir -p --mode=777 ${PHP_LOGS}/xdebug
 # Application
 mkdir -p --mode=777 ${APP_ROOT}/public
 
@@ -24,6 +25,7 @@ chmod 777 ${HTTPD_LOGS}
 # PHP
 chmod 777 ${PHP_DATA}
 chmod 777 ${PHP_LOGS}
+chmod 777 ${PHP_LOGS}/xdebug
 # Application
 chmod 777 ${APP_ROOT}
 chmod 777 ${APP_ROOT}/public

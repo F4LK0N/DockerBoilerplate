@@ -191,6 +191,8 @@ RUN set -eux; \
         rm ${PHP_CONFD}/*; \
         # Data
         mkdir --mode=777 "${PHP_DATA}/tmp"; \
+        # Logs
+        mkdir --mode=777 "${PHP_LOGS}/xdebug"; \
     \
     ### APPLICATION ###
         rm "${APP_ROOT}/index.html"; \
