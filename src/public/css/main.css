@@ -47,6 +47,22 @@ body {
   display: grid;
   grid-template-rows: 1fr auto;
 }
+
+
+div.loader {
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    background-color:#000;
+    opacity:0.5;
+    text-align:center;
+}
+div.loader > img {
+    width:10px;
+}
+
 /*##################################################*/
 /*### DEFAULT STYLE ###*/
 /*##################################################*/

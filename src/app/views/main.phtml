@@ -2,6 +2,7 @@
 <html lang="pt-BR" class="no-js" xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml" xmlns:og="http://opengraphprotocol.org/schema/">
 <?= $this->partial('_head'); ?>
 <body<?php if(isset($cssPageId)){ print" id='page-$cssPageId'";} ?>>
+    <?= $this->partial('_body/loader'); ?>
     <?= $this->partial('_body/google-tag-manager'); ?>
     <?= $this->getContent(); ?>
     <?= $this->partial('_foot'); ?>
