@@ -193,6 +193,7 @@ RUN set -eux; \
         mkdir --mode=777 "${PHP_DATA}/tmp"; \
     \
     ### APPLICATION ###
+        rm "${APP_ROOT}/index.html"; \
         chmod 777 "${APP_ROOT}"; \
         mkdir --mode=777 "${APP_ROOT}/public"; \
         ln -s "${APP_ROOT}" "/src";
