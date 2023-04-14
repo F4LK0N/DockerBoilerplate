@@ -42,14 +42,20 @@ $group = new Group([
     $group->add('', [
         'action' => 'list',
     ]);
-    $group->add('view', [
+    $group->add('view/:int', [
         'action' => 'view',
+        'id' => 1,
     ]);
     $group->add('edit', [
         'action' => 'edit',
     ]);
-    $group->add('rem', [
+    $group->add('edit/:int', [
+        'action' => 'edit',
+        'id' => 1,
+    ]);
+    $group->add('rem/:int', [
         'action' => 'rem',
+        'id' => 1,
     ]);
 $router->mount($group);
 
@@ -61,16 +67,5 @@ $router->mount($group);
 
 
 $router->handle($_SERVER["REQUEST_URI"]);
-
-//VD(($_SERVER["REQUEST_URI"]));
-//echo '"'.$router->getControllerName().'"<br>';
-//echo '"'.$router->getActionName().'"<br>';
-//die;
-////VDD($router->getMatchedRoute());
-
-
-////Adjust Routes Not Found
-
-
 
 CONFIGS::SET("ROUTER", $router);

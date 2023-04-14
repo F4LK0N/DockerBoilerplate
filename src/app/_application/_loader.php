@@ -38,14 +38,6 @@ class _APPLICATION
             $response = PROVIDERS::GET('response');
             $response->setContent($view->getContent());
             $response->send();
-            
-            //VDD($dispatcher);
-
-
-            //$response = self::INSTANCE()->handle(
-            //    $_SERVER["REQUEST_URI"]
-            //);
-            //$response->send();
         }
         catch (\Exception $e) {
             echo 'Exception: ', $e->getMessage();

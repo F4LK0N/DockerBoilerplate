@@ -5,17 +5,12 @@ class IndexController extends _BaseController
 {
     public function indexAction()
     {
-        //return '<h1>Hello!</h1>';
+        print '<h1>Hello!</h1>';
     }
 
-    public function aAction()
+    public function notFoundAction()
     {
-        
-    }
-
-    public function bAction()
-    {
-        
+        print "404";
     }
     
 }
