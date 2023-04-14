@@ -33,6 +33,34 @@ $router->mount($group);
 
 
 
+# Auth
+$group = new Group([
+    'controller' => 'auth',
+]);
+    $group->setPrefix('/auth/');
+
+    $group->add('signup', [
+        'action' => 'signup',
+    ]);
+    $group->add('activate', [
+        'action' => 'activate',
+    ]);
+    $group->add('reset', [
+        'action' => 'reset',
+    ]);
+    $group->add('reset-confirm', [
+        'action' => 'resetConfirm',
+    ]);
+    $group->add('login', [
+        'action' => 'login',
+    ]);
+    $group->add('logout', [
+        'action' => 'logout',
+    ]);
+$router->mount($group);
+
+
+
 # Users
 $group = new Group([
     'controller' => 'users',
