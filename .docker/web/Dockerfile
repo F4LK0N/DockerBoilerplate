@@ -146,7 +146,8 @@ RUN set -eux; \
     ; \
     chmod 755 ${OS_RUN}; \
     chmod 755 ${HTTPD_RUN}; \
-    chmod 755 ${PHP_RUN};
+    chmod 755 ${PHP_RUN}; \
+    chmod 777 ${APP_ROOT};
 
 ########################################################################################################################
 ### CONFIG ###
@@ -162,18 +163,18 @@ RUN set -eux; \
         mkdir --mode=777 "${HTTPD_ROOT}/original"; \
         cp "${HTTPD_CONF}" "${HTTPD_ROOT}/original/httpd.conf"; \
         cp -a "${HTTPD_CONFD}/." "${HTTPD_ROOT}/original/conf.d/"; \
-        rm -f "${HTTPD_CONF}"; \
-        rm -fr "${HTTPD_CONFD}/*"; \
+        rm ${HTTPD_CONF}; \
+        rm ${HTTPD_CONFD}/*; \
         # CGI
-        rm -fr "/var/www/localhost/cgi-bin/"; \
+        rm -r "/var/www/localhost/cgi-bin/"; \
         # Logs
-        rm -f "/var/www/logs"; \
-        rm -fr "/var/log/apache2"; \
+        rm "/var/www/logs"; \
+        rm -r "/var/log/apache2/"; \
         ln -s "${HTTPD_LOGS}" "/var/www/logs"; \
         chmod 777 "/var/www/logs"; \
         # Run
-        rm -f "/var/www/run"; \
-        rm -fr "/run/apache2"; \
+        rm "/var/www/run"; \
+        rm -r "/run/apache2/"; \
         ln -s "${HTTPD_RUN}" "/var/www/run"; \
         chmod 777 "/var/www/run"; \
         mkdir --mode=755 "${HTTPD_RUN}/mutex"; \
@@ -186,8 +187,8 @@ RUN set -eux; \
         mkdir --mode=777 "${PHP_ROOT}/original"; \
         cp "${PHP_CONF}" "${PHP_ROOT}/original/php.ini"; \
         cp -a "${PHP_CONFD}/." "${PHP_ROOT}/original/conf.d/"; \
-        rm -f "${PHP_CONF}"; \
-        rm -fr "${PHP_CONFD}/*"; \
+        rm ${PHP_CONF}; \
+        rm ${PHP_CONFD}/*; \
         # Data
         mkdir --mode=777 "${PHP_DATA}/tmp"; \
     \

@@ -2,13 +2,13 @@ services:
   web:
     container_name: ${COMPOSE_PREFIX}web
     build: ./.docker/web
-    #volumes:
+    volumes:
     #  # Application
     #  - ./src/:/var/www/localhost/htdocs/
     #  # Data
     #  - ./data/:/data/
-    #  # Logs
-    #  - ./logs/:/logs/
+      # Logs
+      - ./logs/:/logs/
     #  # Dev
     #  - ./.docker/web/os/docker/:/docker/
     #  - ./.docker/web/os/adm/:/adm/
