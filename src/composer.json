@@ -30,13 +30,14 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\App\\": "tests/app",
-            "Tests\\Core\\": "tests/core"
+            "Tests\\App\\": "tests/app/",
+            "Tests\\Core\\": "tests/core/"
         }
     },
 
     "scripts": {
         "da": "composer dumpautoload",
+        "dao": "composer dumpautoload -o",
 
         "test":  "./vendor/bin/phpunit --no-coverage",
         "dox":   "./vendor/bin/phpunit --no-coverage --testdox",
