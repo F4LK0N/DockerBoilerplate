@@ -7,6 +7,11 @@ Dockerfile:
 ENV ENV="/root/.ashrc"
 ```
 
+# File System Permissions
+r = 100b = 4
+w = 010b = 2
+x = 001b = 1
+
 
 # XDebug
 https://xdebug.org/docs/all_settings

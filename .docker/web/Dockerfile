@@ -43,7 +43,7 @@ ENV PHP_RUN="${ROOT_RUN}/php"
 ENV PHALCON_VERSION="5.2.1"
 
 ### APPLICATION ###
-ENV APP_ROOT="/app"
+ENV APP_ROOT="/var/www/localhost/htdocs"
 
 ########################################################################################################################
 ### DATA ###
@@ -90,7 +90,6 @@ RUN set -eux; \
         php81-tokenizer \
         php81-pecl-xdebug; \
     # Clean
-    apk cache clean; \
     rm -r -f /var/cache/apk/*;
 
 ### DOWNLOADS ###
@@ -118,7 +117,6 @@ RUN set -eux; \
         cd /; \
     # Clean
     apk del temp_deps; \
-    apk cache clean; \
     rm -fr /var/cache/apk/*; \
     rm -fr /tmp/phalcon/;
 
@@ -141,12 +139,10 @@ RUN set -eux; \
         ${HTTPD_RUN} \
         # PHP
         ${PHP_DATA} \
-        ${PHP_DATA}/tmp \
         ${PHP_LOGS} \
         ${PHP_RUN} \
         # Application
         ${APP_ROOT} \
-        ${APP_ROOT}/public \
     ; \
     chmod 755 ${OS_RUN}; \
     chmod 755 ${HTTPD_RUN}; \
@@ -168,6 +164,8 @@ RUN set -eux; \
         cp -a "${HTTPD_CONFD}/." "${HTTPD_ROOT}/original/conf.d/"; \
         rm -f "${HTTPD_CONF}"; \
         rm -fr "${HTTPD_CONFD}/*"; \
+        # CGI
+        rm -fr "/var/www/localhost/cgi-bin/"; \
         # Logs
         rm -f "/var/www/logs"; \
         rm -fr "/var/log/apache2"; \
@@ -191,7 +189,12 @@ RUN set -eux; \
         rm -f "${PHP_CONF}"; \
         rm -fr "${PHP_CONFD}/*"; \
         # Data
-        mkdir --mode=777 "${PHP_DATA}/tmp";
+        mkdir --mode=777 "${PHP_DATA}/tmp"; \
+    \
+    ### APPLICATION ###
+        chmod 777 "${APP_ROOT}"; \
+        mkdir --mode=777 "${APP_ROOT}/public"; \
+        ln -s "${APP_ROOT}" "/src";
 
 ### IMPORT ###
 # OS
@@ -199,13 +202,13 @@ COPY "./os/root/.ashrc" "/root/.ashrc"
 COPY "./os/docker/" "/docker/"
 COPY "./os/adm/" "/adm/"
 # APACHE
-COPY "./apache/httpd.conf" "${HTTPD_CONF}"
-COPY "./apache/conf.d/" "${HTTPD_CONFD}/"
+COPY --chmod=644 "./apache/httpd.conf" "${HTTPD_CONF}"
+COPY --chmod=644 "./apache/conf.d/*" "${HTTPD_CONFD}/"
 # PHP
-COPY "./php/php.ini" "${PHP_CONF}"
+#COPY "./php/php.ini" "${PHP_CONF}"
 
 ########################################################################################################################
-## DOCKER ###
+### DOCKER ###
 ########################################################################################################################
 STOPSIGNAL SIGWINCH
 ENTRYPOINT ["/docker/entrypoint.sh"]

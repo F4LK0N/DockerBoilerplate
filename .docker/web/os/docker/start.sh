@@ -29,7 +29,9 @@ chmod 777 ${APP_ROOT}
 chmod 777 ${APP_ROOT}/public
 
 echo "LOGS";
-ln -s /var/log/ ${OS_LOGS}
+if [[ ! -f "${OS_LOGS}/logs" ]]; then
+    ln -s "/var/log" "${OS_LOGS}/logs"
+fi
 
 echo "APPLICATION - COMPOSER"
 if [[ ! -f "${APP_ROOT}/composer.json" ]]; then
