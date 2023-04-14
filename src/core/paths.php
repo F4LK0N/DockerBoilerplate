@@ -30,10 +30,12 @@ while($deep>0){
     $temp.='../';
     $deep--;
 }
-define('HTML_ROOT', $temp);
-unset($temp, $deep);
 
 # RESOURCES
-define('HTML_CSS', HTML_ROOT.'/css');
-define('HTML_JS',  HTML_ROOT.'/js');
-define('HTML_IMG', HTML_ROOT.'/img');
+define('HTML_CSS', $temp.'css');
+define('HTML_JS',  $temp.'js');
+define('HTML_IMG', $temp.'img');
+
+if(!$temp){ $temp="./"; }
+define('HTML_ROOT', $temp);
+unset($temp, $deep);

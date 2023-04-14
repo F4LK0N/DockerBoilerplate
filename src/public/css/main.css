@@ -22,7 +22,7 @@ Font Usage Examples:
 /*##################################################*/
 /*### FIXED FOOTER ###*/
 /*##################################################*/
-html {
+/*html {
     min-height:100%;
 }
 body {
@@ -40,6 +40,12 @@ body > footer {
     margin:0;
     position:absolute;
     bottom:0;
+}*/
+
+body {
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr auto;
 }
 /*##################################################*/
 /*### DEFAULT STYLE ###*/
