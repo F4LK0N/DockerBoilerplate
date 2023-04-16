@@ -1,7 +1,7 @@
 <?php
 use Phalcon\Mvc\Url;
 
-PROVIDERS::SET(
+PROVIDER::SET(
     'url',
     function () {
         $url = new Url();

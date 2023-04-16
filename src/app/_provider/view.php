@@ -1,7 +1,7 @@
 <?php
 use Phalcon\Mvc\View;
 
-PROVIDERS::SET(
+PROVIDER::SET(
     'view',
     function () {
         $view = new View();

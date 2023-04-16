@@ -1,13 +1,13 @@
 <?php
 use Phalcon\Mvc\Router;
 
-PROVIDERS::SET_SHARED(
+PROVIDER::SET_SHARED(
     'router',
     function () {
         /**
          * @var Router
          */
-        $router = CONFIGS::GET('ROUTER');
+        $router = CONFIGS::GET('router');
         return $router;
     }
 );
