@@ -23,7 +23,7 @@ class Session
     private function LoadToken()
     {
         $this->tokenKey = CONFIG::GET('app', 'session-token-key');
-        $this->token    = $_COOKIE[$this->tokenKey] ?? '';
+        $this->token    = $_POST[$this->tokenKey] ?? '';
     }
 
     private function Refresh()

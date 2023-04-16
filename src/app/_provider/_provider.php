@@ -7,7 +7,6 @@ class PROVIDER
     static private ?FactoryDefault $INSTANCE = null;
 
     static private array           $FILES = [
-        "view",
         "url",
         "router",
         "session",
