@@ -43,3 +43,6 @@ services:
           memory: 256M
     memswap_limit: 256M
 ```
+
+# WSL Volume Mapping
+https://stackoverflow.com/questions/61083772/where-are-docker-volumes-located-when-running-wsl-using-docker-desktop#answer-61147954
