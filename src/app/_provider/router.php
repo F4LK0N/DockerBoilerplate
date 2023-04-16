@@ -1,4 +1,5 @@
-<?php
+<? defined("FKN") or http_response_code(403).die('Forbidden!');
+
 use Phalcon\Mvc\Router;
 
 PROVIDER::SET_SHARED(

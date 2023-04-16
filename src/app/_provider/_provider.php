@@ -1,4 +1,5 @@
-<?php
+<? defined("FKN") or http_response_code(403).die('Forbidden!');
+
 use Phalcon\Di\FactoryDefault;
 
 class PROVIDER
@@ -9,6 +10,7 @@ class PROVIDER
         "view",
         "url",
         "router",
+        "session",
     ];
 
 
