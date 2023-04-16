@@ -22,7 +22,7 @@ services:
       - ./.docker/api/php/php.ini:/etc/php81/php.ini
     ports:
       # API Server
-      - "8080:80"
-      - "4430:443"
+      - "8080:8080"
+      - "4430:4430"
       # XDebug
-      - "10001:10000"
+      - "10001:10001"
