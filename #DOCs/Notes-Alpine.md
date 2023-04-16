@@ -21,14 +21,15 @@ https://xdebug.org/docs/all_settings
 ```
 
 
-
-
 # Timezone
 https://wiki.alpinelinux.org/wiki/Setting_the_timezone
-
 
 apk add --virtual temp_deps \
         tzdata \
 cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime; \
 echo "America/Sao_Paulo" > /etc/timezone; \
 apk del temp_deps;
+
+
+# Swap Memory Disable
+https://docs.docker.com/compose/compose-file/05-services/#mem_limit

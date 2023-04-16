@@ -2,6 +2,11 @@ services:
   web:
     container_name: ${COMPOSE_PREFIX}web
     build: ./.docker/web
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    memswap_limit: 256M
     volumes:
       # Application
       - ./src/:/var/www/localhost/htdocs/
