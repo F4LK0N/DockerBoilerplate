@@ -33,3 +33,13 @@ apk del temp_deps;
 
 # Swap Memory Disable
 https://docs.docker.com/compose/compose-file/05-services/#mem_limit
+https://docs.docker.com/compose/compose-file/deploy/#memory
+```
+services:
+  container_name:
+    deploy:
+      resources:
+        limits:
+          memory: 256M
+    memswap_limit: 256M
+```
