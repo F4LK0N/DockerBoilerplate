@@ -40,13 +40,13 @@ echo "APPLICATION - COMPOSER"
 if [[ ! -f "${APP_ROOT}/composer.json" ]]; then
     echo "- 'composer.json' not found!"
 else
-    echo "- 'composer.json' found!"
+    #echo "- 'composer.json' found!"
 
     if [[ -f "${APP_ROOT}/composer.lock" ]]; then
-        echo "- 'composer.lock' found!"
+        #echo "- 'composer.lock' found!"
         echo "- Skipping installation."
     else
-        echo "- 'composer.lock' not found!"
+        #echo "- 'composer.lock' not found!"
         echo "- Starting installation."
 
         composer install -d ${APP_ROOT}

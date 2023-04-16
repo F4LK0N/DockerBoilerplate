@@ -157,6 +157,8 @@ RUN set -eux; \
         # Logs
         ln -s "/var/log" "${OS_LOGS}/logs"; \
         chmod 777 "${OS_LOGS}/logs"; \
+        # Clean
+        rm -r "/srv/"; \
     \
     ### APACHE ###
         # Conf File and Dir
