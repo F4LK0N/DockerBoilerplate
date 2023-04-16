@@ -2,20 +2,20 @@
 
 CONFIG::SET("app", [
     
-    'name' => 'web',
-    'domain' => '127.0.0.1',
+    'name' => 'app',
+    'domain' => '127.0.0.1:8080',
 
-    'session-token-key' => 'APP_SESSION',
+    'session-token-key' => 'API_SESSION',
     
-    'title' => 'Web',
-    'description' => 'Falkon Front End Framework',
+    'title' => 'API',
+    'description' => 'Falkon Back End Framework',
     
     'google-tag-manager-id' => 'GTM-XXXXXXX',
 
-    'facebook-id' => 'web',
-    'facebook-url' => 'facebook.com/web',
+    'facebook-id' => 'api',
+    'facebook-url' => 'facebook.com/api',
     
-    'twitter-id' => 'web',
-    'twitter-url' => 'twitter.com/web',
+    'twitter-id' => 'api',
+    'twitter-url' => 'twitter.com/api',
     
 ]);
