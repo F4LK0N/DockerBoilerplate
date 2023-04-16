@@ -46,3 +46,14 @@ services:
 
 # WSL Volume Mapping
 https://stackoverflow.com/questions/61083772/where-are-docker-volumes-located-when-running-wsl-using-docker-desktop#answer-61147954
+
+
+
+
+# SSL Multi Container
+https://medium.com/@sitapati/easily-run-multiple-apps-with-https-using-docker-and-letsencrypt-cb0e5f11bf84  
+https://github.com/jwulf/letsencrypt-nginx-sidecar  
+
+https://stackoverflow.com/questions/62812203/https-in-multiple-docker-containers  
+
+https://blog.ssdnodes.com/blog/host-multiple-ssl-websites-docker-nginx/

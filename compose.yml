@@ -20,9 +20,14 @@ services:
       - ./.docker/web/apache/httpd.conf:/etc/apache2/httpd.conf
       - ./.docker/web/apache/conf.d:/etc/apache2/conf.d
       - ./.docker/web/php/php.ini:/etc/php81/php.ini
+    networks:
+      - frontend
     ports:
       # Web Server
       - "80:80"
       - "443:443"
       # XDebug
       - "10000:10000"
+
+networks:
+  frontend:
