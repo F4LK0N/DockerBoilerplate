@@ -39,8 +39,8 @@ $group = new Group([
 ]);
     $group->setPrefix('/auth/');
 
-    $group->add('signup', [
-        'action' => 'signup',
+    $group->add('register', [
+        'action' => 'register',
     ]);
     $group->add('activate', [
         'action' => 'activate',

@@ -1,4 +1,25 @@
 {
+    "name": "f4lk0n/web",
+    "type": "library",
+    "description": "Front-End Framework based on JQuery and Foundation over Phalcon",
+    "keywords": [
+        "f4lk0n",
+        "frontend",
+        "framework",
+        "jquery",
+        "foundation",
+        "phalcon"
+    ],
+    "homepage": "https://github.com/F4LK0N/BoilerplateDocker/tree/web",
+    "license": "",
+    "authors": [
+        {
+            "name": "F4lk0n",
+            "email": "otaviosoria@gmail.com",
+            "homepage": "https://github.com/F4LK0N",
+            "role": "Developer"
+        }
+    ],
     "require": {
         "php": "8.1.*",
         "ext-json": "*",
