@@ -2,8 +2,7 @@
 use Phalcon\Mvc\Application;
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Dispatcher;
-use Phalcon\Mvc\View;
-use Phalcon\Http\Response;
+use Phalcon\Http\ResponseInterface;
 
 class _APPLICATION
 {
@@ -28,8 +27,7 @@ class _APPLICATION
     {
         try {
             $dispatcher = self::RUN_DISPATCHER();
-            $view       = self::RUN_VIEW($dispatcher);
-            self::RUN_RESPONSE($view);
+            self::RUN_RESPONSE($dispatcher);
         }
         catch (\Exception $e) {
             echo 'Exception: ', $e->getMessage();
@@ -49,34 +47,19 @@ class _APPLICATION
         $dispatcher->setControllerName($router->getControllerName());
         $dispatcher->setActionName($router->getActionName());
         $dispatcher->setParams($router->getParams());
+        $dispatcher->dispatch();
         return $dispatcher;
     }
 
-    static private function RUN_VIEW(Dispatcher &$dispatcher): View
+    static private function RUN_RESPONSE(Dispatcher &$dispatcher)
     {
         /**
-         * @var View
+         * @var ResponseInterface
          */
-        $view = PROVIDER::GET('view');
-        $view->start();
-        $dispatcher->dispatch();
-        $view->render(
-            $dispatcher->getControllerName(),
-            $dispatcher->getActionName(),
-            $dispatcher->getParams()
-        );
-        $view->finish();
-        return $view;
-    }
-
-    static private function RUN_RESPONSE(View &$view)
-    {
-        /**
-         * @var Response
-         */
-        $response = PROVIDER::GET('response');
-        $response->setContent($view->getContent());
-        $response->send();
+        $response = $dispatcher->getReturnedValue();
+        if ($response instanceof ResponseInterface) {
+            $response->send();
+        }
     }
 
 }
