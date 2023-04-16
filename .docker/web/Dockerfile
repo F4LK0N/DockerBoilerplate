@@ -74,20 +74,24 @@ RUN set -eux; \
         #php81-ctype \
         php81-curl \
         php81-dom \
-        #php81-gd \
         #php81-iconv \
+        php81-fileinfo \
+        #php81-gd \
+        php81-gettext \
         php81-mbstring \
         #php81-mysqli \
         #php81-mysqlnd \
-        php81-openssl \
+        php81-pdo \
         php81-pdo_mysql \
         #php81-pdo_pgsql \
         #php81-pdo_sqlite \
         php81-phar \
         php81-xml \
         php81-xmlwriter \
-        php81-session \
         php81-tokenizer \
+        php81-openssl \
+        php81-session \
+        php81-pecl-psr \
         php81-pecl-xdebug; \
     # Clean
     rm -r -f /var/cache/apk/*;

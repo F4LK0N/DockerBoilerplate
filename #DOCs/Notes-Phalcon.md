@@ -1,3 +1,10 @@
+# Dependencies
+https://docs.phalcon.io/4.0/en/installation
+https://github.com/jbboehr/php-psr
+
+
+
+
 # Web Server Setup
 https://github.com/phalcon/cphalcon/issues/16213
 https://docs.phalcon.io/5.0/en/webserver-setup
