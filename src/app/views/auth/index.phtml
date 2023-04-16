@@ -1,0 +1,15 @@
+<? if($data['action']===''){ ?>
+
+    <? if($data['session']['logged']){ ?>
+        <form action='./' method='post'>
+            <input type='hidden' name='action' value='LOGOUT'>
+            <input class='button' type='submit' value='LOGOUT'>
+        </form>
+    <? }else{ ?>
+        <form action='./' method='post'>
+            <input type='hidden' name='action' value='LOGIN'>
+            <input class='button' type='submit' value='LOGIN'>
+        </form>
+    <? } ?>
+
+<? } ?>

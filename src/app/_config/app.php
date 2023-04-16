@@ -4,6 +4,8 @@ CONFIG::SET("app", [
     
     'name' => 'web',
     'domain' => '127.0.0.1',
+
+    'session-token-key' => 'APP_SESSION',
     
     'title' => 'Web',
     'description' => 'Falkon Front End Framework',
