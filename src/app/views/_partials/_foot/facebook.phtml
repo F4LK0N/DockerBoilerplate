@@ -3,11 +3,11 @@
     {
         "@context": "http://schema.org",
         "@type": "Organization",
-        "name": "<?= CONFIGS::GET("APP", 'title'); ?>",
-        "url": "http://<?= CONFIGS::GET("APP", 'domain'); ?>",
+        "name": "<?= CONFIG::GET("app", 'title'); ?>",
+        "url": "http://<?= CONFIG::GET("app", 'domain'); ?>",
         "address": "",
         "sameAs": [
-            "https://<?= CONFIGS::GET("APP", 'facebook-url'); ?>"
+            "https://<?= CONFIG::GET("app", 'facebook-url'); ?>"
         ]
     }
     </script>
