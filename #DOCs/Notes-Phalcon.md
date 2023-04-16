@@ -29,7 +29,12 @@ alias phalcon=/app/vendor/phalcon/devtools/phalcon
 
 
 # Debug
-# ...
+XDebug
+https://xdebug.org/docs/all_settings
+```
+?XDEBUG_TRIGGER=1
+```
+
 
 # Migrations
 https://docs.phalcon.io/5.0/en/db-migrations
