@@ -1,12 +1,12 @@
 <?php
 
-CONFIGS::SET("APP", [
+CONFIG::SET("app", [
     
     'name' => 'web',
-    'domain' => 'domain.com',
+    'domain' => '127.0.0.1',
     
     'title' => 'Web',
-    'description' => 'Falkon Web Framework',
+    'description' => 'Falkon Front End Framework',
     
     'google-tag-manager-id' => 'GTM-XXXXXXX',
 
