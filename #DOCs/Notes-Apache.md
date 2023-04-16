@@ -82,3 +82,9 @@ LogLevel warn rewrite:trace8
 
 ### Reference
 ``` https://stackoverflow.com/questions/9632852/how-to-debug-apache-mod-rewrite ```  
+
+
+
+
+
+https://github.com/yahoo/tunitas-apanolio/blob/master/tests/httpd/conf.modules.d/minimal.conf
