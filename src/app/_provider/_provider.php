@@ -10,6 +10,7 @@ class PROVIDER
         "url",
         "router",
         "session",
+        "response",
     ];
 
 

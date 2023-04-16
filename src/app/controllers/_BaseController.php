@@ -1,64 +1,53 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
 use Phalcon\Mvc\Controller;
 use Phalcon\Mvc\Dispatcher;
+use Phalcon\Http\Response;
 
 class _BaseController extends Controller
 {
-    
+    protected $apiResponse = [];
+
     public function beforeExecuteRoute(Dispatcher $dispatcher): bool
     {
-        //$this->view->setMainView("main");
-        //$this->view->setLayout("main");
-        //$this->view->pick('invoices/search');
-
-        //$controllerName = $dispatcher->getControllerName();
-        //$actionName     = $dispatcher->getActionName();
-
-        //// Only check permissions on private controllers
-        //if ($this->acl->isPrivate($controllerName)) {
-        //    // Get the current identity
-        //    $identity = $this->auth->getIdentity();
-
-        //    // If there is no identity available the user is redirected to index/index
-        //    if (!is_array($identity)) {
-        //        $this->flash->notice('You don\'t have access to this module: private');
-
-        //        $dispatcher->forward([
-        //            'controller' => 'index',
-        //            'action'     => 'index',
-        //        ]);
-        //        return false;
-        //    }
-
-        //    // Check if the user have permission to the current option
-        //    if (!$this->acl->isAllowed($identity['profile'], $controllerName, $actionName)) {
-        //        $this->flash->notice('You don\'t have access to this module: ' . $controllerName . ':' . $actionName);
-
-        //        if ($this->acl->isAllowed($identity['profile'], $controllerName, 'index')) {
-        //            $dispatcher->forward([
-        //                'controller' => $controllerName,
-        //                'action'     => 'index',
-        //            ]);
-        //        } else {
-        //            $dispatcher->forward([
-        //                'controller' => 'index',
-        //                'action'     => 'index',
-        //            ]);
-        //        }
-
-        //        return false;
-        //    }
-        //}
-
+        $this->apiResponse = [
+            'status'  => 1,
+            'error'   => 0,
+            'message' => '',
+            'data'    => []
+        ];
         return true;
     }
-
-    protected function initialize()
-    {
-        //$this->tag->title()
-        //          ->prepend('INVO | ')
-        //;
-        //$this->view->setTemplateAfter('main');
-    }
     
+    protected function setResponse($data)
+    {
+        $this->apiResponse['data'] = $data;
+    }
+
+    protected function addResponse($data)
+    {
+        $this->apiResponse['data'] = array_merge($this->apiResponse['data'], $data);
+    }
+
+    protected function setError(int $code, string $message)
+    {
+        $this->apiResponse = [
+            'status'  => 0,
+            'error'   => $code,
+            'message' => $message,
+            'data'    => [],
+        ];
+        $this->send();
+    }
+
+    public function afterExecuteRoute($dispatcher)
+    {
+        $this->send();
+    }
+
+    protected function send()
+    {
+        $this->response->setJsonContent($this->apiResponse);
+        $this->response->send();
+    }
+
 }
