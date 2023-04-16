@@ -1,6 +1,5 @@
 <?php
 use Phalcon\Mvc\Application;
-use Phalcon\Mvc\Router;
 
 class _APPLICATION
 {
@@ -9,7 +8,7 @@ class _APPLICATION
     static public function INSTANCE()
     {
         if(self::$INSTANCE === null){
-            self::$INSTANCE = new Application(PROVIDERS::CONTAINER());
+            self::$INSTANCE = new Application(PROVIDER::INSTANCE());
         }
         return self::$INSTANCE;
     }
@@ -17,11 +16,11 @@ class _APPLICATION
     static public function RUN()
     {
         try {
-            $router = PROVIDERS::GET("router");
+            $router = PROVIDER::GET("router");
 
-            $view = PROVIDERS::GET('view');
+            $view = PROVIDER::GET('view');
 
-            $dispatcher = PROVIDERS::GET('dispatcher');
+            $dispatcher = PROVIDER::GET('dispatcher');
             $dispatcher->setControllerName($router->getControllerName());
             $dispatcher->setActionName($router->getActionName());
             $dispatcher->setParams($router->getParams());
@@ -35,7 +34,7 @@ class _APPLICATION
             );
             $view->finish();
 
-            $response = PROVIDERS::GET('response');
+            $response = PROVIDER::GET('response');
             $response->setContent($view->getContent());
             $response->send();
         }

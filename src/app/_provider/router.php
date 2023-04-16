@@ -7,7 +7,7 @@ PROVIDER::SET_SHARED(
         /**
          * @var Router
          */
-        $router = CONFIGS::GET('router');
+        $router = CONFIG::GET('router');
         return $router;
     }
 );
