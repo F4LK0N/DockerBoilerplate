@@ -20,9 +20,44 @@ services:
       - ./.docker/api/apache/httpd.conf:/etc/apache2/httpd.conf
       - ./.docker/api/apache/conf.d:/etc/apache2/conf.d
       - ./.docker/api/php/php.ini:/etc/php81/php.ini
+    networks:
+      - frontend
+      - backend
     ports:
       # API Server
       - "8080:8080"
       - "4430:4430"
       # XDebug
       - "10001:10001"
+  
+  mysql:
+    container_name: ${COMPOSE_PREFIX}mysql
+    build: ./.docker/mysql
+    command: --default-authentication-plugin=mysql_native_password
+    networks:
+      - backend
+    ports:
+      - "3306:3306"
+    volumes:
+      # Data
+      - ./data/mysql:/var/lib/mysql
+
+  phpmyadmin:
+    container_name: ${COMPOSE_PREFIX}phpmyadmin
+    build: ./.docker/phpmyadmin
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+    ports:
+      - "8081:80"
+    networks:
+      - backend
+    #volumes:
+      # Config
+      #- ./.docker/phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
+  
+networks:
+  frontend:
+  backend:
