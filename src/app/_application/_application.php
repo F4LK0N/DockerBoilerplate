@@ -1,4 +1,4 @@
-<?php
+<? defined("FKN") or http_response_code(403).die('Forbidden!');
 use Phalcon\Mvc\Application;
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Dispatcher;
