@@ -1,8 +1,8 @@
 #!/bin/bash
 
 DockerHubRepo="f4lk0n/fkn"
-DockerfileDir="web"
-ImageTag="web"
+DockerfileDir="api"
+ImageTag="api"
 
 echo "--- --- --- --- --- --- --- --- ---"
 echo "### DOCKER - IMAGE BUILD ###"
