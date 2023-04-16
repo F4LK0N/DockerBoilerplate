@@ -11,7 +11,8 @@ class CONFIG
         'namespaces',
         'directories',
         'router',
-        'api',
+        'database',
+        'redis',
         'bucket',
     ];
 

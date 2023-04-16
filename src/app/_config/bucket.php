@@ -2,16 +2,11 @@
 
 CONFIG::SET("bucket", [
 
-    'profile' => [
+    'main' => [
         'host' => '',
         'port' => '',
         'user' => '',
         'name' => '',
     ],
-    'news' => [
-        'host' => '',
-        'port' => '',
-        'user' => '',
-        'name' => '',
-    ],
+    
 ]);

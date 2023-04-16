@@ -9,9 +9,12 @@ $group->setPrefix('/auth/');
 
 
 
-$group->add('', [
-    //Login/Logout
+$group->add('login', [
     'action' => 'index',
+]);
+
+$group->add('logout', [
+    'action' => 'logout',
 ]);
 
 $group->add('register', [

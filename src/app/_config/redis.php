@@ -1,11 +1,13 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
 
-CONFIG::SET("api", [
+CONFIG::SET("redis", [
 
-    'data' => [
+    'session' => [
         'host' => '',
         'port' => '',
         'user' => '',
         'name' => '',
     ],
+
+    
 ]);

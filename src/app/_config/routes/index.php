@@ -2,7 +2,6 @@
 use Phalcon\Mvc\Router;
 use Phalcon\Mvc\Router\Group;
 
-
 $group = new Group([
     'controller' => 'index',
 ]);
