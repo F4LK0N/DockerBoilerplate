@@ -52,7 +52,6 @@
         "phpunit/phpunit": "10.*",
         "phpunit/php-code-coverage": "^10.0",
         "nikic/php-parser": "^4.15",
-        "mockery/mockery": "*",
         "phalcon/devtools": "^4.2"
     },
     "autoload-dev": {
