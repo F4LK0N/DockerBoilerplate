@@ -10,31 +10,32 @@ class _BaseController extends Controller
     public function beforeExecuteRoute(Dispatcher $dispatcher): bool
     {
         $this->apiResponse = [
-            'status'  => 1,
-            'error'   => 0,
-            'message' => '',
-            'data'    => []
+            'status' => 1,
+            'error' => [
+                'code'    => 0,
+                'message' => '',
+                'details' => '',
+            ],
+            'data' => [],
         ];
         return true;
     }
     
-    protected function setResponse($data)
+    protected function setData($data)
     {
         $this->apiResponse['data'] = $data;
     }
 
-    protected function addResponse($data)
-    {
-        $this->apiResponse['data'] = array_merge($this->apiResponse['data'], $data);
-    }
-
-    protected function setError(string $message, int $code=1)
+    protected function setError(string $message='', int $code=400, $details='')
     {
         $this->apiResponse = [
-            'status'  => 0,
-            'error'   => $code,
-            'message' => $message,
-            'data'    => [],
+            'status' => 0,
+            'error' => [
+                'code'    => $code,
+                'message' => '!!! ERROR !!!'.($message?' '.$message:''),
+                'details' => $details,
+            ],
+            'data' => [],
         ];
         $this->send();
     }

@@ -6,7 +6,7 @@ class UsersController extends _BaseController
     public function listAction()
     {
         $users = Users::find();
-        $this->setResponse(
+        $this->setData(
             $users
         );
     }
@@ -21,7 +21,7 @@ class UsersController extends _BaseController
                 404
             );
         }
-        $this->setResponse(
+        $this->setData(
             $user
         );
     }
@@ -49,7 +49,7 @@ class UsersController extends _BaseController
             );
         }
 
-        $this->setResponse([
+        $this->setData([
             'id' => $user->id,
         ]);
     }
@@ -79,7 +79,7 @@ class UsersController extends _BaseController
                 400
             );
         }
-        $this->setResponse(
+        $this->setData(
             $user
         );
     }
@@ -95,10 +95,7 @@ class UsersController extends _BaseController
         }
 
         if (!$user->delete()) {
-            $this->setError(
-                'Removing error!',
-                400
-            );
+            $this->setError('Removing error!', 400);
         }
     }
     

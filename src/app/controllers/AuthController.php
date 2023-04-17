@@ -1,61 +1,57 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
 use Phalcon\Mvc\Controller;
+use Phalcon\Http\Request;
+use Phalcon\Filter\Filter;
+use Phalcon\Filter\Validation;
+use Phalcon\Filter\Validation\Validator\Email;
+use Phalcon\Filter\Validation\Validator\PresenceOf;
 
 class AuthController extends _BaseController
 {
-    public function indexAction()
+    public function loginAction()
     {
-        $data = [
-            'session' => [
-                'token' => ($_COOKIE[CONFIG::GET('app', 'session-token-key')] ?? ''),
-                'logged' => false,
-            ],
-            'action' => ($_POST['action'] ?? $_GET['action'] ?? ''),
-            'update' => ($_GET['update'] ?? 0),
-        ];
-        $data['session']['logged'] = $data['session']['token'] !== '';
-        $this->view->data = $data;
+        //$inputs = PROVIDER::GET('inputs');
+        //$inputs->post(
+        //    'email',
+        //    ['injection', 'spaces'],
+        //    [
+        //        'required'=>true,
+        //        'size-min'=>6,
+        //        'size-max'=>25,
+        //        'size'=>25,
+        //        'email'=>25,
+        //    ],
+        //);
+        //if($inputs->error()){
+        //}
         
+        
+        /**
+          * @var Filter
+          */
+        $filter = PROVIDER::GET('filter');
+        $request = new Request();
 
-        $this->login($data);
-        $this->logout($data);
-    }
+        $email = $request->getPost('email', null, '');
+        $email = $filter->sanitize($email, ['injection', 'spaces']);
+        
+        $pass = $request->getPost('pass', null, '');
+        $pass = $filter->sanitize($pass, ['injection']);
 
-    private function login(&$data)
-    {
-        if($data['action']==="LOGIN"){
-            if($data['update']===0){
-                setcookie(CONFIG::GET('app', 'session-token-key'), time());
-                $data['update']=4;
-            }
 
-            
-            if($data['update']>=1 && $data['session']['token']===''){
-                header('Location: '.HTML_ROOT.'auth/?action=LOGIN&update='.(--$data['update']), 205);
-                exit;
-            }
+        $validation = new Validation();
+        $validation->add('email', new PresenceOf(['message' => 'The e-mail is required']));
+        $validation->add('email', new Email(['message' => 'The e-mail is not valid']));
 
-            header('Location: '.HTML_ROOT, 205);
-            exit;
+        $errors = $validation->validate([
+            'email' => $email,
+            'pass' => $pass,
+        ]);
+        if(count($errors)){
+            $this->setError("Login Error!", 400, $errors);
         }
-    }
 
-    private function logout(&$data)
-    {
-        if($data['action']==="LOGOUT"){
-            if($data['update']===0){
-                setcookie(CONFIG::GET('app', 'session-token-key'), '');
-                $data['update']=4;
-            }
-
-            if($data['update']>=1 && $data['session']['token']!==''){
-                header('Location: '.HTML_ROOT.'auth/?action=LOGOUT&update='.(--$data['update']), 205);
-                exit;
-            }
-
-            header('Location: '.HTML_ROOT, 205);
-            exit;
-        }
+        
     }
 
 }
