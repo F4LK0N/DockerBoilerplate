@@ -49,6 +49,10 @@ CREATE TABLE `users` (
         DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
 
+    `ts_deleted`
+        TIMESTAMP
+        NULL,
+
     PRIMARY KEY (`id`),
 
     KEY `IK_STATUS` (`status`),
