@@ -106,7 +106,8 @@ class HEADERS
 
     static private function HANDLE_CONTENT_REQUEST () 
     {
-        self::CONTENT_TYPE(eHEADER_CONTENT_TYPE::JSON);
+        //self::CONTENT_TYPE(eHEADER_CONTENT_TYPE::JSON);
+        self::CONTENT_TYPE(eHEADER_CONTENT_TYPE::HTML);//<=== DEV TEMP
 		self::CACHE_CONTROL(false);
 		self::EXPIRES();
 		self::E_TAG();

@@ -46,6 +46,7 @@ class _BaseController extends Controller
 
     protected function send()
     {
+        HEADERS::CONTENT_TYPE(eHEADER_CONTENT_TYPE::JSON);
         $this->response->setJsonContent($this->apiResponse);
         $this->response->send();
         exit(0);
