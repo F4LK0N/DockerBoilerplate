@@ -1,0 +1,64 @@
+{
+    "VersionCheck": false,
+    "ShowDbStructureCharset": true,
+    "HideStructureActions": false,
+    "ShowAll": true,
+    "MaxRows": 500,
+    "Order": "DESC",
+    "DefaultTabServer": "databases",
+    "DefaultTabTable": "structure",
+    "Export\/method": "custom",
+    "Export\/charset": "utf-8",
+    "Export\/sql_if_not_exists": true,
+    "Export\/sql_auto_increment": false,
+    "Export\/sql_create_view": false,
+    "Export\/sql_ignore": true,
+    "Export\/sql_type": "REPLACE",
+    "TablePrimaryKeyOrder": "DESC",
+    "RepeatCells": 50,
+    "TitleTable": "@TABLE@ [@DATABASE@]",
+    "TitleDatabase": "[ @DATABASE@]",
+    "TitleServer": "@VSERVER@",
+    "TitleDefault": "@HTTP_HOST@",
+    "SendErrorReports": "never",
+    "Console\/AlwaysExpand": true,
+    "Console\/Mode": "collapse",
+    "DefaultTransformations\/Substring": [
+        "0",
+        "all",
+        "\u2026"
+    ],
+    "DefaultTransformations\/External": [
+        "0",
+        "-f \/dev\/null -i -wrap -q",
+        "1",
+        "1"
+    ],
+    "DefaultTransformations\/Hex": [
+        "2"
+    ],
+    "DefaultTransformations\/DateFormat": [
+        "0",
+        "local",
+        "local"
+    ],
+    "DefaultTransformations\/Inline": {
+        "0": "100",
+        "1": "100",
+        "wrapper_link": null,
+        "wrapper_params": []
+    },
+    "DefaultTransformations\/TextImageLink": [
+        "100",
+        "50",
+        "50"
+    ],
+    "FirstDayOfCalendar": 1,
+    "Server\/hide_db": "(information_schema|mysql|performance_schema|sys)",
+    "Server\/only_db": "",
+    "2fa": {
+        "backend": "",
+        "settings": [],
+        "type": "session"
+    }
+}
