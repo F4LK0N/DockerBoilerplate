@@ -5,12 +5,19 @@ class UsersController extends _BaseController
 {
     public function listAction()
     {
-        print 'list';
+        $users = Users::find();
+        $this->setResponse(
+            $users
+        );
     }
 
     public function viewAction()
     {
-        print 'view';
+        $id = $this->request->getQuery('id');
+        $user = Users::findFirstById($id);
+        $this->setResponse(
+            $user
+        );
     }
 
     public function addAction() 
@@ -18,22 +25,40 @@ class UsersController extends _BaseController
         $user        = new Users();
         $user->name  = 'name';
         $user->email = 'email';
-        $success = $user->save();
-        $this->setResponse($success);
+        if(!$user->save()){
+            $this->setError(
+                'Error adding!'
+            );
+        }
+        $this->setResponse([
+            'id' => $user->id,
+        ]);
     }
-    
     
     public function editAction()
     {
-        print 'edit';
-
-        $id = $this->dispatcher->getParam('id');
-        vd($id);
+        $id = $this->request->getQuery('id');
+        $user = Users::findFirstById($id);
+        $user->name = time();
+        if(!$user->save()){
+            $this->setError(
+                'Error adding!'
+            );
+        }
+        $this->setResponse(
+            $user
+        );
     }
 
     public function remAction()
     {
-        print 'rem';
+        $id = $this->request->getQuery('id');
+        $user = Users::findFirstById($id);
+        if (!$user->delete()) {
+            $this->setError(
+                'Error removing!'
+            );
+        }
     }
     
 }
