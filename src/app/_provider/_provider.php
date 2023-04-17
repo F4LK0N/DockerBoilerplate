@@ -9,6 +9,7 @@ class PROVIDER
     static private array           $FILES = [
         "url",
         "router",
+        "filter",
         "session",
         "response",
         "db",
