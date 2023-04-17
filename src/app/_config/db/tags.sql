@@ -1,6 +1,6 @@
 CREATE TABLE `tags` (
     `id`
-        bigint
+        BIGINT
         NOT NULL
         AUTO_INCREMENT,
 

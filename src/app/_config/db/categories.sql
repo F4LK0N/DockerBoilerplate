@@ -1,6 +1,6 @@
 CREATE TABLE `categories` (
     `id`
-        bigint
+        BIGINT
         NOT NULL
         AUTO_INCREMENT,
 
@@ -23,7 +23,7 @@ CREATE TABLE `categories` (
         NOT NULL
         DEFAULT CURRENT_TIMESTAMP
         ON UPDATE CURRENT_TIMESTAMP,
-        
+
     `ts_deleted`
         TIMESTAMP
         NULL,

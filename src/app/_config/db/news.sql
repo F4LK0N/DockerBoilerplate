@@ -1,6 +1,6 @@
 CREATE TABLE `news` (
     `id`
-        bigint
+        BIGINT
         NOT NULL
         AUTO_INCREMENT,
 

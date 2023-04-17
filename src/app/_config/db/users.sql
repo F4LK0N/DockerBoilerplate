@@ -1,6 +1,6 @@
 CREATE TABLE `users` (
     `id`
-        bigint
+        BIGINT
         NOT NULL
         AUTO_INCREMENT,
 
