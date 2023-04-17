@@ -42,33 +42,40 @@ class Auth
     static login($button)
     {
         vd('Auth.login');
-        this.#transactionStart();
+        //this.#transactionStart();
 
         let $auth = this;
 
-        //API
-        (new API('/users/'))
-        .post(
+        (new API('/')).post();
+        (new API('/users/')).post();
+        (new API('/users/view/1')).post();
+        (new API('/users/add')).post();
+        (new API('/users/edit/1')).post();
+        (new API('/users/rem/1')).post();
 
-        )
-        .error((jqXHR, textStatus, errorThrown)=>{
-            console.error('error');
-            console.log(jqXHR);
-            console.log(textStatus);
-            console.log(errorThrown);
-        })
-        .success((data, textStatus, jqXHR)=>{
-            console.warn();('success');
-            console.log(data);
-            console.log(textStatus);
-            console.log(jqXHR);
-        })
-        .complete((jqXHR, textStatus)=>{
-            console.warn();('complete');
-            console.log(jqXHR);
-            console.log(textStatus);
-            $auth.#transactionStop();
-        });
+        ////API
+        //(new API('/users/'))
+        //.post(
+
+        //)
+        //.error((jqXHR, textStatus, errorThrown)=>{
+        //    console.error('error');
+        //    console.log(jqXHR);
+        //    console.log(textStatus);
+        //    console.log(errorThrown);
+        //})
+        //.success((data, textStatus, jqXHR)=>{
+        //    console.warn();('success');
+        //    console.log(data);
+        //    console.log(textStatus);
+        //    console.log(jqXHR);
+        //})
+        //.complete((jqXHR, textStatus)=>{
+        //    console.warn();('complete');
+        //    console.log(jqXHR);
+        //    console.log(textStatus);
+        //    $auth.#transactionStop();
+        //});
 
     }
 
