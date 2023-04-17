@@ -14,6 +14,15 @@ CREATE TABLE `news` (
         NOT NULL
         DEFAULT '0',
 
+    `step`
+        ENUM(
+            'DRAFT',
+            'REVISION',
+            'DONE'
+        )
+        NOT NULL
+        DEFAULT 'DRAFT',
+
     `short_title`
         VARCHAR(255)
         NOT NULL
