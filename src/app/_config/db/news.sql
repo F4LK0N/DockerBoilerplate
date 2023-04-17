@@ -1,4 +1,4 @@
-CREATE TABLE `categories` (
+CREATE TABLE `news` (
     `id`
         bigint
         NOT NULL
@@ -24,7 +24,6 @@ CREATE TABLE `categories` (
         NOT NULL
         DEFAULT '',
 
-
     `title`
         VARCHAR(255)
         NOT NULL
@@ -32,8 +31,7 @@ CREATE TABLE `categories` (
 
     `content`
         TEXT
-        NOT NULL
-        DEFAULT '',
+        NULL,
 
     `ts_created`
         TIMESTAMP
