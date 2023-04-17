@@ -6,15 +6,15 @@ CREATE TABLE `users` (
     
     `access_type`
         ENUM(
-            'dev',
-            'master',
-            'admin',
-            'manager',
-            'editor',
-            'reader'
+            'DEV',
+            'MASTER',
+            'ADMIN',
+            'MANAGER',
+            'EDITOR',
+            'READER'
         ) 
         NOT NULL
-        DEFAULT 'reader',
+        DEFAULT 'READER',
     
     `email`
         VARCHAR(255)

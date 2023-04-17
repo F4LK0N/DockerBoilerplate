@@ -4,9 +4,13 @@ use Phalcon\Mvc\Model;
 
 enum eUserTypes 
 {
-
+    case DEV;
+    case MASTER;
+    case ADMIN;
+    case MANAGER;
+    case EDITOR;
+    case READER;
 }
-
 
 class Users extends Model
 {
