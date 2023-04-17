@@ -10,7 +10,7 @@ $group->setPrefix('/auth/');
 
 
 $group->add('login', [
-    'action' => 'index',
+    'action' => 'login',
 ]);
 
 $group->add('logout', [
