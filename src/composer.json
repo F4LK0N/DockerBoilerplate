@@ -31,10 +31,7 @@
         "ext-psr": "*",
         "ext-pdo": "*",
         "ext-pdo_mysql": "*",
-        "ext-phalcon": "*",
-        "ext-xdebug": "3.2.1",
-        "phalcon/devtools": "^4.2",
-        "phalcon/ide-stubs": "^5.2"
+        "ext-phalcon": "*"
     },
     "autoload": {
         "psr-4": {
@@ -45,6 +42,7 @@
     },
     
     "require-dev": {
+        "ext-xdebug": "3.2.1",
         "ext-dom": "*",
         "ext-tokenizer": "*",
         "ext-xml": "*",
@@ -52,7 +50,8 @@
         "phpunit/phpunit": "10.*",
         "phpunit/php-code-coverage": "^10.0",
         "nikic/php-parser": "^4.15",
-        "phalcon/devtools": "^4.2"
+        "phalcon/ide-stubs": "^5.2",
+        "fakerphp/faker": "^1.21"
     },
     "autoload-dev": {
         "psr-4": {
