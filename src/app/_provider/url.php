@@ -2,7 +2,7 @@
 
 use Phalcon\Mvc\Url;
 
-PROVIDER::SET(
+PROVIDER::SET_SHARED(
     'url',
     function () {
         $url = new Url();

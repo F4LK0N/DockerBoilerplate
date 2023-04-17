@@ -11,6 +11,7 @@ class PROVIDER
         "router",
         "session",
         "response",
+        "db",
     ];
 
 

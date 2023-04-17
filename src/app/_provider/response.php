@@ -2,7 +2,7 @@
 
 use Phalcon\Http\Response;
 
-PROVIDER::SET(
+PROVIDER::SET_SHARED(
     'response',
     function () {
         $response = new Response();

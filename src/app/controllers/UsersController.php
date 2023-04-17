@@ -13,6 +13,16 @@ class UsersController extends _BaseController
         print 'view';
     }
 
+    public function addAction() 
+    {
+        $user        = new Users();
+        $user->name  = 'name';
+        $user->email = 'email';
+        $success = $user->save();
+        $this->setResponse($success);
+    }
+    
+    
     public function editAction()
     {
         print 'edit';

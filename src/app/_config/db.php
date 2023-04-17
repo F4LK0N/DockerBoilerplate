@@ -1,12 +1,12 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
 
-CONFIG::SET("database", [
+CONFIG::SET("db", [
 
     'main' => [
-        'host' => '',
-        'port' => '',
-        'user' => '',
-        'name' => '',
+        'host'     => 'mysql',
+        'username' => 'root',
+        'password' => 'root',
+        'dbname'   => 'app',
     ],
 
     'tdd' => [
@@ -22,4 +22,5 @@ CONFIG::SET("database", [
         'user' => '',
         'name' => '',
     ],
+    
 ]);
