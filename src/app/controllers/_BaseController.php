@@ -28,7 +28,7 @@ class _BaseController extends Controller
         $this->apiResponse['data'] = array_merge($this->apiResponse['data'], $data);
     }
 
-    protected function setError(int $code, string $message)
+    protected function setError(string $message, int $code=1)
     {
         $this->apiResponse = [
             'status'  => 0,
