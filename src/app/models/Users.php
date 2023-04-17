@@ -11,7 +11,12 @@ enum eUserTypes
 class Users extends Model
 {
     public $id;
+    public $access_type;
+
     public $email;
+    public $pass;
+
     public $name;
+    public $surname;
 
 }

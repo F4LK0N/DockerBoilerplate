@@ -24,6 +24,7 @@ $group->add('add', [
 
 $group->add('edit/:int', [
     'action' => 'edit',
+    'id' => 1,
 ]);
 
 $group->add('rem/:int', [

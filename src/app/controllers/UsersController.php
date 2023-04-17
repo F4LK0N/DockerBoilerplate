@@ -13,8 +13,14 @@ class UsersController extends _BaseController
 
     public function viewAction()
     {
-        $id = $this->request->getQuery('id');
+        $id = $this->dispatcher->getParam('id');
         $user = Users::findFirstById($id);
+        if($user===null){
+            $this->setError(
+                'Not found!',
+                404
+            );
+        }
         $this->setResponse(
             $user
         );
@@ -22,14 +28,27 @@ class UsersController extends _BaseController
 
     public function addAction() 
     {
-        $user        = new Users();
-        $user->name  = 'name';
-        $user->email = 'email';
+        //$params = [
+        //    'email'   => 
+        //    'pass'    => 
+        //    'name'    => 
+        //    'surname' => 
+        //    'name'    => 
+        //];
+        $faker = Faker\Factory::create();
+        
+        $user          = new Users();
+        $user->pass    = md5($user->name.'.'.$user->surname);
+        $user->name    = $faker->firstName();
+        $user->surname = $faker->lastName();
+        $user->email   = $user->name.'.'.$user->surname.'@gmail.com';
         if(!$user->save()){
             $this->setError(
-                'Error adding!'
+                'Error adding!',
+                400
             );
         }
+
         $this->setResponse([
             'id' => $user->id,
         ]);
@@ -37,12 +56,27 @@ class UsersController extends _BaseController
     
     public function editAction()
     {
-        $id = $this->request->getQuery('id');
+        //$params = [
+        //    'email'   => 
+        //    'pass'    => 
+        //    'name'    => 
+        //    'surname' => 
+        //    'name'    => 
+        //];
+
+        $id = $this->dispatcher->getParam('id');
         $user = Users::findFirstById($id);
-        $user->name = time();
+        if($user===null){
+            $this->setError(
+                'Not found!',
+                404
+            );
+        }
+
         if(!$user->save()){
             $this->setError(
-                'Error adding!'
+                'Saving error!',
+                400
             );
         }
         $this->setResponse(
@@ -52,11 +86,18 @@ class UsersController extends _BaseController
 
     public function remAction()
     {
-        $id = $this->request->getQuery('id');
+        $id = $this->dispatcher->getParam('id');
         $user = Users::findFirstById($id);
+        if($user===null){
+            $this->setError(
+                'Not found!'
+            );
+        }
+
         if (!$user->delete()) {
             $this->setError(
-                'Error removing!'
+                'Removing error!',
+                400
             );
         }
     }
