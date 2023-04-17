@@ -44,18 +44,32 @@ class Auth
         vd('Auth.login');
         this.#transactionStart();
 
+        let $auth = this;
+
         //API
-        setTimeout(()=>{
+        (new API('/users/'))
+        .post(
 
-            vd('Auth.login OK');
-            
-            this.#token = Date.now();
-            localStorage.setItem("token", this.#token);
-            this.#transactionStop();
+        )
+        .error((jqXHR, textStatus, errorThrown)=>{
+            console.error('error');
+            console.log(jqXHR);
+            console.log(textStatus);
+            console.log(errorThrown);
+        })
+        .success((data, textStatus, jqXHR)=>{
+            console.warn();('success');
+            console.log(data);
+            console.log(textStatus);
+            console.log(jqXHR);
+        })
+        .complete((jqXHR, textStatus)=>{
+            console.warn();('complete');
+            console.log(jqXHR);
+            console.log(textStatus);
+            $auth.#transactionStop();
+        });
 
-            window.location = HTML_ROOT;
-
-        }, 3000);
     }
 
     static refresh()
@@ -71,7 +85,7 @@ class Auth
             localStorage.setItem("token", this.#token);
             this.#transactionStop();
 
-        }, 3000);
+        }, 200);
     }
 
 }
