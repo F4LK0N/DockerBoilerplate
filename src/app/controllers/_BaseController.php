@@ -48,6 +48,7 @@ class _BaseController extends Controller
     {
         $this->response->setJsonContent($this->apiResponse);
         $this->response->send();
+        exit(0);
     }
 
 }
