@@ -152,3 +152,24 @@ https://docs.phalcon.io/5.0/en/application
 
 # CORS
 https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control
+
+
+
+# MySQL Charset and Collations
+https://dev.mysql.com/doc/refman/8.0/en/charset-unicode-sets.html
+
+https://dev.mysql.com/doc/refman/8.0/en/charset-unicode-sets.html#charset-unicode-sets-uca
+
+https://dev.mysql.com/doc/refman/8.0/en/charset-unicode-sets.html#charset-unicode-sets-language-specific-collations
+
+http://www.unicode.org/Public/UCA/9.0.0/allkeys.txt
+
+```
+DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+```
+
+# MySQL Engines
+```
+ENGINE=MyISAM
+ENGINE=InnoDB
+```
