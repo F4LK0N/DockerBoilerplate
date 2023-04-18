@@ -59,7 +59,6 @@ class ValidatorProvider
             $this->validator->add($name, new Email(['message' => "'$name' invalid!"]));
             $this->validator->add($name, new Max(["max"=>100, "message"=> "'$name' size max 100!"]));
         }elseif($type==='pass'){
-            $this->validator->add($name, new Email(['message' => "'$name' invalid!"]));
             $this->validator->add($name, new Min(["min"=>6, "message"=> "'$name' size min 6!"]));
             $this->validator->add($name, new Max(["max"=>100, "message"=> "'$name' max length 100!"]));
         }
