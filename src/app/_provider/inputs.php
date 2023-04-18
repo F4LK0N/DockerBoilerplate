@@ -52,6 +52,15 @@ class InputsProvider
                 $this->setError(eERROR_CODES::INPUT_CONFIG, 'Invalid field name!');
                 continue;
             }
+
+            //Type
+            if(!isset($config['validations']['type'])){
+                $config['validations']['type'] = 'string';
+            }
+
+            //Value
+            $config['value'] = '';
+
             //Filters
             if(!isset($config['filters']) || !is_array($config['filters'])){
                 $config['filters'] = ['injection'];
@@ -66,14 +75,9 @@ class InputsProvider
             }
             elseif(!isset($config['validations']['required'])){
                 $config['validations']['required'] = true;
+            }else{
+                $config['validations']['required'] = boolval($config['validations']['required']);
             }
-
-            if(!isset($config['validations']['type'])){
-                $config['validations']['type'] = 'string';
-            }
-
-            //Value
-            $config['value']='';
 
             //Add
             $this->fields["$name"] = $config;
@@ -98,6 +102,8 @@ class InputsProvider
                     $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' is required!");
                 }elseif(isset($config['default'])){
                     $config['value'] = $config['default'];
+                }else{
+                    $config['value'] = '';
                 }
             }
             unset($config['default']);
@@ -107,7 +113,6 @@ class InputsProvider
     }
 
 }
-
 
 
 

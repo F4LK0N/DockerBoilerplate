@@ -27,12 +27,14 @@ class PROVIDER
         return self::$INSTANCE;
     }
 
-    static public function GET(string $key=null): mixed
+    static public function GET(string $key, mixed $params=null): mixed
     {
-        if(!$key){
-            return self::INSTANCE();
-        }
-        return self::INSTANCE()[$key];
+        return self::INSTANCE()->get($key, $params);
+    }
+
+    static public function GET_SHARED(string $key, mixed $params=null): mixed
+    {
+        return self::INSTANCE()->getShared($key, $params);
     }
 
     static public function SET(string $key, mixed $function)
