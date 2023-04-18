@@ -99,4 +99,8 @@ class UsersController extends _BaseController
         }
     }
     
+    static public function login(string $email, string $pass)
+    {
+        
+    }
 }

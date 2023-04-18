@@ -12,7 +12,7 @@ class ResultError
 
 class Result
 {
-    public int          $status = eRESPONSE_STATUS_CODES::SUCCESS;
+    public int          $status = eSTATUS_CODES::SUCCESS;
     public ?ResultError $error  = null;
     public array        $data   = [];
 
@@ -23,7 +23,7 @@ class Result
 
     protected function setError(int $code, $details='')
     {
-        $this->status         = eRESPONSE_STATUS_CODES::ERROR;
+        $this->status         = eSTATUS_CODES::ERROR;
         $this->error->code    = $code??eERROR_CODES::GENERIC_ERROR;
         $this->error->details = $details;
         $this->data           = [];

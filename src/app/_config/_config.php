@@ -8,6 +8,7 @@ class CONFIG
 
     static private array   $FILES = [
         'app',
+        'enumerations',
         'namespaces',
         'directories',
         'router',

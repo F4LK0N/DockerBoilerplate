@@ -27,9 +27,7 @@ class AuthController extends _BaseController
                     'injection'],
                 'validations' => [
                     'type'=>'pass',
-                    'required'=>true,
-                    'size-min'=>6,
-                    'size-max'=>25,],
+                    'required'=>true],
             ],
         ]);
         if($inputs->hasErrors()){
@@ -39,9 +37,10 @@ class AuthController extends _BaseController
             );
         }
 
+        $result = UsersController::login($_POST['email'], $_POST['pass']);
+        VDD($result);
 
-
-        $this->setData($inputs);
+        //$this->setData($inputs);
     }
 
 }

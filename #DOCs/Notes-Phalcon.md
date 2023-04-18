@@ -185,3 +185,7 @@ https://docs.phalcon.io/5.0/en/filter-filter
 # Phalcon Validation
 https://docs.phalcon.io/3.4/en/validation
 https://docs.phalcon.io/5.0/en/db-models-validation
+
+
+# Models
+https://phalcon-nucleon.github.io/#!database/models.html
