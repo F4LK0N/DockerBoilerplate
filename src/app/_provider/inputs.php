@@ -33,7 +33,16 @@ class InputsProvider
         return $this->details;
     }
 
-    public function values(array $data, array $fields): bool
+
+
+    public function get($name): mixed
+    {
+        return $this->data[$name];
+    }
+
+
+
+    public function values(array $fields): bool
     {
         $this->method = 'VALUES';
         if(!$this->setFields($fields)){
@@ -55,16 +64,10 @@ class InputsProvider
     {
         try
         {
-            $request = new Request();
-
-            if(!$request->isPost()){
-                $this->setError(eERROR_CODES::INPUT_METHOD, 'Incorrect http method, POST expected!');
-                return false;
-            }
+            $this->data = [];
 
             foreach($this->fields as $name => &$config)
             {
-                $config['value'] = $request->getPost($name, null, null);
                 if($config['value']===null){
                     if($config['validations']['required']===true){
                         $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' is required!");
@@ -75,16 +78,8 @@ class InputsProvider
                     }
                 }
                 unset($config['default']);
-                $_POST[$name] = &$config['value'];
+                $this->data[$name] = &$config['value'];
             }
-
-            foreach($_POST as $name => &$value){
-                if(!isset($this->fields[$name])){
-                    $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' not allowed!");
-                }
-            }
-
-            $this->data = &$_POST;
             
             return !$this->hasErrors();
         }
@@ -156,6 +151,8 @@ class InputsProvider
             return false;
         }
     }
+
+
 
     private function setFields(&$fields): bool
     {
