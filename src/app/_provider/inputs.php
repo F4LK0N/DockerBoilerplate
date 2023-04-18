@@ -15,10 +15,7 @@ class InputsProvider
     private function setError(eERROR_CODES $code=null, string $details='')
     {
         $this->code = $code??eERROR_CODES::INPUT;
-        if($details!==''){
-            $this->details = $this->details?($this->details.'\n'):$details;
-        }
-        return true;
+        $this->details .= ($this->details?'\n':'').$details;
     }
     public function hasErrors(): bool
     {
@@ -88,14 +85,24 @@ class InputsProvider
     {
         $request = new Request();
 
-        if($request->isPost()){
-            return $this->setError(eERROR_CODES::INPUT_METHOD, 'Incorrect http method, POST expected!');
+        if(!$request->isPost()){
+            $this->setError(eERROR_CODES::INPUT_METHOD, 'Incorrect http method, POST expected!');
+            return false;
         }
 
         foreach($this->fields as $name => &$config)
         {
             $config['value'] = $request->getPost($name, null, null);
+            if($config['value']===null){
+                if($config['validations']['required']===true){
+                    $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' is required!");
+                }elseif(isset($config['default'])){
+                    $config['value'] = $config['default'];
+                }
+            }
+            unset($config['default']);
         }
+
         return !$this->hasErrors();
     }
 
