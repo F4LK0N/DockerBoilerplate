@@ -39,10 +39,13 @@ class InputsProvider
         if(!$this->postRetrieve()){
             return false;
         }
+        if(!$this->filter()){
+            return false;
+        }
         return true;
     }
 
-    private function setFields(&$fields)
+    private function setFields(&$fields): bool
     {
         $this->fields = [];
         foreach($fields as $name => &$config)
@@ -85,7 +88,7 @@ class InputsProvider
         return !$this->hasErrors();
     }
 
-    private function postRetrieve ()
+    private function postRetrieve (): bool
     {
         try
         {
@@ -110,13 +113,26 @@ class InputsProvider
                 }
                 unset($config['default']);
             }
+            
+            return !$this->hasErrors();
+        }
+        catch (\Exception $exception) {
+            VD($exception->getCode());
+            $this->setError(eERROR_CODES::INPUT_RETRIEVE + $exception->getCode(), $exception->getMessage());
+            return false;
+        }
+    }
 
-            throw new UnexpectedValueException("Invalid host ");
+    private function filter (): bool
+    {
+        try
+        {
+            
 
             return !$this->hasErrors();
         }
         catch (\Exception $exception) {
-            $this->setError(eERROR_CODES::INPUT_RETRIEVE + $exception->getCode(), $exception->getMessage());
+            $this->setError(eERROR_CODES::INPUT_FILTER + $exception->getCode(), $exception->getMessage());
             return false;
         }
     }
