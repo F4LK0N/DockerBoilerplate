@@ -43,6 +43,9 @@ class InputsProvider
         if(!$this->filter()){
             return false;
         }
+        if(!$this->validate()){
+            return false;
+        }
         return true;
     }
 
@@ -113,6 +116,7 @@ class InputsProvider
                     }
                 }
                 unset($config['default']);
+                $_POST[$name] = &$config['value'];
             }
             
             return !$this->hasErrors();
@@ -140,6 +144,21 @@ class InputsProvider
         }
         catch (\Exception $exception) {
             $this->setError(eERROR_CODES::INPUT_FILTER + $exception->getCode(), $exception->getMessage());
+            return false;
+        }
+    }
+
+    private function validate (): bool
+    {
+        try
+        {
+            VD($this->fields);
+            VDD($_POST);
+
+            return !$this->hasErrors();
+        }
+        catch (\Exception $exception) {
+            $this->setError(eERROR_CODES::INPUT_VALIDATION + $exception->getCode(), $exception->getMessage());
             return false;
         }
     }

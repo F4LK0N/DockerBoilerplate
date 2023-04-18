@@ -12,6 +12,9 @@ class AuthController extends _BaseController
 {
     public function loginAction()
     {
+
+        $_POST['test2'] = ' ';
+
         $inputs = PROVIDER::GET('inputs');
         $inputs->post([
             'email' => [
@@ -41,6 +44,11 @@ class AuthController extends _BaseController
                 ],
                 'default' => ' as  asd \''
             ],
+            'test2' => [
+                'validations' => [
+                    'required' => true,
+                ],
+            ],
         ]);
         if($inputs->hasErrors()){
             $this->setError(
@@ -52,22 +60,6 @@ class AuthController extends _BaseController
 
         VD($inputs);
         die;
-
-        //if($inputs->error()){
-        //}
-        
-        
-        /**
-          * @var Filter
-          */
-        $filter = PROVIDER::GET('filter');
-        $request = new Request();
-
-        $email = $request->getPost('email', null, '');
-        $email = $filter->sanitize($email, ['injection', 'spaces']);
-        
-        $pass = $request->getPost('pass', null, '');
-        $pass = $filter->sanitize($pass, ['injection']);
 
 
         $validation = new Validation();
