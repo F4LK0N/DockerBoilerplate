@@ -2,6 +2,8 @@
 
 use Phalcon\Mvc\Model;
 use Phalcon\Db\Column;
+use Phalcon\Mvc\Model\Criteria;
+use Phalcon\Mvc\Model\Resultset;
 
 trait ModelBehaviorStatus
 {
@@ -70,6 +72,66 @@ class Users extends Model
         //    'autoInsert' => true,
         //    'autoUpdate' => true,
         //]);
+    }
+
+    static public function findByLogin(string $email, string $pass): Result
+    {
+        $result = new Result();
+
+        $inputs = PROVIDER::GET('inputs');
+        $inputs->values([
+            'email' => [
+                'value' => $email,
+                'filters' => [
+                    'injection',
+                    'spaces'],
+                'validations' => [
+                    'type'=>'email',
+                    'required'=>true],
+            ],
+            'pass' => [
+                'value' => $pass,
+                'filters' => [
+                    'injection',
+                    'spaces'],
+                'validations' => [
+                    'type'=>'pass',
+                    'required'=>true],
+            ],
+        ]);
+        if($inputs->hasErrors()){
+            $result->setError(
+                eERROR_CODES::MODEL_INPUT + $inputs->getErrorCode(),
+                $inputs->getErrorDetails()
+            );
+            return $result;
+        }
+
+        $email = $inputs->get('email');
+        $pass  = $inputs->get('pass');
+        $pass  = PROVIDER::GET_SHARED('security')->passHash($email, $pass);
+        
+        /** @var ResultSet $resultset */
+        $resultset = Users::query()
+            ->columns('id,access_type,email,name,surname')
+            ->where('status = 1')
+            ->andWhere('email = :email:')
+            ->andWhere('pass = :pass:')
+            ->bind([
+                'email' => $email,
+                'pass'  => $pass,
+            ])
+        ->execute();
+        if($resultset->count()!==1){
+            $result->setError(
+                eERROR_CODES::MODEL_NOT_FOUND,
+                'User not found!'
+            );
+            return $result;
+        }
+        $user = $resultset->getFirst()->toArray();
+        $result->setData(['user'=>$user]);
+        return $result;
     }
 
 }
