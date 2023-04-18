@@ -27,7 +27,7 @@ do
 
         if [ "$option" == "1" ]; then
             echo "- ps -A"
-            echo "- top"
+            echo "- top -H -d 0.1 (NR)"
             echo "- kill"
         fi
 
@@ -49,7 +49,7 @@ do
         fi
 
         if [ "$option" == "4" ]; then
-            top
+            top -H -d 0.1
             option="DONTWAIT"
         fi
 
