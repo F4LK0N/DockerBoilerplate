@@ -5,20 +5,6 @@ use Phalcon\Db\Column;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Mvc\Model\Resultset;
 
-trait ModelBehaviorStatus
-{
-    public function beforeCreate()
-    {
-        
-    }
-
-    public function beforeUpdate()
-    {
-        
-    }
-    
-}
-
 enum eUserTypes 
 {
     case DEV;
@@ -31,9 +17,6 @@ enum eUserTypes
 
 class Users extends _ModelBase
 {
-    use ModelBehaviorStatus;
-
-
     public $id;
     public $access_type;
 
