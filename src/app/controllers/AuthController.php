@@ -44,8 +44,9 @@ class AuthController extends _BaseController
                 $result->getErrorDetails()
             );
         }
+        $user = $result->get();
         
-        $this->setData($result->get());
+        $this->setData(['user'=>$user]);
     }
 
 }

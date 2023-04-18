@@ -32,30 +32,74 @@ class UsersController extends _BaseController
 
     public function addAction() 
     {
-        //$params = [
-        //    'email'   => 
-        //    'pass'    => 
-        //    'name'    => 
-        //    'surname' => 
-        //    'name'    => 
-        //];
-        $faker = Faker\Factory::create();
-        
-        $user          = new Users();
-        $user->pass    = md5($user->name.'.'.$user->surname);
-        $user->name    = $faker->firstName();
-        $user->surname = $faker->lastName();
-        $user->email   = $user->name.'.'.$user->surname.'@gmail.com';
-        if(!$user->save()){
+        $inputs = PROVIDER::GET('inputs');
+        $inputs->post([
+            'email' => [
+                'filters' => [
+                    'injection',
+                    'spaces'],
+                'validations' => [
+                    'type'=>'email',
+                    'required'=>true],
+            ],
+            'pass' => [
+                'filters' => [
+                    'injection',
+                    'spaces'],
+                'validations' => [
+                    'type'=>'pass',
+                    'required'=>true],
+            ],
+            'name' => [
+                'filters' => [
+                    'injection',
+                    'double-spaces'],
+                'validations' => [
+                    'type'=>'string',
+                    'required'=>true],
+            ],
+            'surname' => [
+                'filters' => [
+                    'injection',
+                    'double-spaces'],
+                'validations' => [
+                    'type'=>'string',
+                    'required'=>true],
+            ],
+        ]);
+        if($inputs->hasErrors()){
             $this->setError(
-                'Error adding!',
-                400
+                eERROR_CODES::CONTROLLER_INPUT + $inputs->getErrorCode(),
+                $inputs->getErrorDetails()
             );
         }
 
-        $this->setData([
-            'id' => $user->id,
-        ]);
+        $user          = new Users();
+        $user->email   = $inputs->get('email');
+        $user->pass    = PROVIDER::GET_SHARED('security')->passHash($inputs->get('email'), $inputs->get('pass'));
+        $user->name    = $inputs->get('name');
+        $user->surname = $inputs->get('surname');
+
+        try
+        {
+            if(!$user->save()){
+                $this->setError(
+                    eERROR_CODES::CONTROLLER_TRANSACTION,
+                    $user->getMessagesString()
+                );
+            }
+            $this->setData(['user'=>[
+                'id' => $user->id,
+                'email' => $user->email,
+                'name' => $user->name,
+            ]]);
+        }
+        catch (\Exception $exception) {
+            $this->setError(
+                eERROR_CODES::CONTROLLER_TRANSACTION + $exception->getCode(), 
+                $user->getMessagesString($exception->getMessage())
+            );
+        }
     }
     
     public function editAction()
