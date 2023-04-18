@@ -163,10 +163,10 @@ class InputsProvider
             {
                $validator->add($name, $config['validations']);
             }
-            die;
-            $validator->validate($this->data);
-
             
+            if(!$validator->validate($this->data)){
+                $this->setError(eERROR_CODES::INPUT_VALIDATION, $validator->getErrorDetails());
+            }
 
             return !$this->hasErrors();
         }
