@@ -11,6 +11,7 @@ class InputsProvider
     
     private string $method = '';
     private array  $fields = [];
+    private array  $data   = [];
 
 
 
@@ -119,6 +120,7 @@ class InputsProvider
                 unset($config['default']);
                 $_POST[$name] = &$config['value'];
             }
+            $this->data = &$_POST;
             
             return !$this->hasErrors();
         }
@@ -133,9 +135,7 @@ class InputsProvider
     {
         try
         {
-            /**
-             * @var Filter $filter
-            */
+            /** @var Filter $filter */
             $filter = PROVIDER::GET('filter');
             foreach($this->fields as $name => &$config)
             {
@@ -156,23 +156,17 @@ class InputsProvider
     {
         try
         {
+            /** @var ValidatorProvider $validator */
+            $validator = PROVIDER::GET('validator');
+
+            foreach($this->fields as $name => &$config)
+            {
+               $validator->add($name, $config['validations']);
+            }
+            die;
+            $validator->validate($this->data);
+
             
-
-
-            //$validation = new Validation();
-            //$validation->add('email', new PresenceOf(['message' => 'The e-mail is required']));
-            //$validation->add('email', new Email(['message' => 'The e-mail is not valid']));
-
-            //$errors = $validation->validate([
-            //    'email' => $email,
-            //    'pass' => $pass,
-            //]);
-
-
-
-
-
-
 
             return !$this->hasErrors();
         }

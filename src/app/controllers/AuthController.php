@@ -26,8 +26,7 @@ class AuthController extends _BaseController
                     'required'=>true,
                     'size-min'=>6,
                     'size-max'=>25,
-                    'size'=>25,
-                    'email'=>25,],
+                    'size'=>25],
             ],
             'pass' => [
                 'filters' => [
