@@ -2,6 +2,7 @@
 
 use Phalcon\Http\Request;
 use Phalcon\Filter\Filter;
+use Phalcon\Filter\Validation;
 
 class InputsProvider
 {
@@ -139,6 +140,9 @@ class InputsProvider
             foreach($this->fields as $name => &$config)
             {
                 $config['value'] = $filter->sanitize($config['value'], $config['filters']);
+                if($config['value']==='' && $config['validations']['required']===true){
+                    $this->setError(eERROR_CODES::INPUT_FILTER, "'$name' is required!");
+                }
             }
             return !$this->hasErrors();
         }
@@ -152,8 +156,23 @@ class InputsProvider
     {
         try
         {
-            VD($this->fields);
-            VDD($_POST);
+            
+
+
+            //$validation = new Validation();
+            //$validation->add('email', new PresenceOf(['message' => 'The e-mail is required']));
+            //$validation->add('email', new Email(['message' => 'The e-mail is not valid']));
+
+            //$errors = $validation->validate([
+            //    'email' => $email,
+            //    'pass' => $pass,
+            //]);
+
+
+
+
+
+
 
             return !$this->hasErrors();
         }

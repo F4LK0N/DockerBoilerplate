@@ -13,7 +13,7 @@ class AuthController extends _BaseController
     public function loginAction()
     {
 
-        $_POST['test2'] = ' ';
+        $_POST['test2'] = ' a';
 
         $inputs = PROVIDER::GET('inputs');
         $inputs->post([
@@ -58,23 +58,8 @@ class AuthController extends _BaseController
         }
 
 
-        VD($inputs);
-        die;
 
-
-        $validation = new Validation();
-        $validation->add('email', new PresenceOf(['message' => 'The e-mail is required']));
-        $validation->add('email', new Email(['message' => 'The e-mail is not valid']));
-
-        $errors = $validation->validate([
-            'email' => $email,
-            'pass' => $pass,
-        ]);
-        //if(count($errors)){
-        //    $this->setError("Login Error!", 1, $errors);
-        //}
-
-        
+        $this->setData($inputs);
     }
 
 }
