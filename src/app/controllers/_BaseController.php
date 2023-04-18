@@ -24,9 +24,10 @@ enum eERROR_CODES: int
     //INPUT
     case INPUT            = 100; //Generic Input Error.
     case INPUT_CONFIG     = 101; //Invalid Config
-    case INPUT_RETRIEVE   = 102; //Cannot Retrieve
-    case INPUT_FILTER     = 103; //Filter Error
-    case INPUT_VALIDATION = 104; //Validation Error
+    case INPUT_METHOD     = 102; //Incorrect method used.
+    case INPUT_RETRIEVE   = 103; //Cannot Retrieve
+    case INPUT_FILTER     = 104; //Filter Error
+    case INPUT_VALIDATION = 105; //Validation Error
 }
 
 class _BaseController extends Controller
@@ -52,13 +53,12 @@ class _BaseController extends Controller
         $this->apiResponse['data'] = $data;
     }
 
-    protected function setError(string $message, int $code=null, $details='')
+    protected function setError(eERROR_CODES $codeBase, eERROR_CODES $code, $details='')
     {
         $this->apiResponse = [
             'status' => eRESPONSE_STATUS_CODES::ERROR,
             'error' => [
-                'code'    => ($code??eERROR_CODES::CONTROLLER),
-                'message' => $message,
+                'code'    => ($codeBase->value + $code->value),
                 'details' => $details,
             ],
             'data' => [],

@@ -6,22 +6,54 @@ use Phalcon\Filter\Validation;
 use Phalcon\Filter\Validation\Validator\Email;
 use Phalcon\Filter\Validation\Validator\PresenceOf;
 
+
+
 class AuthController extends _BaseController
 {
     public function loginAction()
     {
-        //$inputs = PROVIDER::GET('inputs');
-        //$inputs->post(
-        //    'email',
-        //    ['injection', 'spaces'],
-        //    [
-        //        'required'=>true,
-        //        'size-min'=>6,
-        //        'size-max'=>25,
-        //        'size'=>25,
-        //        'email'=>25,
-        //    ],
-        //);
+        $inputs = PROVIDER::GET('inputs');
+        $inputs->post([
+            'email' => [
+                'filters' => [
+                    'injection',
+                    'spaces'],
+                'validations' => [
+                    'type'=>'email',
+                    'required'=>true,
+                    'size-min'=>6,
+                    'size-max'=>25,
+                    'size'=>25,
+                    'email'=>25,],
+            ],
+            'pass' => [
+                'filters' => [
+                    'injection'],
+                'validations' => [
+                    'type'=>'pass',
+                    'required'=>true,
+                    'size-min'=>6,
+                    'size-max'=>25,],
+            ],
+            'test' => [],
+            'test2' => [
+                'filters' => [
+                    'aa',
+                ]
+            ],
+        ]);
+        if($inputs->hasErrors()){
+            $this->setError(
+                eERROR_CODES::CONTROLLER_INPUT, 
+                $inputs->getErrorCode(),
+                $inputs->getErrorDetails()
+            );
+        }
+
+
+        VD($inputs);
+        die;
+
         //if($inputs->error()){
         //}
         
@@ -48,7 +80,7 @@ class AuthController extends _BaseController
             'pass' => $pass,
         ]);
         if(count($errors)){
-            $this->setError("Login Error!", 400, $errors);
+            $this->setError("Login Error!", 1, $errors);
         }
 
         

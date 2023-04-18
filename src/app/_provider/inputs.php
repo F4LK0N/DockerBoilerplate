@@ -16,23 +16,32 @@ class InputsProvider
     {
         $this->code = $code??eERROR_CODES::INPUT;
         if($details!==''){
-            $this->details .= $details.'\n';
+            $this->details = $this->details?($this->details.'\n'):$details;
         }
         return true;
     }
-
-    public function hasError(): bool
+    public function hasErrors(): bool
     {
         return ($this->code !== eERROR_CODES::NO_ERROR);
+    }
+    public function getErrorCode(): eERROR_CODES
+    {
+        return $this->code;
+    }
+    public function getErrorDetails(): string
+    {
+        return $this->details;
     }
 
     public function post(array $fields): bool
     {
         $this->method = 'POST';
-        if($this->setFields($fields)){
+        if(!$this->setFields($fields)){
             return false;
         }
-        //$this->postRetrieve();
+        if(!$this->postRetrieve()){
+            return false;
+        }
         return true;
     }
 
@@ -43,7 +52,7 @@ class InputsProvider
         {
             //Name
             if(!is_string($name) || $name===''){
-                $this->setError(eERROR_CODES::INPUT_CONFIG, 'Invalid field name');
+                $this->setError(eERROR_CODES::INPUT_CONFIG, 'Invalid field name!');
                 continue;
             }
             //Filters
@@ -68,27 +77,26 @@ class InputsProvider
 
             //Value
             $config['value']='';
-            if(isset($config['default'])){
-                $config['value'] = $config['default'];
-                unset($config['default']);
-            }
 
             //Add
             $this->fields["$name"] = $config;
         }
-        return !$this->hasError();
+        return !$this->hasErrors();
     }
 
     private function postRetrieve ()
     {
         $request = new Request();
-        foreach($this->fields as $name => &$field)
-        {
-            if(!is_string($name))
 
-            $field['value'] = $request->getPost($name, null, '');
+        if($request->isPost()){
+            return $this->setError(eERROR_CODES::INPUT_METHOD, 'Incorrect http method, POST expected!');
         }
-        die;
+
+        foreach($this->fields as $name => &$config)
+        {
+            $config['value'] = $request->getPost($name, null, null);
+        }
+        return !$this->hasErrors();
     }
 
 }
