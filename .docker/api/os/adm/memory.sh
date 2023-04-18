@@ -17,6 +17,7 @@ do
         echo " 1 = Commands"
         echo " 2 = Memory Stats"
         echo " 3 = Memory Stats - Detailed"
+        echo " 4 = [REALTIME] Memory (top)"
         echo "$ADM_DIVIDER"
 
         echo -n "Enter option: "
@@ -39,9 +40,16 @@ do
             echo "$list"
         fi
 
-        echo "$ADM_DIVIDER"
-        echo -n "Enter to continue..."
-        read -r -s -n 1 option
+        if [ "$option" == "4" ]; then
+            top -m -d 0.1
+            option="DONTWAIT"
+        fi
+
+        if [ "$option" != "DONTWAIT" ]; then
+            echo "$ADM_DIVIDER"
+            echo -n "Enter to continue..."
+            read -r -s -n 1 option
+        fi
         option="---"
 
     fi
