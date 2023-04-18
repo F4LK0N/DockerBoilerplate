@@ -8,6 +8,16 @@ class AuthController extends _BaseController
     
     public function loginAction()
     {
+        $user = new Users();
+        $user->save();
+        $user = new Users();
+        $user = new Users();
+
+        $user = new Sessions();
+        $user = new Sessions();
+        $user = new Sessions();
+        return;
+
         $inputs = PROVIDER::GET('inputs');
         $inputs->post([
             'email' => [

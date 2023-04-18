@@ -30,6 +30,11 @@ class Users extends _ModelBase
 
     public function initialize()
     {
+        echo "USERS ";
+        $this->behaviorStatusEnabled(true);
+        parent::initialize();
+        echo "USERS \n";
+
         //$this->skipAttributes([
         //    'pass',
         //]);

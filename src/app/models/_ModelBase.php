@@ -2,63 +2,178 @@
 
 use Phalcon\Mvc\Model;
 use Phalcon\Mvc\Model\Resultset;
+use Phalcon\Messages\Message;
+use Phalcon\Events\Manager;
+use Phalcon\Events\Event;
 
-trait _Behavior_Status
+class _ModelBehaviorBase extends Model
 {
-    public function beforeCreate()
-    {
-        echo('STATUS beforeCreate');
-        echo(@$this->id).'\n';
-        $this->skipOperation(true);
-        
-    }
-    public function create(): bool
-    {
-        echo('STATUS create');
-        echo(@$this->id).'\n';
-        $this->skipOperation(true);
-        return true;
-    }
-    public function afterCreate()
-    {
-        echo('STATUS afterCreate');
-        echo(@$this->id).'\n';
-        $this->skipOperation(true);
+    protected bool     $eventsManagerEnable = false;
+    protected ?Manager $eventsManager       = null;
+
+    public function initialize(){
+        if(!$this->eventsManagerEnable){
+            return;
+        }
+        echo "BBB ";
+        $this->eventsManager = new Manager();
     }
 
-
-    public function beforeUpdate()
+    protected function initializeAfter(): void
     {
-        $this->skipOperation(true);
-        
-        //VD('STATUS beforeUpdate');
+        if(!$this->eventsManagerEnable){
+            return;
+        }
+        echo "BBA ";
+        //VDD($this->eventsManager);
+        $this->setEventsManager($this->eventsManager);
     }
-    
-    public function beforeDelete()
+
+}
+
+
+class _Model_Subversion extends _ModelBehaviorBase
+{
+    private $behaviorSubversionEnabled = false;
+
+    protected function behaviorSubversionEnabled($enabled=null){
+        if($enabled!==null){
+            $this->behaviorSubversionEnabled = boolval($enabled);
+            $this->eventsManagerEnable = ($this->eventsManagerEnable || $this->behaviorSubversionEnabled);
+        }
+        return $this->behaviorSubversionEnabled;
+    }
+
+    public function initialize()
     {
-        $this->skipOperation(true);
-        
-        //VD('STATUS beforeDelete');
+        parent::initialize();
+        if(!$this->behaviorSubversionEnabled){
+            return;
+        }
+        echo "SUBVERSION ";
+
     }
     
 }
 
-trait _Behavior_Subversion
+class _Model_Status extends _Model_Subversion
 {
-    public function beforeCreate()
+    private $behaviorStatusEnabled = false;
+
+    protected function behaviorStatusEnabled($enabled=null)
     {
-        
+        if($enabled!==null){
+            $this->behaviorStatusEnabled = boolval($enabled);
+            $this->eventsManagerEnable = ($this->eventsManagerEnable || $this->behaviorStatusEnabled);
+        }
+        return $this->behaviorStatusEnabled;
     }
 
-    public function beforeUpdate()
+    public function initialize()
     {
-        
+        parent::initialize();
+        if(!$this->behaviorStatusEnabled){
+            return;
+        }
+        echo "STATUS ";
+
+        $this->behaviorStatusBeforeSave();
+        $this->behaviorStatusBeforeCreate();
     }
+
+    private function behaviorStatusBeforeSave()
+    {
+        $this->eventsManager->attach(
+            'model:beforeSave',
+            function (Event $event, $model) {
+                VD($event);
+                VD($model);
+
+                return true;
+            }
+        );
+    }
+
+    private function behaviorStatusBeforeCreate()
+    {
+        $this->eventsManager->attach(
+            'model:beforeCreate',
+            function (Event $event, $model) {
+                VD($event);
+                VD($model);
+                return true;
+            }
+        );
+    }
+    
+    //public function beforeCreate()
+    //{
+    //    if(!$this->behaviorStatusEnabled){
+    //        return;
+    //    }
+
+    //    echo("STATUS beforeCreate\n");
+    //    $this->skipOperation(true);
+    //    $message = new Message(
+    //        "STATUS beforeCreate"
+    //    );
+    //    $this->appendMessage($message);
+    //}
+    //public function create(): bool
+    //{
+    //    if(!$this->behaviorStatusEnabled){
+    //        return true;
+    //    }
+
+    //    echo("STATUS create\n");
+    //    $this->skipOperation(true);
+    //    //echo(@$this->id).'\n';
+    //    //$this->skipOperation(true);
+    //    return true;
+    //}
+    //public function afterCreate()
+    //{
+    //    if(!$this->behaviorStatusEnabled){
+    //        return;
+    //    }
+
+    //    echo("STATUS afterCreate\n");
+    //    $this->skipOperation(true);
+    //    $message = new Message(
+    //        "STATUS afterCreate"
+    //    );
+    //    $this->appendMessage($message);
+    //}
+
+
+    //public function beforeUpdate()
+    //{
+    //    //$this->skipOperation(true);
+        
+    //    //VD('STATUS beforeUpdate');
+    //}
+    
+    //public function beforeDelete()
+    //{
+    //    //$this->skipOperation(true);
+        
+    //    //VD('STATUS beforeDelete');
+    //}
     
 }
 
-class _ModelBase extends Model
+class _ModelBase extends _Model_Status
 {
+    public function initialize()
+    {
+        echo "BASE ";
+        parent::initialize();
+        $this->initializeAfter();
+        echo "BASE ";
+        
+        
+    }
+
     public function getMessagesString($messages='')
     {
         if($messages===''){
