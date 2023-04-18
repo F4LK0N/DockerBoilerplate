@@ -39,7 +39,6 @@ class Result
     {
         $this->status          = eSTATUS_CODES::ERROR;
         $this->error->code     = $code??eERROR_CODES::GENERIC_ERROR;
-        $this->error->details  = $details;
         $this->error->details .= ($this->error->details?'\n':'').$details;
         $this->data            = [];
     }
