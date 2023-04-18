@@ -28,17 +28,6 @@
         "command": "editor.action.transformToLowercase",
         "when": "editorTextFocus && !editorReadonly"
     },
-    //DELETE WORD
-    {
-        "key": "ctrl+delete",
-        "command": "deleteWordRight",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "shift+delete",
-        "command": "deleteWordLeft",
-        "when": "editorTextFocus && !editorReadonly"
-    },
     //LINE - DUPLICATE
     {
         "key": "ctrl+d",
@@ -67,9 +56,19 @@
         "command": "editor.action.insertLineAfter",
         "when": "editorTextFocus && !editorReadonly && !findWidgetVisible"
     },
-    //LINE - DELETE
+    //DELETE
     {
         "key": "ctrl+backspace",
+        "command": "deleteWordLeft",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+delete",
+        "command": "deleteWordRight",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+shift+backspace",
         "command": "editor.action.deleteLines",
         "when": "editorTextFocus && !editorReadonly"
     },
@@ -134,7 +133,7 @@
         "args": {
             "commands": [
                 "hideSuggestWidget",
-                "editor.action.quickFix"
+                "editor.action.quickFix",
             ]
         },
         "when": "editorTextFocus && suggestWidgetVisible"
