@@ -42,7 +42,7 @@ class Users extends Model
     public $surname;
 
 
-    
+
     public function initialize()
     {
         //$this->skipAttributes([

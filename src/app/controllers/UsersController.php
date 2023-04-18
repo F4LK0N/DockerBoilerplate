@@ -1,5 +1,8 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
+
 use Phalcon\Mvc\Controller;
+use Phalcon\Mvc\Model;
+use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Mvc\Model\Resultset;
 
 class UsersController extends _BaseController
@@ -136,21 +139,17 @@ class UsersController extends _BaseController
         $email = $inputs->get('email');
         $pass  = $inputs->get('pass');
 
-        /** @var Resultset $resultset */
-        $resultset = Users::find([
-            //'columns'=> 
-            //    '',
-            'conditions'=>
-                "(status = 1)".
-                ' AND '.
-                "(email = :email:)".
-                ' AND '.
-                '(pass = :pass:)',
-            'bind' => [
+        /** @var ResultSet $resultset */
+        $resultset = Users::query()
+            ->columns('id,access_type,email,name,surname')
+            ->where('status = 1')
+            ->andWhere('email = :email:')
+            ->andWhere('pass = :pass:')
+            ->bind([
                 'email' => $email,
                 'pass'  => $pass,
-            ],
-        ]);
+            ])
+        ->execute();
         if($resultset->count()!==1){
             $result->setError(
                 eERROR_CODES::CONTROLLER_NOT_FOUND,
