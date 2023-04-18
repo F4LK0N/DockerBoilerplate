@@ -4,7 +4,7 @@ use Phalcon\Http\Request;
 
 class InputsProvider
 {
-    private eERROR_CODES $code    = eERROR_CODES::NO_ERROR;
+    private int          $code    = eERROR_CODES::NO_ERROR;
     private string       $details = '';
     
     private string $method = '';
@@ -12,7 +12,7 @@ class InputsProvider
 
 
 
-    private function setError(eERROR_CODES $code=null, string $details='')
+    private function setError(int $code=null, string $details='')
     {
         $this->code = $code??eERROR_CODES::INPUT;
         $this->details .= ($this->details?'\n':'').$details;
@@ -21,7 +21,7 @@ class InputsProvider
     {
         return ($this->code !== eERROR_CODES::NO_ERROR);
     }
-    public function getErrorCode(): eERROR_CODES
+    public function getErrorCode(): int
     {
         return $this->code;
     }
@@ -87,29 +87,38 @@ class InputsProvider
 
     private function postRetrieve ()
     {
-        $request = new Request();
+        try
+        {
+            $request = new Request();
 
-        if(!$request->isPost()){
-            $this->setError(eERROR_CODES::INPUT_METHOD, 'Incorrect http method, POST expected!');
+            if(!$request->isPost()){
+                $this->setError(eERROR_CODES::INPUT_METHOD, 'Incorrect http method, POST expected!');
+                return false;
+            }
+
+            foreach($this->fields as $name => &$config)
+            {
+                $config['value'] = $request->getPost($name, null, null);
+                if($config['value']===null){
+                    if($config['validations']['required']===true){
+                        $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' is required!");
+                    }elseif(isset($config['default'])){
+                        $config['value'] = $config['default'];
+                    }else{
+                        $config['value'] = '';
+                    }
+                }
+                unset($config['default']);
+            }
+
+            throw new UnexpectedValueException("Invalid host ");
+
+            return !$this->hasErrors();
+        }
+        catch (\Exception $exception) {
+            $this->setError(eERROR_CODES::INPUT_RETRIEVE + $exception->getCode(), $exception->getMessage());
             return false;
         }
-
-        foreach($this->fields as $name => &$config)
-        {
-            $config['value'] = $request->getPost($name, null, null);
-            if($config['value']===null){
-                if($config['validations']['required']===true){
-                    $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' is required!");
-                }elseif(isset($config['default'])){
-                    $config['value'] = $config['default'];
-                }else{
-                    $config['value'] = '';
-                }
-            }
-            unset($config['default']);
-        }
-
-        return !$this->hasErrors();
     }
 
 }

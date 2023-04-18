@@ -35,7 +35,11 @@ class AuthController extends _BaseController
                     'size-min'=>6,
                     'size-max'=>25,],
             ],
-            'test' => [],
+            'test' => [
+                'validations' => [
+                    'required' => false,
+                ]
+            ],
             'test2' => [
                 'filters' => [
                     'aa',
@@ -44,8 +48,7 @@ class AuthController extends _BaseController
         ]);
         if($inputs->hasErrors()){
             $this->setError(
-                eERROR_CODES::CONTROLLER_INPUT, 
-                $inputs->getErrorCode(),
+                eERROR_CODES::CONTROLLER_INPUT + $inputs->getErrorCode(),
                 $inputs->getErrorDetails()
             );
         }
@@ -79,9 +82,9 @@ class AuthController extends _BaseController
             'email' => $email,
             'pass' => $pass,
         ]);
-        if(count($errors)){
-            $this->setError("Login Error!", 1, $errors);
-        }
+        //if(count($errors)){
+        //    $this->setError("Login Error!", 1, $errors);
+        //}
 
         
     }
