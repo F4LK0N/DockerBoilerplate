@@ -12,9 +12,6 @@ class AuthController extends _BaseController
 {
     public function loginAction()
     {
-
-        $_POST['test2'] = ' a';
-
         $inputs = PROVIDER::GET('inputs');
         $inputs->post([
             'email' => [
@@ -23,10 +20,7 @@ class AuthController extends _BaseController
                     'spaces'],
                 'validations' => [
                     'type'=>'email',
-                    'required'=>true,
-                    'size-min'=>6,
-                    'size-max'=>25,
-                    'size'=>25],
+                    'required'=>true],
             ],
             'pass' => [
                 'filters' => [
@@ -36,17 +30,6 @@ class AuthController extends _BaseController
                     'required'=>true,
                     'size-min'=>6,
                     'size-max'=>25,],
-            ],
-            'test' => [
-                'validations' => [
-                    'required' => false,
-                ],
-                'default' => ' as  asd \''
-            ],
-            'test2' => [
-                'validations' => [
-                    'required' => true,
-                ],
             ],
         ]);
         if($inputs->hasErrors()){

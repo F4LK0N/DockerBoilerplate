@@ -120,6 +120,13 @@ class InputsProvider
                 unset($config['default']);
                 $_POST[$name] = &$config['value'];
             }
+
+            foreach($_POST as $name => &$value){
+                if(!isset($this->fields[$name])){
+                    $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' not allowed!");
+                }
+            }
+
             $this->data = &$_POST;
             
             return !$this->hasErrors();
