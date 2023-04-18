@@ -13,7 +13,7 @@ class PROVIDER
         "session",
         "db",
         "filter",
-        //"validator",
+        "validator",
         "inputs",
     ];
 
