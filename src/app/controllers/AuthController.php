@@ -38,12 +38,8 @@ class AuthController extends _BaseController
             'test' => [
                 'validations' => [
                     'required' => false,
-                ]
-            ],
-            'test2' => [
-                'filters' => [
-                    'aa',
-                ]
+                ],
+                'default' => ' as  asd \''
             ],
         ]);
         if($inputs->hasErrors()){

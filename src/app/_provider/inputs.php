@@ -1,6 +1,7 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
 
 use Phalcon\Http\Request;
+use Phalcon\Filter\Filter;
 
 class InputsProvider
 {
@@ -127,8 +128,14 @@ class InputsProvider
     {
         try
         {
-            
-
+            /**
+             * @var Filter $filter
+            */
+            $filter = PROVIDER::GET('filter');
+            foreach($this->fields as $name => &$config)
+            {
+                $config['value'] = $filter->sanitize($config['value'], $config['filters']);
+            }
             return !$this->hasErrors();
         }
         catch (\Exception $exception) {
