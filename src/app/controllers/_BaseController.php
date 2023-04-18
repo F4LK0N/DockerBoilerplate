@@ -26,13 +26,13 @@ class _BaseController extends Controller
         $this->apiResponse['data'] = $data;
     }
 
-    protected function setError(string $message='', int $code=400, $details='')
+    protected function setError(string $message, int $code=0, $details='')
     {
         $this->apiResponse = [
             'status' => 0,
             'error' => [
-                'code'    => $code,
-                'message' => '!!! ERROR !!!'.($message?' '.$message:''),
+                'code'    => 400 + $code,
+                'message' => $message,
                 'details' => $details,
             ],
             'data' => [],
