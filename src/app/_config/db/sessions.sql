@@ -17,6 +17,10 @@ CREATE TABLE `sessions` (
         VARCHAR(255)
         NOT NULL,
 
+    `expires`
+        TIMESTAMP
+        NOT NULL,
+
     `ts_created`
         TIMESTAMP
         NOT NULL
@@ -33,6 +37,8 @@ CREATE TABLE `sessions` (
         NULL,
 
     PRIMARY KEY (`id`),
+
+    KEY `IK_ID_USER` (`id_user`),
 
     KEY `IK_STATUS` (`status`),
 

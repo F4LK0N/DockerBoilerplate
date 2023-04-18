@@ -45,8 +45,21 @@ class AuthController extends _BaseController
             );
         }
         $user = $result->get();
+
+        $result = Sessions::startSession($user['id']);
+        if($result->hasErrors()){
+            $this->setError(
+                $result->getErrorCode(),
+                $result->getErrorDetails()
+            );
+        }
+        $session = $result->get();
+
         
-        $this->setData(['user'=>$user]);
+        $this->setData([
+            'user'=>$user,
+            'session'=>$session,
+        ]);
     }
 
 }
