@@ -41,13 +41,14 @@ class ValidatorProvider
         {
             if($rule==='type'){
                 $this->addType($name, $param);
-                continue;
-            }
-            if($rule==='required'){
+            }elseif($rule==='required'){
                 if($param===true){
                     $this->addRequired($name, $param);
                 }
-                continue;
+            }elseif($rule==='size-min'){
+                $this->addSizeMin($name, $param);
+            }elseif($rule==='size-max'){
+                $this->addSizeMax($name, $param);
             }
         }
     }
@@ -56,6 +57,11 @@ class ValidatorProvider
     {
         if($type==='email'){
             $this->validator->add($name, new Email(['message' => "'$name' invalid!"]));
+            $this->validator->add($name, new Max(["max"=>100, "message"=> "'$name' size max 100!"]));
+        }elseif($type==='pass'){
+            $this->validator->add($name, new Email(['message' => "'$name' invalid!"]));
+            $this->validator->add($name, new Min(["min"=>6, "message"=> "'$name' size min 6!"]));
+            $this->validator->add($name, new Max(["max"=>100, "message"=> "'$name' max length 100!"]));
         }
     }
 
@@ -66,12 +72,12 @@ class ValidatorProvider
 
     private function addSizeMin($name, $param)
     {
-        $this->validator->add($name, new Min(["min"=>$param, "message"=> "'$name' min size $param!"]));
+        $this->validator->add($name, new Min(["min"=>$param, "message"=> "'$name' size min $param!"]));
     }
 
     private function addSizeMax($name, $param)
     {
-        $this->validator->add($name, new Max(["max"=>$param, "message"=> "'$name' max size $param!"]));
+        $this->validator->add($name, new Max(["max"=>$param, "message"=> "'$name' size max $param!"]));
     }
 
     public function validate(&$data)
