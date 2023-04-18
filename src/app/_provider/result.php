@@ -26,6 +26,15 @@ class Result
         return ($this->error->code !== eERROR_CODES::NO_ERROR);
     }
 
+    public function getErrorCode(): int
+    {
+        return $this->error->code;
+    }
+    public function getErrorDetails(): string
+    {
+        return $this->error->details;
+    }
+
     public function setError(int $code, $details='')
     {
         $this->status          = eSTATUS_CODES::ERROR;
@@ -38,6 +47,14 @@ class Result
     public function setData(array $data)
     {
         $this->data = $data;
+    }
+
+    public function get($key=null)
+    {
+        if($key===null){
+            return $this->data;
+        }
+        return $this->data[$key];
     }
 
 }
