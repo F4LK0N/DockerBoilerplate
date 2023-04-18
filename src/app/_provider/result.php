@@ -21,13 +21,25 @@ class Result
         $this->error = new ResultError();
     }
 
-    protected function setError(int $code, $details='')
+    public function hasErrors(): bool
     {
-        $this->status         = eSTATUS_CODES::ERROR;
-        $this->error->code    = $code??eERROR_CODES::GENERIC_ERROR;
-        $this->error->details = $details;
-        $this->data           = [];
+        return ($this->error->code !== eERROR_CODES::NO_ERROR);
     }
+
+    public function setError(int $code, $details='')
+    {
+        $this->status          = eSTATUS_CODES::ERROR;
+        $this->error->code     = $code??eERROR_CODES::GENERIC_ERROR;
+        $this->error->details  = $details;
+        $this->error->details .= ($this->error->details?'\n':'').$details;
+        $this->data            = [];
+    }
+
+    public function setData(array $data)
+    {
+        $this->data = $data;
+    }
+
 }
 
 PROVIDER::SET(
