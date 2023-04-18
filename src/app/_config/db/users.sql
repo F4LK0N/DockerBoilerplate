@@ -22,7 +22,7 @@ CREATE TABLE `users` (
         DEFAULT 'READER',
 
     `email`
-        VARCHAR(255)
+        VARCHAR(100)
         NOT NULL,
     
     `pass`
