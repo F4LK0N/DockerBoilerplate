@@ -33,6 +33,68 @@ class InputsProvider
         return $this->details;
     }
 
+    public function values(array $data, array $fields): bool
+    {
+        $this->method = 'VALUES';
+        if(!$this->setFields($fields)){
+            return false;
+        }
+        if(!$this->valuesRetrieve()){
+            return false;
+        }
+        if(!$this->filter()){
+            return false;
+        }
+        if(!$this->validate()){
+            return false;
+        }
+        return true;
+    }
+
+    private function valuesRetrieve (): bool
+    {
+        try
+        {
+            $request = new Request();
+
+            if(!$request->isPost()){
+                $this->setError(eERROR_CODES::INPUT_METHOD, 'Incorrect http method, POST expected!');
+                return false;
+            }
+
+            foreach($this->fields as $name => &$config)
+            {
+                $config['value'] = $request->getPost($name, null, null);
+                if($config['value']===null){
+                    if($config['validations']['required']===true){
+                        $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' is required!");
+                    }elseif(isset($config['default'])){
+                        $config['value'] = $config['default'];
+                    }else{
+                        $config['value'] = '';
+                    }
+                }
+                unset($config['default']);
+                $_POST[$name] = &$config['value'];
+            }
+
+            foreach($_POST as $name => &$value){
+                if(!isset($this->fields[$name])){
+                    $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' not allowed!");
+                }
+            }
+
+            $this->data = &$_POST;
+            
+            return !$this->hasErrors();
+        }
+        catch (\Exception $exception) {
+            VD($exception->getCode());
+            $this->setError(eERROR_CODES::INPUT_RETRIEVE + $exception->getCode(), $exception->getMessage());
+            return false;
+        }
+    }
+
     public function post(array $fields): bool
     {
         $this->method = 'POST';
@@ -49,49 +111,6 @@ class InputsProvider
             return false;
         }
         return true;
-    }
-
-    private function setFields(&$fields): bool
-    {
-        $this->fields = [];
-        foreach($fields as $name => &$config)
-        {
-            //Name
-            if(!is_string($name) || $name===''){
-                $this->setError(eERROR_CODES::INPUT_CONFIG, 'Invalid field name!');
-                continue;
-            }
-
-            //Type
-            if(!isset($config['validations']['type'])){
-                $config['validations']['type'] = 'string';
-            }
-
-            //Value
-            $config['value'] = '';
-
-            //Filters
-            if(!isset($config['filters']) || !is_array($config['filters'])){
-                $config['filters'] = ['injection'];
-            }
-            elseif(!in_array('injection', $config['filters'])){
-                array_unshift($config['filters'], 'injection');
-            }
-
-            //Validations
-            if(!isset($config['validations']) || !is_array($config['validations'])){
-                $config['validations'] = ['required'=>true];
-            }
-            elseif(!isset($config['validations']['required'])){
-                $config['validations']['required'] = true;
-            }else{
-                $config['validations']['required'] = boolval($config['validations']['required']);
-            }
-
-            //Add
-            $this->fields["$name"] = $config;
-        }
-        return !$this->hasErrors();
     }
 
     private function postRetrieve (): bool
@@ -136,6 +155,51 @@ class InputsProvider
             $this->setError(eERROR_CODES::INPUT_RETRIEVE + $exception->getCode(), $exception->getMessage());
             return false;
         }
+    }
+
+    private function setFields(&$fields): bool
+    {
+        $this->fields = [];
+        foreach($fields as $name => &$config)
+        {
+            //Name
+            if(!is_string($name) || $name===''){
+                $this->setError(eERROR_CODES::INPUT_CONFIG, 'Invalid field name!');
+                continue;
+            }
+
+            //Type
+            if(!isset($config['validations']['type'])){
+                $config['validations']['type'] = 'string';
+            }
+
+            //Value
+            if(!isset($config['value'])){
+                $config['value'] = '';
+            }
+
+            //Filters
+            if(!isset($config['filters']) || !is_array($config['filters'])){
+                $config['filters'] = ['injection'];
+            }
+            elseif(!in_array('injection', $config['filters'])){
+                array_unshift($config['filters'], 'injection');
+            }
+
+            //Validations
+            if(!isset($config['validations']) || !is_array($config['validations'])){
+                $config['validations'] = ['required'=>true];
+            }
+            elseif(!isset($config['validations']['required'])){
+                $config['validations']['required'] = true;
+            }else{
+                $config['validations']['required'] = boolval($config['validations']['required']);
+            }
+
+            //Add
+            $this->fields["$name"] = $config;
+        }
+        return !$this->hasErrors();
     }
 
     private function filter (): bool
