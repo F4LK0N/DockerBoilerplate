@@ -3,6 +3,8 @@
 use Phalcon\Filter\Validation;
 use Phalcon\Filter\Validation\Validator\Email;
 use Phalcon\Filter\Validation\Validator\PresenceOf;
+use Phalcon\Filter\Validation\Validator\StringLength\Max;
+use Phalcon\Filter\Validation\Validator\StringLength\Min;
 
 class ValidatorProvider
 {
@@ -60,6 +62,16 @@ class ValidatorProvider
     private function addRequired($name)
     {
         $this->validator->add($name, new PresenceOf(['message' => "'$name' is required!"]));
+    }
+
+    private function addSizeMin($name, $param)
+    {
+        $this->validator->add($name, new Min(["min"=>$param, "message"=> "'$name' min size $param!"]));
+    }
+
+    private function addSizeMax($name, $param)
+    {
+        $this->validator->add($name, new Max(["max"=>$param, "message"=> "'$name' max size $param!"]));
     }
 
     public function validate(&$data)
