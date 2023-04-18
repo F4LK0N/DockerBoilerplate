@@ -3,6 +3,20 @@
 use Phalcon\Mvc\Model;
 use Phalcon\Db\Column;
 
+trait ModelBehaviorStatus
+{
+    public function beforeCreate()
+    {
+        
+    }
+
+    public function beforeUpdate()
+    {
+        
+    }
+    
+}
+
 enum eUserTypes 
 {
     case DEV;
@@ -15,6 +29,9 @@ enum eUserTypes
 
 class Users extends Model
 {
+    use ModelBehaviorStatus;
+
+
     public $id;
     public $access_type;
 
@@ -28,8 +45,6 @@ class Users extends Model
     
     public function initialize()
     {
-        parent::initialize();
-        
         //$this->skipAttributes([
         //    'pass',
         //]);

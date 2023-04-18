@@ -24,7 +24,8 @@ class AuthController extends _BaseController
             ],
             'pass' => [
                 'filters' => [
-                    'injection'],
+                    'injection',
+                    'spaces'],
                 'validations' => [
                     'type'=>'pass',
                     'required'=>true],
@@ -37,10 +38,18 @@ class AuthController extends _BaseController
             );
         }
 
-        $result = UsersController::login($_POST['email'], $_POST['pass']);
-        VDD($result);
+        $email = $inputs->get('email');
+        $pass  = $inputs->get('pass');
 
-        //$this->setData($inputs);
+        $result = UsersController::login($email, $pass);
+        if($result->hasErrors()){
+            $this->setError(
+                $result->getErrorCode(),
+                $result->getErrorDetails()
+            );
+        }
+        
+        $this->setData($result->get());
     }
 
 }

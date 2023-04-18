@@ -1,5 +1,6 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
 use Phalcon\Mvc\Controller;
+use Phalcon\Mvc\Model\Resultset;
 
 class UsersController extends _BaseController
 {
@@ -99,8 +100,66 @@ class UsersController extends _BaseController
         }
     }
     
-    static public function login(string $email, string $pass)
+    static public function login(string $email, string $pass): Result
     {
-        
+        $result = new Result();
+
+        $inputs = PROVIDER::GET('inputs');
+        $inputs->values([
+            'email' => [
+                'value' => $email,
+                'filters' => [
+                    'injection',
+                    'spaces'],
+                'validations' => [
+                    'type'=>'email',
+                    'required'=>true],
+            ],
+            'pass' => [
+                'value' => $pass,
+                'filters' => [
+                    'injection',
+                    'spaces'],
+                'validations' => [
+                    'type'=>'pass',
+                    'required'=>true],
+            ],
+        ]);
+        if($inputs->hasErrors()){
+            $result->setError(
+                eERROR_CODES::CONTROLLER_INPUT + $inputs->getErrorCode(),
+                $inputs->getErrorDetails()
+            );
+            return $result;
+        }
+
+        $email = $inputs->get('email');
+        $pass  = $inputs->get('pass');
+
+        /** @var Resultset $resultset */
+        $resultset = Users::find([
+            //'columns'=> 
+            //    '',
+            'conditions'=>
+                "(status = 1)".
+                ' AND '.
+                "(email = :email:)".
+                ' AND '.
+                '(pass = :pass:)',
+            'bind' => [
+                'email' => $email,
+                'pass'  => $pass,
+            ],
+        ]);
+        if($resultset->count()!==1){
+            $result->setError(
+                eERROR_CODES::CONTROLLER_NOT_FOUND,
+                'User not found!'
+            );
+            return $result;
+        }
+        $user = $resultset->getFirst()->toArray();
+        $result->setData(['user'=>$user]);
+        return $result;
     }
 }
