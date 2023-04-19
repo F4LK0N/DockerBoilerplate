@@ -32,8 +32,7 @@ class UsersController extends _BaseController
 
     public function addAction() 
     {
-        $inputs = PROVIDER::GET('inputs');
-        $inputs->post([
+        $inputs = PROVIDER::GET('inputs')->post([
             'email' => [
                 'filters' => [
                     'injection',
@@ -68,26 +67,21 @@ class UsersController extends _BaseController
             ],
         ]);
         if($inputs->hasErrors()){
-            $this->setError(
-                eERROR_CODES::CONTROLLER_INPUT + $inputs->getErrorCode(),
-                $inputs->getErrorDetails()
-            );
+            $this->setError(eERROR_CODES::CONTROLLER_INPUT + $inputs->getErrorCode(), $inputs->getErrorDetails());
         }
-
-        $user          = new Users();
-        $user->email   = $inputs->get('email');
-        $user->pass    = PROVIDER::GET_SHARED('security')->passHash($inputs->get('email'), $inputs->get('pass'));
-        $user->name    = $inputs->get('name');
-        $user->surname = $inputs->get('surname');
 
         try
         {
+            $user          = new Users();
+            $user->email   = $inputs->get('email');
+            $user->pass    = PROVIDER::GET_SHARED('security')->passHash($inputs->get('email'), $inputs->get('pass'));
+            $user->name    = $inputs->get('name');
+            $user->surname = $inputs->get('surname');
+
             if(!$user->save()){
-                $this->setError(
-                    eERROR_CODES::CONTROLLER_TRANSACTION,
-                    $user->getMessagesString()
-                );
+                throw new Exception($user->getMessagesString());
             }
+
             $this->setData(['user'=>[
                 'id' => $user->id,
                 'email' => $user->email,
@@ -95,10 +89,7 @@ class UsersController extends _BaseController
             ]]);
         }
         catch (\Exception $exception) {
-            $this->setError(
-                eERROR_CODES::CONTROLLER_TRANSACTION + $exception->getCode(), 
-                $user->getMessagesString($exception->getMessage())
-            );
+            $this->setError(eERROR_CODES::CONTROLLER_TRANSACTION + $exception->getCode(), $user->getMessagesString($exception->getMessage()));
         }
     }
     
