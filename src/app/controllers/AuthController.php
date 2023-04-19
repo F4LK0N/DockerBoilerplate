@@ -8,18 +8,7 @@ class AuthController extends _BaseController
     
     public function loginAction()
     {
-        $user = new Users();
-        $user->save();
-        $user = new Users();
-        $user = new Users();
-
-        $user = new Sessions();
-        $user = new Sessions();
-        $user = new Sessions();
-        return;
-
-        $inputs = PROVIDER::GET('inputs');
-        $inputs->post([
+        $inputs = PROVIDER::GET('inputs')->post([
             'email' => [
                 'filters' => [
                     'injection',
@@ -38,10 +27,7 @@ class AuthController extends _BaseController
             ],
         ]);
         if($inputs->hasErrors()){
-            $this->setError(
-                eERROR_CODES::CONTROLLER_INPUT + $inputs->getErrorCode(),
-                $inputs->getErrorDetails()
-            );
+            $this->setError(eERROR_CODES::CONTROLLER_INPUT + $inputs->getErrorCode(), $inputs->getErrorDetails());
         }
 
         $email = $inputs->get('email');
@@ -49,10 +35,7 @@ class AuthController extends _BaseController
 
         $result = Users::findByLogin($email, $pass);
         if($result->hasErrors()){
-            $this->setError(
-                $result->getErrorCode(),
-                $result->getErrorDetails()
-            );
+            $this->setError($result->getErrorCode(), $result->getErrorDetails());
         }
         $user = $result->get();
 
@@ -64,7 +47,6 @@ class AuthController extends _BaseController
             );
         }
         $session = $result->get();
-
         
         $this->setData([
             'user'=>$user,
