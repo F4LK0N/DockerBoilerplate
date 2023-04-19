@@ -5,16 +5,6 @@ use Phalcon\Db\Column;
 use Phalcon\Mvc\Model\Criteria;
 use Phalcon\Mvc\Model\Resultset;
 
-enum eUserTypes 
-{
-    case DEV;
-    case MASTER;
-    case ADMIN;
-    case MANAGER;
-    case EDITOR;
-    case READER;
-}
-
 class Users extends _ModelBase
 {
     public $id;
@@ -26,14 +16,12 @@ class Users extends _ModelBase
     public $name;
     public $surname;
 
-
-
     public function initialize()
     {
-        echo "USERS ";
-        $this->behaviorStatusEnabled(true);
-        parent::initialize();
-        echo "USERS \n";
+        //echo "USERS ";
+        //$this->behaviorStatusEnabled(true);
+        //parent::initialize();
+        //echo "USERS \n";
 
         //$this->skipAttributes([
         //    'pass',

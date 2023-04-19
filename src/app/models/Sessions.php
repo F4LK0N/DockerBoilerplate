@@ -25,9 +25,7 @@ class Sessions extends _ModelBase
 
     public function initialize()
     {
-        echo "SESSIONS ";
-        parent::initialize();
-        echo "SESSIONS \n";
+        
     }
 
     static public function startSession(string $userId): Result
