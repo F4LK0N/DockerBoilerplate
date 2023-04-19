@@ -35,3 +35,13 @@ class eERROR_CODES
     const INPUT_FILTER           =     1400; //Filter Error
     const INPUT_VALIDATION       =     1500; //Validation Error
 }
+
+enum eUserTypes 
+{
+    case DEV;
+    case MASTER;
+    case ADMIN;
+    case MANAGER;
+    case EDITOR;
+    case READER;
+}
