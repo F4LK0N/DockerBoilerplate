@@ -7,6 +7,7 @@
         "devsense.profiler-php-vscode",
         "phproberto.vscode-php-getters-setters",
         "tabnine.tabnine-vscode",
-        "mehedidracula.php-constructor"
+        "mehedidracula.php-constructor",
+        "ms-vscode-remote.remote-wsl"
     ]
 }

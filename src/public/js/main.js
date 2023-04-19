@@ -27,6 +27,8 @@ class Auth
         }
         this.#token = token;
         this.refresh();
+
+        this.login();
     }
 
     static token()
@@ -39,41 +41,65 @@ class Auth
         return this.#logged;
     }
 
+    static userId = 1;
+    
+    
     static login($button)
     {
         vd('Auth.login');
         //this.#transactionStart();
-
         let $auth = this;
 
-        (new API('/')).post();
-        (new API('/users/')).post();
-        (new API('/users/view/1')).post();
-        (new API('/users/add')).post();
-        (new API('/users/edit/1')).post();
-        (new API('/users/rem/1')).post();
+            ////INDEX
+            //(new API('/')).post();
+            
+            ////USERS
+            //(new API('/users/')).post();
+            //(new API('/users/view/'+$auth.userId)).post();
+
+            (new API('/users/add')).post({
+                email: 'user'+(Date.now())+'@gmail.com',
+                pass: 'teste132',
+                name: 'name'+(Date.now()),
+                surname: 'surname'+(Date.now()),
+            }).done((response)=>{$auth.userId = response.data.id;});
+            
+            //(new API('/users/add')).post({
+            //    email: 'otaviosoria@gmail.com',
+            //    pass: '123456',
+            //    name: 'Otavio',
+            //    surname: 'Soria',
+            //}).done((response)=>{$auth.userId = response.data.id;});
+            //(new API('/users/edit/'+$auth.userId)).post();
+            //(new API('/users/rem/60')).post();
+            //(new API('/users/rem/1')).post();
+
+            //AUTH
+            (new API('/auth/login')).post({
+                email: 'otaviosoria@gmail.com',
+                pass: '123456',
+            });
 
         ////API
         //(new API('/users/'))
         //.post(
-
         //)
-        //.error((jqXHR, textStatus, errorThrown)=>{
-        //    console.error('error');
-        //    console.log(jqXHR);
-        //    console.log(textStatus);
+        //.fail((jqXHR, textStatus, errorThrown)=>{
+        //    console.error('fail');
+        //    //console.log(jqXHR);
+        //    //console.log(textStatus);
         //    console.log(errorThrown);
         //})
-        //.success((data, textStatus, jqXHR)=>{
-        //    console.warn();('success');
+        //.done((data, textStatus, jqXHR)=>{
+        //    console.warn();('done');
         //    console.log(data);
-        //    console.log(textStatus);
-        //    console.log(jqXHR);
+        //    //console.log(textStatus);
+        //    //console.log(jqXHR);
         //})
-        //.complete((jqXHR, textStatus)=>{
-        //    console.warn();('complete');
-        //    console.log(jqXHR);
-        //    console.log(textStatus);
+        //.always((data, textStatus)=>{
+        //    console.warn();('always');
+        //    console.log(data);
+        //    //console.log(textStatus);
         //    $auth.#transactionStop();
         //});
 
