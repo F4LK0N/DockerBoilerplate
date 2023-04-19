@@ -42,22 +42,22 @@ class InputsProvider
 
 
 
-    public function values(array $fields): bool
+    public function values(array $fields): InputsProvider
     {
         $this->method = 'VALUES';
         if(!$this->setFields($fields)){
-            return false;
+            return $this;
         }
         if(!$this->valuesRetrieve()){
-            return false;
+            return $this;
         }
         if(!$this->filter()){
-            return false;
+            return $this;
         }
         if(!$this->validate()){
-            return false;
+            return $this;
         }
-        return true;
+        return $this;
     }
 
     private function valuesRetrieve (): bool
@@ -90,22 +90,22 @@ class InputsProvider
         }
     }
 
-    public function post(array $fields): bool
+    public function post(array $fields): InputsProvider
     {
         $this->method = 'POST';
         if(!$this->setFields($fields)){
-            return false;
+            return $this;
         }
         if(!$this->postRetrieve()){
-            return false;
+            return $this;
         }
         if(!$this->filter()){
-            return false;
+            return $this;
         }
         if(!$this->validate()){
-            return false;
+            return $this;
         }
-        return true;
+        return $this;
     }
 
     private function postRetrieve (): bool
