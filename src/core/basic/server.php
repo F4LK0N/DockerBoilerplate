@@ -27,14 +27,6 @@ class SERVER
         self::IDENTIFY_URI();
 
         //self::SET_PHP_CONFIG();
-
-        VD(self::$LOADED);
-        VD(self::$ENVIRONMENT);
-        VD(self::$PROVIDER);
-        VD(self::$TIER);
-        VD(self::$HOST);
-        VD(self::$URI);
-        VDD(1);
     }
 
     static private function IDENTIFY_HOST()
