@@ -1,5 +1,28 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
 
+class eSERVER_ENVIRONMENT
+{
+    const ONLINE  = 1;
+    const OFFLINE = 0;
+}
+class eSERVER_PROVIDER
+{
+    const DEVELOPER = 0;
+    const AWS       = 1;
+}
+class eSERVER_TIER
+{
+    const DEV  = 0;
+    const STAG = 1;
+    const PROD = 2;
+}
+class eCLIENT_PLATFORM
+{
+    const UNKNOWN = 0;
+    const WEB     = 1;
+    const APP     = 2;
+}
+
 enum eSTATUS_CODES: int
 {
     const SUCCESS = 1;
