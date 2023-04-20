@@ -43,7 +43,7 @@ ENV PHP_RUN="${ROOT_RUN}/php"
 ENV PHALCON_VERSION="5.2.1"
 
 ### APPLICATION ###
-ENV APP_ROOT="/var/www/localhost/htdocs"
+ENV APP_ROOT="/src"
 
 ########################################################################################################################
 ### DATA ###
@@ -150,8 +150,7 @@ RUN set -eux; \
     ; \
     chmod 755 ${OS_RUN}; \
     chmod 755 ${HTTPD_RUN}; \
-    chmod 755 ${PHP_RUN}; \
-    chmod 777 ${APP_ROOT};
+    chmod 755 ${PHP_RUN};
 
 ########################################################################################################################
 ### CONFIG ###
@@ -171,8 +170,6 @@ RUN set -eux; \
         cp -a "${HTTPD_CONFD}/." "${HTTPD_ROOT}/original/conf.d/"; \
         rm ${HTTPD_CONF}; \
         rm ${HTTPD_CONFD}/*; \
-        # CGI
-        rm -r "/var/www/localhost/cgi-bin/"; \
         # Logs
         rm "/var/www/logs"; \
         rm -r "/var/log/apache2/"; \
@@ -187,6 +184,8 @@ RUN set -eux; \
         # SSL
         chmod 755 "/etc/ssl/apache2/server.pem"; \
         chmod 755 "/etc/ssl/apache2/server.key"; \
+        # Clear
+        rm -r "/var/www/localhost/"; \
     \
     ### PHP ###
         # Conf File and Dir
@@ -201,10 +200,8 @@ RUN set -eux; \
         mkdir --mode=777 "${PHP_LOGS}/xdebug"; \
     \
     ### APPLICATION ###
-        rm "${APP_ROOT}/index.html"; \
         chmod 777 "${APP_ROOT}"; \
-        mkdir --mode=777 "${APP_ROOT}/public"; \
-        ln -s "${APP_ROOT}" "/src";
+        mkdir --mode=777 "${APP_ROOT}/public";
 
 ### IMPORT ###
 # OS

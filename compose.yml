@@ -2,6 +2,8 @@ services:
   api:
     container_name: ${COMPOSE_PREFIX}api
     build: ./.docker/api
+    depends_on:
+      - mysql
     deploy:
       resources:
         limits:
@@ -9,7 +11,7 @@ services:
     memswap_limit: 256M
     volumes:
       # Application
-      - ./src/:/var/www/localhost/htdocs/
+      - ./src/:/src/
       # Data
       - ./data/api/:/data/
       # Logs
@@ -45,6 +47,8 @@ services:
   phpmyadmin:
     container_name: ${COMPOSE_PREFIX}phpmyadmin
     build: ./.docker/phpmyadmin
+    depends_on:
+      - mysql
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=mysql
@@ -53,6 +57,7 @@ services:
     ports:
       - "8081:80"
     networks:
+      - frontend
       - backend
     #volumes:
       # Config
