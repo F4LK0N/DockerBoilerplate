@@ -3,8 +3,7 @@
     //### APPLICATION ###
     {
         "key": "ctrl+o",
-        "command": "workbench.action.files.openFolder",
-        "when": "editorTextFocus && openFolderWorkspaceSupport"
+        "command": "workbench.action.files.openFolder"
     },
     {
         "key": "f5",
@@ -16,6 +15,18 @@
         "command": "workbench.action.newWindow",
         "when": "editorTextFocus"
     },
+    {
+        "key": "ctrl+y",
+        "command": "redo"
+    },
+    {
+        "key": "alt+f1",
+        "command": "workbench.action.openSettings"
+    },
+    {
+        "key": "ctrl+alt+f1",
+        "command": "workbench.action.openGlobalKeybindings"
+    },
     //### EDITOR ###
     //SELECTION - CHANGE CASE
     {
@@ -26,6 +37,23 @@
     {
         "key": "ctrl+u",
         "command": "editor.action.transformToLowercase",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    //WORD - DELETE
+    {
+        "key": "ctrl+backspace",
+        "command": "deleteWordLeft",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    {
+        "key": "ctrl+delete",
+        "command": "deleteWordRight",
+        "when": "editorTextFocus && !editorReadonly"
+    },
+    //LINE DELETE
+    {
+        "key": "ctrl+shift+delete",
+        "command": "editor.action.deleteLines",
         "when": "editorTextFocus && !editorReadonly"
     },
     //LINE - DUPLICATE
@@ -56,22 +84,6 @@
         "command": "editor.action.insertLineAfter",
         "when": "editorTextFocus && !editorReadonly && !findWidgetVisible"
     },
-    //DELETE
-    {
-        "key": "ctrl+backspace",
-        "command": "deleteWordLeft",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "ctrl+delete",
-        "command": "deleteWordRight",
-        "when": "editorTextFocus && !editorReadonly"
-    },
-    {
-        "key": "ctrl+shift+backspace",
-        "command": "editor.action.deleteLines",
-        "when": "editorTextFocus && !editorReadonly"
-    },
     //LINE - COMMENT
     {
         "key": "ctrl+oem_2",
@@ -79,13 +91,13 @@
         "when": "editorTextFocus && !editorReadonly"
     },
     {
-        "key": "ctrl+shift+oem_2",
-        "command": "editor.action.removeCommentLine",
+        "key": "ctrl+abnt_c1",
+        "command": "editor.action.addCommentLine",
         "when": "editorTextFocus && !editorReadonly"
     },
     {
-        "key": "ctrl+abnt_c1",
-        "command": "editor.action.addCommentLine",
+        "key": "ctrl+shift+oem_2",
+        "command": "editor.action.removeCommentLine",
         "when": "editorTextFocus && !editorReadonly"
     },
     {
@@ -126,24 +138,71 @@
         "command": "markdown.showPreviewToSide",
         "when": "editorTextFocus && !notebookEditorFocused && editorLangId == 'markdown'"
     },
-    //CODE - COMPLETE AND FIX
+    //SUGGEST - INLINE
+    {
+        "key": "ctrl+left",
+        "command": "editor.action.inlineSuggest.showPrevious",
+        "when": "editorTextFocus && inlineSuggestionVisible && !editorReadonly"
+    },
+    {
+        "key": "ctrl+up",
+        "command": "editor.action.inlineSuggest.showPrevious",
+        "when": "editorTextFocus && inlineSuggestionVisible && !editorReadonly"
+    },
+    {
+        "key": "ctrl+down",
+        "command": "editor.action.inlineSuggest.showNext",
+        "when": "editorTextFocus && inlineSuggestionVisible && !editorReadonly"
+    },
+    {
+        "key": "ctrl+right",
+        "command": "editor.action.inlineSuggest.showNext",
+        "when": "editorTextFocus && inlineSuggestionVisible && !editorReadonly"
+    },
+    {
+        "key": "enter",
+        "command": "editor.action.inlineSuggest.commit",
+        "when": "editorTextFocus && inlineSuggestionHasIndentationLessThanTabSize && inlineSuggestionVisible && !editorTabMovesFocus"
+    },
+    {
+        "key": "escape",
+        "command": "editor.action.inlineSuggest.hide",
+        "when": "editorTextFocus && inlineSuggestionVisible && !editorReadonly"
+    },
+    {
+        "key": "ctrl+space",
+        "command": "editor.action.inlineSuggest.hide",
+        "when": "editorTextFocus && inlineSuggestionVisible && !editorReadonly"
+    },
     {
         "key": "ctrl+space",
         "command": "runCommands",
         "args": {
             "commands": [
                 "hideSuggestWidget",
-                "editor.action.quickFix"
+                "editor.action.inlineSuggest.trigger",
             ]
         },
-        "when": "editorTextFocus && suggestWidgetVisible"
+        "when": "editorTextFocus && !inlineSuggestionVisible && !editorReadonly"
+    },
+    //SUGGEST - WIDGET
+    {
+        "key": "shift+space",
+        "command": "hideSuggestWidget",
+        "when": "editorTextFocus && suggestWidgetVisible && !editorReadonly"
     },
     {
-        "key": "ctrl+space",
-        "command": "editor.action.triggerSuggest",
-        "when": "editorTextFocus && !suggestWidgetVisible"
+        "key": "shift+space",
+        "command": "runCommands",
+        "args": {
+            "commands": [
+                "editor.action.inlineSuggest.hide",
+                "editor.action.triggerSuggest",
+            ]
+        },
+        "when": "editorTextFocus && !suggestWidgetVisible && !editorReadonly"
     },
-    //CODE - PARAMETERS
+    //PARAMETERS
     {
         "key": "ctrl+shift+space",
         "command": "closeParameterHints",
@@ -678,5 +737,49 @@
         "key": "ctrl+delete",
         "command": "-deleteWordRight",
         "when": "textInputFocus && !editorReadonly"
-    }
+    },
+    
+    {
+        "key": "ctrl+k ctrl+s",
+        "command": "-workbench.action.openGlobalKeybindings"
+    },
+    
+    {
+        "key": "ctrl+oem_comma",
+        "command": "-workbench.action.openSettings"
+    },
+    {
+        "key": "alt+f1",
+        "command": "-editor.action.showAccessibilityHelp"
+    },
+    {
+        "key": "alt+f1",
+        "command": "-workbench.action.terminal.showAccessibilityHelp",
+        "when": "terminalFocus && terminalProcessSupported"
+    },
+    {
+        "key": "ctrl+o",
+        "command": "-workbench.action.files.openFile",
+        "when": "true"
+    },
+    {
+        "key": "alt+oem_6",
+        "command": "-editor.action.inlineSuggest.showNext",
+        "when": "inlineSuggestionVisible && !editorReadonly"
+    },
+    {
+        "key": "alt+oem_4",
+        "command": "-editor.action.inlineSuggest.showPrevious",
+        "when": "inlineSuggestionVisible && !editorReadonly"
+    },
+    {
+        "key": "ctrl+left",
+        "command": "-editor.action.inlineSuggest.undo",
+        "when": "canUndoInlineSuggestion && !editorReadonly"
+    },
+    {
+        "key": "ctrl+right",
+        "command": "-editor.action.inlineSuggest.acceptNextWord",
+        "when": "inlineSuggestionVisible && !editorReadonly"
+    },
 ]

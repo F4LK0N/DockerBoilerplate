@@ -74,20 +74,20 @@
     "files.exclude": {
         ".git": true,
         ".vscode": true,
-        "*.log": true,
         "**/.DS_Store": false,
+        "**/.git": false,
         "**/.hg": false,
-        "**/CVS": false
+        "**/.svn": false,
+        "**/CVS": false,
+        "**/Thumbs.db": false
     },
     "explorer.expandSingleFolderWorkspaces": false,
     "explorer.fileNesting.enabled": true,
     "explorer.fileNesting.patterns": {
-        //Container
+        "*.js": "${capture}.min.js,${capture}.min.js.map",
         "compose.yml": ".editorconfig,.env*,.git*,*.md",
-    //Project
-    "composer.json": "composer.lock,.env*,.git*,*.md,LICENSE",
-        "*.css": "${capture}.min.css,${capture}.min.css.map,${capture}.eot,${capture}.svg,${capture}.ttf,${capture}.woff",
-        "*.js": "${capture}.min.js,${capture}.min.js.map"
+        "composer.json": "composer.lock,.env*,.git*,*.md,README*,LICENSE*,*.dist,*.xml,*.txt",
+        "*.css": "${capture}.min.css,${capture}.min.css.map,${capture}.eot,${capture}.svg,${capture}.ttf,${capture}.woff"
     },
     "explorer.enableDragAndDrop": false,
     "explorer.compactFolders": false,
@@ -95,7 +95,7 @@
     "window.title": "[${rootNameShort}] ${activeEditorMedium}",
     "explorer.incrementalNaming": "smart",
     "explorer.openEditors.sortOrder": "fullPath",
-    "explorer.openEditors.visible": 99,
+    "explorer.openEditors.visible": 0,
     "scm.defaultViewMode": "tree",
     "scm.diffDecorationsGutterPattern": {
         "added": true
@@ -272,7 +272,6 @@
         "src/vendor"
     ],
     "cSpell.useGitignore": false,
-    "cSpell.checkLimit": 1000,
     "cSpell.overrides": [
         {
             "filename": "*.phtml",
@@ -310,6 +309,8 @@
     "editor.minimap.showSlider": "always",
     "editor.minimap.size": "fill",
     "explorer.autoRevealExclude": {
+        "**/bower_components": false,
+        "**/node_modules": false,
         "src/vendor": true
     },
     "explorer.confirmUndo": "verbose",
@@ -325,10 +326,63 @@
     "workbench.commandPalette.preserveInput": true,
     "workbench.editorLargeFileConfirmation": 1,
     "workbench.enableExperiments": false,
-    "cSpell.language": "en,pt",
+    "cSpell.language": "en,pt,pt_BR",
     "editor.minimap.maxColumn": 40,
     "[yaml]": {
         "editor.autoIndent": "full"
     },
-    "workbench.editor.enablePreview": false
+    "workbench.editor.enablePreview": false,
+    "editor.find.autoFindInSelection": "multiline",
+    "editor.find.seedSearchStringFromSelection": "selection",
+    "editor.formatOnSaveMode": "modifications",
+    "diffEditor.maxFileSize": 2,
+    "diffEditor.wordWrap": "off",
+    "editor.inlineSuggest.showToolbar": "always",
+    "editor.quickSuggestions": {
+        "other": "inline",
+        "comments": "inline",
+        "strings": "inline"
+    },
+    "editor.quickSuggestionsDelay": 150,
+    "editor.snippetSuggestions": "none",
+    "editor.suggest.shareSuggestSelections": true,
+    "editor.suggest.showStatusBar": true,
+    "editor.suggest.snippetsPreventQuickSuggestions": false,
+    "editor.suggestSelection": "recentlyUsedByPrefix",
+    "files.associations": {
+        "*.phtml": "php"
+    },
+    "files.defaultLanguage": "php",
+    "files.eol": "\n",
+    "files.hotExit": "onExitAndWindowClose",
+    "files.maxMemoryForLargeFilesMB": 32,
+    "files.refactoring.autoSave": false,
+    "files.simpleDialog.enable": true,
+    "files.watcherExclude": {
+        "**/.hg/store/**": false,
+        "**/node_modules/*/**": false
+    },
+    "zenMode.hideLineNumbers": false,
+    "zenMode.hideTabs": false,
+    "zenMode.restore": false,
+    "editor.cursorStyle": "line-thin",
+    "search.defaultViewMode": "tree",
+    "search.exclude": {
+        "**/*.code-search": false,
+        "**/bower_components": false,
+        "**/node_modules": false,
+        "/*.md": true,
+        "/#DOCs": true
+    },
+    "window.newWindowDimensions": "maximized",
+    "search.followSymlinks": false,
+    "explorer.sortOrder": "type",
+    "problems.showCurrentInStatus": true,
+    "comments.useRelativeTime": false,
+    "comments.openView": "never",
+    "comments.visible": false,
+    "cSpell.hideAddToDictionaryCodeActions": true,
+    "cSpell.blockCheckingWhenLineLengthGreaterThan": 250,
+    "editor.suggest.insertMode": "replace",
+    "editor.suggest.preview": true
 }
