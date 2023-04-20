@@ -18,7 +18,7 @@ require_once "basic/server.php";
 require_once "helpers/debugger.php";
 require_once "helpers/math.php";
 require_once "helpers/storage.php";
-//require_once "helpers/time.php";
+require_once "helpers/time.php";
 //require_once "helpers/profiler.php";
 
 ////Handlers
