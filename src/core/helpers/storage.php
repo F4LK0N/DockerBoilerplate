@@ -24,5 +24,3 @@ class STORAGE {
     }
     
 }
-
-VDD(STORAGE::FORMAT(1501026));
