@@ -4,12 +4,18 @@
 
 function VD($var)
 {
-    var_dump($var);
+    $caller = debug_backtrace(1)[0];
+    echo "<small>".substr($caller['file'], 5).':'.$caller['line']."</small><pre>";
+    print_r($var);
+    echo "</pre>\n";
 }
 
 function VDD($var)
 {
-    var_dump($var);
+    $caller = debug_backtrace(1)[0];
+    echo "<small>".substr($caller['file'], 5).':'.$caller['line']."</small><pre>";
+    print_r($var);
+    echo "</pre>\n";
     die;
 }
 

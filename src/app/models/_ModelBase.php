@@ -4,6 +4,11 @@ use Phalcon\Mvc\Model;
 
 class _ModelBase extends Model
 {
+    static protected function timestampModelToDatabase()
+    {
+        
+    }
+
     
     public function getMessagesString($messages='')
     {

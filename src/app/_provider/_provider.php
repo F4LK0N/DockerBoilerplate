@@ -11,7 +11,6 @@ class PROVIDER
         "router",
         "result",
         "response",
-        "session",
         "db",
         "filter",
         "validator",

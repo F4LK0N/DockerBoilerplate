@@ -1,4 +1,5 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
+
 use Phalcon\Autoload\Loader;
 
 class CONFIG
@@ -29,7 +30,7 @@ class CONFIG
 
     static public function REGISTER()
     {
-        self::INSTANCE()->register();
+        self::INSTANCE()->register(true);
     }
 
     static public function NAMESPACES(array $values)
@@ -65,6 +66,22 @@ class CONFIG
 
     static public function LOAD()
     {
+
+        //$loader->setClasses(
+        //    [
+        //        'MyApp\Components\Mail'             => 'app/library/Components/Mail.php',
+        //        'MyApp\Controllers\IndexController' => 'app/controllers/IndexController.php',
+        //        'MyApp\Controllers\AdminController' => 'app/controllers/AdminController.php',
+        //        'MyApp\Models\Invoices'             => 'app/models/Invoices.php',
+        //        'MyApp\Models\Users'                => 'app/models/Users.php',
+        //    ]
+        //);
+
+        //setNamespaces
+
+
+
+
         if(self::$INSTANCE!==null){
             return;
         }

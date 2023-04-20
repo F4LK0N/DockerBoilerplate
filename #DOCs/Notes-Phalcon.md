@@ -42,6 +42,12 @@ https://xdebug.org/docs/all_settings
 ?XDEBUG_TRIGGER=1
 ```
 
+# Auto Loader
+https://docs.phalcon.io/5.0/en/autoload
+https://docs.phalcon.io/5.0/en/api/phalcon_autoload#autoload-loader
+https://github.com/phalcon/cphalcon/blob/5.0.x/phalcon/Autoload/Loader.zep
+
+
 
 # Migrations
 https://docs.phalcon.io/5.0/en/db-migrations
