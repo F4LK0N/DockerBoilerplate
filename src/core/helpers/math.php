@@ -40,16 +40,3 @@ class MATH
     }
     
 }
-
-VD(MATH::MAX(1,10));
-VD(MATH::MIN(10,1));
-VD(MATH::BETWEEN(-1,1,10));
-VD(MATH::BETWEEN(11,1,10));
-VD(MATH::BETWEEN(5,1,10));
-
-$min = 50;
-$max = -1;
-MATH::RANGE_ADJUST($min, $max);
-VD($min);
-VD($max);
-VDD(1);
