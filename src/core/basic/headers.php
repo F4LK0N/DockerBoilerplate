@@ -1,25 +1,33 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
 
-class eHEADER_CONTENT_TYPE
+class eCONTENT_TYPE
 {
-	public const HTML = 1;
-	public const JSON = 2;
+	const HTML = 1;
+	const JSON = 2;
 }
+
 class HEADERS
 {
+    static private $LOADED            = false;
+    
     static private $CORS_REQUEST      = false;
     static private $PREFLIGHT_REQUEST = false;
 
 
 
-    static public function LOAD()
-	{
+    public function __construct()
+    {
+        if(self::$LOADED){
+            return;
+        }
+        self::$LOADED = true;
+
         self::IDENTIFY_REQUEST();
 
 		self::HANDLE_CORS_REQUEST();
         self::HANDLE_PREFLIGHT_REQUEST();
         self::HANDLE_CONTENT_REQUEST();
-	}
+    }
 
     static private function IDENTIFY_REQUEST()
     {
@@ -88,7 +96,7 @@ class HEADERS
             return;
         }
 
-        self::CONTENT_TYPE(eHEADER_CONTENT_TYPE::HTML);
+        self::CONTENT_TYPE(eCONTENT_TYPE::HTML);
         self::CACHE_CONTROL(true);
         self::EXPIRES();
         self::E_TAG('CORS');
@@ -106,8 +114,11 @@ class HEADERS
 
     static private function HANDLE_CONTENT_REQUEST () 
     {
-        //self::CONTENT_TYPE(eHEADER_CONTENT_TYPE::JSON);
-        self::CONTENT_TYPE(eHEADER_CONTENT_TYPE::HTML);//<=== DEV TEMP
+        if(defined('DEBUG')){
+            self::CONTENT_TYPE(eCONTENT_TYPE::HTML);
+        }else{
+            self::CONTENT_TYPE(eCONTENT_TYPE::JSON);
+        }
 		self::CACHE_CONTROL(false);
 		self::EXPIRES();
 		self::E_TAG();
@@ -120,7 +131,7 @@ class HEADERS
 		//Property
 		$header = "Content-Type: ";
 		//Type
-		$header .= ($type===eHEADER_CONTENT_TYPE::HTML)?"text/html;":"application/json;";
+		$header .= ($type===eCONTENT_TYPE::HTML)?"text/html;":"application/json;";
 		//Encoding
 		$header.=" charset=UTF-8";
 		
@@ -157,4 +168,4 @@ class HEADERS
 
 }
 
-HEADERS::LOAD();
+(new HEADERS());

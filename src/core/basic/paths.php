@@ -2,7 +2,7 @@
 
 ### SOURCE ###
 //ROOT
-$temp = dirname(__DIR__);
+$temp = dirname(dirname(__DIR__));
 while(false!==strpos($temp, '\\')){ $temp = str_replace('\\', '/', $temp); }
 while(false!==strpos($temp, '//')){ $temp = str_replace('//', '/', $temp); }
 $temp = rtrim($temp,"/");

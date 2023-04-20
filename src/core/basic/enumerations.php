@@ -3,8 +3,6 @@
 require_once "enumerations/status.php";
 require_once "enumerations/error.php";
 
-require_once "enumerations/content_type.php";
-
 require_once "enumerations/server_environment.php";
 require_once "enumerations/server_provider.php";
 require_once "enumerations/server_tier.php";
