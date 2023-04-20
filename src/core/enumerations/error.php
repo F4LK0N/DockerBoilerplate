@@ -1,38 +1,10 @@
 <? defined("FKN") or http_response_code(403).die('Forbidden!');
 
-class eSERVER_ENVIRONMENT
+class eERROR
 {
-    const ONLINE  = 1;
-    const OFFLINE = 0;
-}
-class eSERVER_PROVIDER
-{
-    const DEVELOPER = 0;
-    const AWS       = 1;
-}
-class eSERVER_TIER
-{
-    const DEV  = 0;
-    const STAG = 1;
-    const PROD = 2;
-}
-class eCLIENT_PLATFORM
-{
-    const UNKNOWN = 0;
-    const WEB     = 1;
-    const APP     = 2;
-}
-
-enum eSTATUS_CODES: int
-{
-    const SUCCESS = 1;
-    const ERROR   = 0;
-}
-
-class eERROR_CODES
-{
-    const NO_ERROR      = 0;
-    const GENERIC_ERROR = 1;
+    //BASE
+    const NONE      = 0;
+    const GENERIC   = 1;
 
     //CONTROLLERS
     const CONTROLLER             = 10000000; //Generic Controller Error.
@@ -57,14 +29,4 @@ class eERROR_CODES
     const INPUT_RETRIEVE         =     1300; //Cannot Retrieve
     const INPUT_FILTER           =     1400; //Filter Error
     const INPUT_VALIDATION       =     1500; //Validation Error
-}
-
-enum eUserTypes 
-{
-    case DEV;
-    case MASTER;
-    case ADMIN;
-    case MANAGER;
-    case EDITOR;
-    case READER;
 }
