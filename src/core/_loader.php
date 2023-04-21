@@ -27,3 +27,6 @@ require_once "helpers/profiler.php";
 //require_once "helpers/2-id-list.php";
 //require_once "helpers/2-string-list.php";
 //require_once "helpers/4-file-system.php";
+
+//Config
+require_once "config/_config.php";
