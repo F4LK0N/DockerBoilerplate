@@ -41,7 +41,7 @@ class Sessions extends _ModelBase
         {
             if(!$session->save()){
                 $result->setError(
-                    eERROR_CODES::MODEL_TRANSACTION,
+                    eERROR::MODEL_TRANSACTION,
                     $session->getMessagesString()
                 );
             }
@@ -52,7 +52,7 @@ class Sessions extends _ModelBase
         }
         catch (\Exception $exception) {
             $result->setError(
-                eERROR_CODES::MODEL_TRANSACTION + $exception->getCode(), 
+                eERROR::MODEL_TRANSACTION + $exception->getCode(), 
                 $exception->getMessage()
             );
         }

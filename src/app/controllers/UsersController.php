@@ -67,7 +67,7 @@ class UsersController extends _BaseController
             ],
         ]);
         if($inputs->hasErrors()){
-            $this->setError(eERROR_CODES::CONTROLLER_INPUT + $inputs->getErrorCode(), $inputs->getErrorDetails());
+            $this->setError(eERROR::CONTROLLER_INPUT + $inputs->getErrorCode(), $inputs->getErrorDetails());
         }
 
         try
@@ -89,7 +89,7 @@ class UsersController extends _BaseController
             ]]);
         }
         catch (\Exception $exception) {
-            $this->setError(eERROR_CODES::CONTROLLER_TRANSACTION + $exception->getCode(), $user->getMessagesString($exception->getMessage()));
+            $this->setError(eERROR::CONTROLLER_TRANSACTION + $exception->getCode(), $user->getMessagesString($exception->getMessage()));
         }
     }
     

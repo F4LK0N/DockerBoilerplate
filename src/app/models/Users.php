@@ -77,7 +77,7 @@ class Users extends _ModelBase
         ]);
         if($inputs->hasErrors()){
             $result->setError(
-                eERROR_CODES::MODEL_INPUT + $inputs->getErrorCode(),
+                eERROR::MODEL_INPUT + $inputs->getErrorCode(),
                 $inputs->getErrorDetails()
             );
             return $result;
@@ -100,7 +100,7 @@ class Users extends _ModelBase
         ->execute();
         if($resultset->count()!==1){
             $result->setError(
-                eERROR_CODES::MODEL_NOT_FOUND,
+                eERROR::MODEL_NOT_FOUND,
                 'User not found!'
             );
             return $result;

@@ -6,13 +6,13 @@ use Phalcon\Http\Response;
 
 class ResultError
 {
-    public int    $code    = eERROR_CODES::NO_ERROR;
+    public int    $code    = eERROR::NONE;
     public string $details = '';
 }
 
 class Result
 {
-    public int          $status = eSTATUS_CODES::SUCCESS;
+    public int          $status = eSTATUS::SUCCESS;
     public ?ResultError $error  = null;
     public array        $data   = [];
 
@@ -23,7 +23,7 @@ class Result
 
     public function hasErrors(): bool
     {
-        return ($this->error->code !== eERROR_CODES::NO_ERROR);
+        return ($this->error->code !== eERROR::NONE);
     }
 
     public function getErrorCode(): int
@@ -37,8 +37,8 @@ class Result
 
     public function setError(int $code, $details='')
     {
-        $this->status          = eSTATUS_CODES::ERROR;
-        $this->error->code     = $code??eERROR_CODES::GENERIC_ERROR;
+        $this->status          = eSTATUS::ERROR;
+        $this->error->code     = $code??eERROR::GENERIC;
         $this->error->details .= ($this->error->details?'\n':'').$details;
         $this->data            = [];
     }

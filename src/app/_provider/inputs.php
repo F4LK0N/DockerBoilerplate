@@ -6,7 +6,7 @@ use Phalcon\Filter\Validation;
 
 class InputsProvider
 {
-    private int          $code    = eERROR_CODES::NO_ERROR;
+    private int          $code    = eERROR::NONE;
     private string       $details = '';
     
     private string $method = '';
@@ -17,12 +17,12 @@ class InputsProvider
 
     private function setError(int $code=null, string $details='')
     {
-        $this->code = $code??eERROR_CODES::INPUT;
+        $this->code = $code??eERROR::INPUT;
         $this->details .= ($this->details?'\n':'').$details;
     }
     public function hasErrors(): bool
     {
-        return ($this->code !== eERROR_CODES::NO_ERROR);
+        return ($this->code !== eERROR::NONE);
     }
     public function getErrorCode(): int
     {
@@ -70,7 +70,7 @@ class InputsProvider
             {
                 if($config['value']===null){
                     if($config['validations']['required']===true){
-                        $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' is required!");
+                        $this->setError(eERROR::INPUT_RETRIEVE, "'$name' is required!");
                     }elseif(isset($config['default'])){
                         $config['value'] = $config['default'];
                     }else{
@@ -85,7 +85,7 @@ class InputsProvider
         }
         catch (\Exception $exception) {
             VD($exception->getCode());
-            $this->setError(eERROR_CODES::INPUT_RETRIEVE + $exception->getCode(), $exception->getMessage());
+            $this->setError(eERROR::INPUT_RETRIEVE + $exception->getCode(), $exception->getMessage());
             return false;
         }
     }
@@ -115,7 +115,7 @@ class InputsProvider
             $request = new Request();
 
             if(!$request->isPost()){
-                $this->setError(eERROR_CODES::INPUT_METHOD, 'Incorrect http method, POST expected!');
+                $this->setError(eERROR::INPUT_METHOD, 'Incorrect http method, POST expected!');
                 return false;
             }
 
@@ -124,7 +124,7 @@ class InputsProvider
                 $config['value'] = $request->getPost($name, null, null);
                 if($config['value']===null){
                     if($config['validations']['required']===true){
-                        $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' is required!");
+                        $this->setError(eERROR::INPUT_RETRIEVE, "'$name' is required!");
                     }elseif(isset($config['default'])){
                         $config['value'] = $config['default'];
                     }else{
@@ -137,7 +137,7 @@ class InputsProvider
 
             foreach($_POST as $name => &$value){
                 if(!isset($this->fields[$name])){
-                    $this->setError(eERROR_CODES::INPUT_RETRIEVE, "'$name' not allowed!");
+                    $this->setError(eERROR::INPUT_RETRIEVE, "'$name' not allowed!");
                 }
             }
 
@@ -147,7 +147,7 @@ class InputsProvider
         }
         catch (\Exception $exception) {
             VD($exception->getCode());
-            $this->setError(eERROR_CODES::INPUT_RETRIEVE + $exception->getCode(), $exception->getMessage());
+            $this->setError(eERROR::INPUT_RETRIEVE + $exception->getCode(), $exception->getMessage());
             return false;
         }
     }
@@ -161,7 +161,7 @@ class InputsProvider
         {
             //Name
             if(!is_string($name) || $name===''){
-                $this->setError(eERROR_CODES::INPUT_CONFIG, 'Invalid field name!');
+                $this->setError(eERROR::INPUT_CONFIG, 'Invalid field name!');
                 continue;
             }
 
@@ -209,13 +209,13 @@ class InputsProvider
             {
                 $config['value'] = $filter->sanitize($config['value'], $config['filters']);
                 if($config['value']==='' && $config['validations']['required']===true){
-                    $this->setError(eERROR_CODES::INPUT_FILTER, "'$name' is required!");
+                    $this->setError(eERROR::INPUT_FILTER, "'$name' is required!");
                 }
             }
             return !$this->hasErrors();
         }
         catch (\Exception $exception) {
-            $this->setError(eERROR_CODES::INPUT_FILTER + $exception->getCode(), $exception->getMessage());
+            $this->setError(eERROR::INPUT_FILTER + $exception->getCode(), $exception->getMessage());
             return false;
         }
     }
@@ -233,13 +233,13 @@ class InputsProvider
             }
             
             if(!$validator->validate($this->data)){
-                $this->setError(eERROR_CODES::INPUT_VALIDATION, $validator->getErrorDetails());
+                $this->setError(eERROR::INPUT_VALIDATION, $validator->getErrorDetails());
             }
 
             return !$this->hasErrors();
         }
         catch (\Exception $exception) {
-            $this->setError(eERROR_CODES::INPUT_VALIDATION + $exception->getCode(), $exception->getMessage());
+            $this->setError(eERROR::INPUT_VALIDATION + $exception->getCode(), $exception->getMessage());
             return false;
         }
     }
