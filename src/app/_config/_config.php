@@ -35,13 +35,13 @@ class CONFIG
     static public function NAMESPACES(array $values)
     {
         self::INSTANCE()->setNamespaces($values);
-        self::$DATA['namespaces'] = $values;
+        //self::$DATA['namespaces'] = $values;
     }
 
     static public function DIRECTORIES(array $values)
     {
         self::INSTANCE()->setDirectories($values);
-        self::$DATA['directories'] = $values;
+        //self::$DATA['directories'] = $values;
     }
 
     static public function GET(string $key=null, string $key2=null, string $key3=null): mixed
@@ -65,22 +65,6 @@ class CONFIG
 
     static public function LOAD()
     {
-
-        //$loader->setClasses(
-        //    [
-        //        'MyApp\Components\Mail'             => 'app/library/Components/Mail.php',
-        //        'MyApp\Controllers\IndexController' => 'app/controllers/IndexController.php',
-        //        'MyApp\Controllers\AdminController' => 'app/controllers/AdminController.php',
-        //        'MyApp\Models\Invoices'             => 'app/models/Invoices.php',
-        //        'MyApp\Models\Users'                => 'app/models/Users.php',
-        //    ]
-        //);
-
-        //setNamespaces
-
-
-
-
         if(self::$INSTANCE!==null){
             return;
         }

@@ -4,9 +4,10 @@
 //Start Time (Seconds)
 define("PROFILER_TIME", microtime(true));
 //Start Memory (Bytes)
-define("PROFILER_MEMORY", memory_get_usage(false));
-define("PROFILER_MEMORY_REAL", memory_get_usage(true));
+//define("PROFILER_MEMORY", memory_get_usage(false));
+//define("PROFILER_MEMORY_REAL", memory_get_usage(true));
 
+### CORE ###
 //Core
 //require_once "dev.php";
 require_once "basic/headers.php";
@@ -21,7 +22,7 @@ require_once "helpers/storage.php";
 require_once "helpers/time.php";
 require_once "helpers/profiler.php";
 
-////Handlers
+//Handlers
 //require_once "helpers/1-json.php";
 //require_once "helpers/2-id-list.php";
 //require_once "helpers/2-string-list.php";
