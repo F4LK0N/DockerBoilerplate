@@ -1,8 +1,4 @@
-<?
-
-use Phalcon\Http\Response;
-
- defined("FKN") or http_response_code(403).die('Forbidden!');
+<? defined("FKN") or http_response_code(403).die('Forbidden!');
 
 class ResultError
 {
@@ -61,7 +57,6 @@ class Result
 PROVIDER::SET(
     'result',
     function () {
-        $response = new Response();
-        return $response;
+        return new Result();
     }
 );
