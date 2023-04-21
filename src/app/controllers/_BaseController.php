@@ -11,9 +11,9 @@ class _BaseController extends Controller
     {
         //Pass to PROVIDER::GET('response');
         $this->apiResponse = [
-            'status' => eSTATUS_CODES::SUCCESS,
+            'status' => eSTATUS::SUCCESS,
             'error' => [
-                'code'    => eERROR_CODES::NO_ERROR,
+                'code'    => eERROR::NONE,
                 'message' => '',
                 'details' => '',
             ],
@@ -31,9 +31,9 @@ class _BaseController extends Controller
     {
         //Pass to PROVIDER::GET('response');
         $this->apiResponse = [
-            'status' => eSTATUS_CODES::ERROR,
+            'status' => eSTATUS::ERROR,
             'error' => [
-                'code'    => $code??eERROR_CODES::NO_ERROR,
+                'code'    => $code??eERROR::NONE,
                 'details' => $details,
             ],
             'data' => [],
@@ -49,7 +49,7 @@ class _BaseController extends Controller
     protected function send()
     {
         //Pass to PROVIDER::GET('response');
-        HEADERS::CONTENT_TYPE(eHEADER_CONTENT_TYPE::JSON);
+        HEADERS::CONTENT_TYPE(eCONTENT_TYPE::JSON);
         /**
           * @var Response
           */
