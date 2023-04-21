@@ -60,20 +60,3 @@ class Profiler implements JsonSerializable
     }
 
 }
-
-$data=[];
-for($i=0; $i<2000; $i++){
-    $data2=[];
-    for($i2=0; $i2<1000; $i2++){
-        $data2[] = $i*$i2;
-    }
-    $data[]=$data2;
-}
-unset($data);
-unset($data2);
-
-$profiler = new Profiler(true);
-
-//print json_encode($profiler);die;
-print($profiler->format());
-die;
