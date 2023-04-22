@@ -2,33 +2,21 @@
 
 class CONFIG
 {
-    static private array $FILES = [
-        'app',
-        'db',
-        'redis',
-        'bucket',
-    ];
-    
     static private array $DATA = [];
 
 
 
     public function __construct()
     {
-        foreach(self::$FILES as $file){
-            self::$DATA[$file] = require "$file.php";
-        }
-        self::$FILES = [];
+        self::$DATA['app']    = require 'app.php';
+        self::$DATA['db']     = require 'db.php';
+        self::$DATA['redis']  = require 'redis.php';
+        self::$DATA['bucket'] = require 'bucket.php';
     }
 
     static public function GET(string $key): array
     {
         return self::$DATA[$key];
-    }
-
-    static public function SET(string $key, mixed $value)
-    {
-        self::$DATA[$key] = $value;
     }
 
 }
