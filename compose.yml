@@ -1,11 +1,21 @@
 services:
   alpine:
     container_name: ${COMPOSE_PREFIX}alpine
-    build: ./.docker/alpine
+    build: 
+      context: ./.docker/alpine
+      args:
+        - ARG_HOST=alpine
+        - ARG_DOMAIN=${PROJECT_HOST}
+        - ARG_TIMEZONE=${PROJECT_TIMEZONE}
+        - ARG_OS_VERSION=3.17
+        - ARG_OS_APK_MIRROR=${ALPINE_APK_MIRROR}
     volumes:
-      # Data and Logs
+      # Data
       - ./data/:/data/
+      # Logs
       - ./logs/:/logs/
+      # Application
+      - ./src/:/src/
       # Dev
       - ./.docker/alpine/os/docker/:/docker/
       - ./.docker/alpine/os/adm/:/adm/
