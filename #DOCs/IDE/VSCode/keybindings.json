@@ -23,11 +23,11 @@
     },
     //SETTINGS
     {
-        "key": "alt+f1",
+        "key": "ctrl+shift+f1",
         "command": "workbench.action.openSettings"
     },
     {
-        "key": "shift+alt+f1",
+        "key": "ctrl+shift+alt+f1",
         "command": "workbench.action.openGlobalKeybindings"
     },
     //### EDITOR ###
@@ -290,12 +290,12 @@
     },
     //PARAMETERS
     {
-        "key": "ctrl+shift+space",
+        "key": "alt+f1",
         "command": "closeParameterHints",
         "when": "editorTextFocus && parameterHintsVisible"
     },
     {
-        "key": "ctrl+shift+space",
+        "key": "alt+f1",
         "command": "editor.action.triggerParameterHints",
         "when": "editorTextFocus && !parameterHintsVisible"
     },
