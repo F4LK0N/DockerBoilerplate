@@ -27,6 +27,11 @@ $group->add('edit/:int', [
     'id' => 1,
 ]);
 
+$group->add('edit-pass/:int', [
+    'action' => 'edit',
+    'id' => 1,
+]);
+
 $group->add('rem/:int', [
     'action' => 'rem',
     'id' => 1,
