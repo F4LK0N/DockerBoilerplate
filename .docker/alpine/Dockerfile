@@ -50,49 +50,49 @@ RUN set -eux; \
     rm -r -f /var/lib/apk/*; \
     rm -r -f /etc/apk/cache/*;
 
-#### DOWNLOADS ###
-#RUN set -eux; \
-#    # Dependencies
-#    apk update; \
-#    apk add --virtual temp_dependencies \
-#        tzdata \
-#    \
-#    # OS - Timezone
-#        cp "/usr/share/zoneinfo/${PROJECT_TIMEZONE}" /etc/localtime; \
-#        echo "${PROJECT_TIMEZONE}" > /etc/timezone; \
-#    # Clean
-#    apk del temp_dependencies; \
-#    rm -r -f /var/cache/apk/*; \
-#    rm -r -f /var/lib/apk/*; \
-#    rm -r -f /etc/apk/cache/*;
+### DOWNLOADS ###
+RUN set -eux; \
+    # Dependencies
+    apk update; \
+    apk add --virtual temp_dependencies \
+        tzdata \
+    ;\
+    # OS - Timezone
+        cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime; \
+        echo "${TIMEZONE}" > /etc/timezone; \
+    # Clean
+    apk del temp_dependencies; \
+    rm -r -f /var/cache/apk/*; \
+    rm -r -f /var/lib/apk/*; \
+    rm -r -f /etc/apk/cache/*;
 
-#### FILESYSTEM ###
-#RUN set -eux; \
-#    mkdir --mode=777 --parents \
-#        # Container
-#        /docker \
-#        /adm \
-#        ${ROOT_DATA} \
-#        ${ROOT_LOGS} \
-#        # OS
-#        ${OS_DATA} \
-#        ${OS_LOGS} \
-#        # Application
-#        ${APP_ROOT} \
-#    ;
+### FILESYSTEM ###
+RUN set -eux; \
+    mkdir --mode=777 --parents \
+        # Container
+        /docker \
+        /adm \
+        ${ROOT_DATA} \
+        ${ROOT_LOGS} \
+        # OS
+        ${OS_DATA} \
+        ${OS_LOGS} \
+        # Application
+        ${APP_ROOT} \
+    ;
 
-#########################################################################################################################
-#### CONFIG ###
-#########################################################################################################################
-#### IMPORT ###
-## OS
-#COPY --chmod=755 "./os/root/.ashrc" "/root/.ashrc"
-#COPY --chmod=755 "./os/docker/" "/docker/"
-#COPY --chmod=755 "./os/adm/" "/adm/"
+########################################################################################################################
+### CONFIG ###
+########################################################################################################################
+### IMPORT ###
+# OS
+COPY --chmod=755 "./os/root/.ashrc" "/root/.ashrc"
+COPY --chmod=755 "./os/docker/" "/docker/"
+COPY --chmod=755 "./os/adm/" "/adm/"
 
-#########################################################################################################################
-#### CONTAINER ###
-#########################################################################################################################
-#STOPSIGNAL SIGWINCH
-#ENTRYPOINT ["/docker/entrypoint.sh"]
-#CMD ["RUN"]
+########################################################################################################################
+### CONTAINER ###
+########################################################################################################################
+STOPSIGNAL SIGWINCH
+ENTRYPOINT ["/docker/entrypoint.sh"]
+CMD ["RUN"]
