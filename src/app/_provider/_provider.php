@@ -15,7 +15,6 @@ class PROVIDER
         "filter",
         "validator",
         "inputs",
-        "security",
     ];
 
 

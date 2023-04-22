@@ -2,6 +2,15 @@
 
 class Security
 {
+    public function hash128(string $value): string
+    {
+        $iterations = (10 + (strlen($value)%3));
+
+        $value = sha1($value);
+
+        return $value;
+    }
+
     public function passHash(string $email, string $pass): string
     {
         $iterations = (10 + (strlen($email)%3));

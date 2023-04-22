@@ -37,11 +37,11 @@ This image is based on the official Docker image of the Alpine Operational Syste
 ### Build and Run
 	docker compose up -d --build
 ### Access
-	docker compose exec -it phalcon /bin/sh
+	docker compose exec -it api /bin/sh
 
 .
 # Development
 ### Run
 	docker compose up -d	
 ### Access
-	docker compose exec -it phalcon /bin/sh
+	docker compose exec -it api /bin/sh

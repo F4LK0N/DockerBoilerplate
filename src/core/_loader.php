@@ -21,6 +21,7 @@ require_once "helpers/math.php";
 require_once "helpers/storage.php";
 require_once "helpers/time.php";
 require_once "helpers/profiler.php";
+require_once "helpers/security.php";
 
 //Handlers
 //require_once "helpers/1-json.php";
