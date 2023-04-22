@@ -266,7 +266,7 @@
         "args": {
             "commands": [
                 "hideSuggestWidget",
-                "editor.action.inlineSuggest.trigger",
+                "editor.action.inlineSuggest.trigger"
             ]
         },
         "when": "editorTextFocus && !inlineSuggestionVisible && !editorReadonly"
@@ -283,7 +283,7 @@
         "args": {
             "commands": [
                 "editor.action.inlineSuggest.hide",
-                "editor.action.triggerSuggest",
+                "editor.action.triggerSuggest"
             ]
         },
         "when": "editorTextFocus && !suggestWidgetVisible && !editorReadonly"
@@ -299,13 +299,17 @@
         "command": "editor.action.triggerParameterHints",
         "when": "editorTextFocus && !parameterHintsVisible"
     },
-    //QUICK FIX
-    //{
-    //    "key": "ctrl+shift+oem_period",
-    //    "command": "editor.action.quickFix",
-    //    "when": "editorHasCodeActionsProvider && editorTextFocus && !editorReadonly"
-    //},
-    //### SEARCH ###
+    //HOVER
+    {
+        "key": "f1",
+        "command": "editor.action.escapeFocusHover",
+        "when": "editorHoverFocused"
+    },
+    {
+        "key": "f1",
+        "command": "editor.action.showHover",
+        "when": "editorTextFocus"
+    },
     //SEARCH - IN FILES
     {
         "key": "ctrl+shift+f",
@@ -352,11 +356,6 @@
     {
         "key": "shift+insert",
         "command": "-editor.action.clipboardPasteAction"
-    },
-    {
-        "key": "ctrl+k ctrl+i",
-        "command": "-editor.action.showHover",
-        "when": "editorTextFocus"
     },
     {
         "key": "ctrl+shift+pagedown",
@@ -1102,4 +1101,13 @@
         "key": "ctrl+9",
         "command": "-workbench.action.lastEditorInGroup"
     },
+    {
+        "key": "f1",
+        "command": "-workbench.action.showCommands"
+    },
+    {
+        "key": "ctrl+k ctrl+i",
+        "command": "-editor.action.showHover",
+        "when": "editorTextFocus"
+    }
 ]
