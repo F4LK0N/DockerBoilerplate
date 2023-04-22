@@ -5,7 +5,7 @@ services:
       context: ./.docker/alpine
       args:
         - ARG_HOST=alpine
-        - ARG_DOMAIN=${PROJECT_HOST}
+        - ARG_DOMAIN=${PROJECT_DOMAIN}
         - ARG_TIMEZONE=${PROJECT_TIMEZONE}
         - ARG_OS_VERSION=3.17
         - ARG_OS_APK_MIRROR=${ALPINE_APK_MIRROR}
