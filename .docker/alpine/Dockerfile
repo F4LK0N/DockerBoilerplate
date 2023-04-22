@@ -1,66 +1,98 @@
 FROM alpine:3.17
-WORKDIR /
-
 LABEL "org.opencontainers.image.authors"="F4LK0N"
-LABEL "org.opencontainers.image.version"="1.0"
+LABEL "org.opencontainers.image.version"="1.1"
 
 ########################################################################################################################
-### ALPINE ###
+### SETUP ###
 ########################################################################################################################
-### SHELL ###
+WORKDIR /
+ARG ARG_HOST
+ARG ARG_DOMAIN
+ARG ARG_TIMEZONE
+ARG ARG_OS_VERSION
+ARG ARG_OS_APK_MIRROR
+
+### CONTAINER ###
+ENV HOST="${ARG_HOST}"
+ENV DOMAIN="${ARG_DOMAIN}"
+ENV TIMEZONE="${ARG_TIMEZONE}"
+ENV ROOT_DATA="/data"
+ENV ROOT_LOGS="/logs"
+
+### OS ###
 ENV ENV="/root/.ashrc"
+ENV OS_VERSION="${ARG_OS_VERSION}"
+ENV OS_APK_MIRROR="${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}"
+ENV OS_DATA="${ROOT_DATA}/os"
+ENV OS_LOGS="${ROOT_LOGS}/os"
 
-#### FRONTEND ###
-#ARG DEBIAN_FRONTEND noninteractive
+### APPLICATION ###
+ENV APP_ROOT="/src"
 
-#### TIMEZONE ###
-#RUN set -eux; \
-#    echo "tzdata tzdata/Areas select America" | debconf-set-selections; \
-#    echo "tzdata tzdata/Zones/America select Sao_Paulo" | debconf-set-selections; \
-#    rm -f /etc/localtime /etc/timezone; \
-#    dpkg-reconfigure -f noninteractive tzdata
-
-##### APT-GET ###
-#RUN set -eux; \
-## Update and Upgrade
-#    apt-get update -y; \
-#    apt-get upgrade -y; \
-## Install
-#    apt-get install -y procps iftop; \
-## Update and Upgrade
-#    apt-get update -y; \
-#    apt-get upgrade -y; \
-## Clean
-#    apt-get autoremove; \
-#    apt-get clean; \
-#    rm -rf /tmp/*; \
-#    rm -rf /var/tmp/*; \
-#    rm -rf /var/lib/apt/lists/*
-
+########################################################################################################################
+### DATA ###
+########################################################################################################################
+### PACKAGES ###
 RUN set -eux; \
+    # Mirrors
+    truncate -s 0 /etc/apk/repositories; \
+    echo "${OS_APK_MIRROR}/main" >> /etc/apk/repositories; \
+    echo "${OS_APK_MIRROR}/community" >> /etc/apk/repositories; \
+    # Update
+    apk update; \
     apk add --no-cache \
+        \
+        # OS - Core
         openrc \
-        iftop;
+        iftop; \
+    # Clean
+    rm -r -f /var/cache/apk/*; \
+    rm -r -f /var/lib/apk/*; \
+    rm -r -f /etc/apk/cache/*;
 
-### FILESYSTEM ###
-# Centralize Folders
-RUN set -eux; \
-    # Docker
-    mkdir -p /docker/; \
-    # Adm
-    mkdir -p /adm/; \
-    # Data
-    mkdir -p /data/; \
-    # Logs
-    mkdir -p /logs/; \
-    mkdir -p /logs/alpine/; \
-    ln -s /var/log/ /logs/alpine/;
-# Import Content
-COPY ./os/root/.ashrc /root/.ashrc
-COPY ./os/docker/ /docker/
-COPY ./os/adm/ /adm/
+#### DOWNLOADS ###
+#RUN set -eux; \
+#    # Dependencies
+#    apk update; \
+#    apk add --virtual temp_dependencies \
+#        tzdata \
+#    \
+#    # OS - Timezone
+#        cp "/usr/share/zoneinfo/${PROJECT_TIMEZONE}" /etc/localtime; \
+#        echo "${PROJECT_TIMEZONE}" > /etc/timezone; \
+#    # Clean
+#    apk del temp_dependencies; \
+#    rm -r -f /var/cache/apk/*; \
+#    rm -r -f /var/lib/apk/*; \
+#    rm -r -f /etc/apk/cache/*;
 
-## DOCKER ###
-STOPSIGNAL SIGWINCH
-ENTRYPOINT ["/docker/entrypoint.sh"]
-CMD ["RUN"]
+#### FILESYSTEM ###
+#RUN set -eux; \
+#    mkdir --mode=777 --parents \
+#        # Container
+#        /docker \
+#        /adm \
+#        ${ROOT_DATA} \
+#        ${ROOT_LOGS} \
+#        # OS
+#        ${OS_DATA} \
+#        ${OS_LOGS} \
+#        # Application
+#        ${APP_ROOT} \
+#    ;
+
+#########################################################################################################################
+#### CONFIG ###
+#########################################################################################################################
+#### IMPORT ###
+## OS
+#COPY --chmod=755 "./os/root/.ashrc" "/root/.ashrc"
+#COPY --chmod=755 "./os/docker/" "/docker/"
+#COPY --chmod=755 "./os/adm/" "/adm/"
+
+#########################################################################################################################
+#### CONTAINER ###
+#########################################################################################################################
+#STOPSIGNAL SIGWINCH
+#ENTRYPOINT ["/docker/entrypoint.sh"]
+#CMD ["RUN"]
