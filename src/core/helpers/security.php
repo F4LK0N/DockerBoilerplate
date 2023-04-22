@@ -27,12 +27,3 @@ class SECURITY
     }
 
 }
-
-VD(SECURITY::HASH(''));
-VD(SECURITY::HASH('a'));
-VD(SECURITY::HASH('ab'));
-VD(SECURITY::HASH('abc'));
-VD(SECURITY::HASH('abcd'));
-VD(SECURITY::HASH('abcde'));
-
-die;
