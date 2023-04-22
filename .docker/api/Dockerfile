@@ -205,14 +205,14 @@ RUN set -eux; \
 
 ### IMPORT ###
 # OS
-COPY "./os/root/.ashrc" "/root/.ashrc"
-COPY "./os/docker/" "/docker/"
-COPY "./os/adm/" "/adm/"
+COPY --chmod=777 "./os/root/.ashrc" "/root/.ashrc"
+COPY --chmod=777 "./os/docker/" "/docker/"
+COPY --chmod=777 "./os/adm/" "/adm/"
 # APACHE
 COPY --chmod=644 "./apache/httpd.conf" "${HTTPD_CONF}"
 COPY --chmod=644 "./apache/conf.d/*" "${HTTPD_CONFD}/"
 # PHP
-COPY "./php/php.ini" "${PHP_CONF}"
+COPY --chmod=777 "./php/php.ini" "${PHP_CONF}"
 
 ########################################################################################################################
 ### DOCKER ###

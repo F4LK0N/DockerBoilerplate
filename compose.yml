@@ -17,11 +17,11 @@ services:
       # Logs
       - ./logs/api/:/logs/
       # Dev
-      - ./.docker/api/os/docker/:/docker/
-      - ./.docker/api/os/adm/:/adm/
-      - ./.docker/api/apache/httpd.conf:/etc/apache2/httpd.conf
-      - ./.docker/api/apache/conf.d:/etc/apache2/conf.d
-      - ./.docker/api/php/php.ini:/etc/php81/php.ini
+      #- ./.docker/api/os/docker/:/docker/
+      #- ./.docker/api/os/adm/:/adm/
+      #- ./.docker/api/apache/httpd.conf:/etc/apache2/httpd.conf
+      #- ./.docker/api/apache/conf.d:/etc/apache2/conf.d
+      #- ./.docker/api/php/php.ini:/etc/php81/php.ini
     networks:
       - frontend
       - backend
