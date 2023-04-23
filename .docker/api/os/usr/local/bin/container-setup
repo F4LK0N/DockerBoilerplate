@@ -1,0 +1,66 @@
+#!/bin/sh
+set -e
+
+echo "### CONTAINER SETUP ###";
+
+if [[ -f "${OS_DATA}/container/setup-done" ]]; then
+
+    echo "[OK]";
+
+else
+    
+    echo "FILESYSTEM - CLEAR";
+    rm -r -f ${OS_DATA}/container;
+    
+    
+    echo "FILESYSTEM - CREATE";
+    # Container
+    mkdir -p --mode=777 ${ROOT_DATA};
+    mkdir -p --mode=777 ${ROOT_LOGS};
+    # OS
+    mkdir -p --mode=777 ${OS_DATA};
+    mkdir -p --mode=777 ${OS_DATA}/container;
+    mkdir -p --mode=777 ${OS_LOGS};
+    # Apache
+    mkdir -p --mode=777 ${HTTPD_DATA};
+    mkdir -p --mode=777 ${HTTPD_DATA}/run;
+    mkdir -p --mode=777 ${HTTPD_DATA}/run/mutex;
+    mkdir -p --mode=777 ${HTTPD_LOGS};
+    # PHP
+    mkdir -p --mode=777 ${PHP_DATA};
+    mkdir -p --mode=777 ${PHP_DATA}/tmp;
+    mkdir -p --mode=777 ${PHP_LOGS};
+    mkdir -p --mode=777 ${PHP_LOGS}/xdebug;
+    # Application
+    mkdir -p --mode=777 ${APP_ROOT};
+    mkdir -p --mode=777 ${APP_ROOT}/public;
+
+
+    echo "FILESYSTEM - PERMISSIONS";
+    # Container
+    chmod 777 ${ROOT_DATA};
+    chmod 777 ${ROOT_LOGS};
+    # OS
+    chmod 777 ${OS_DATA};
+    chmod 777 ${OS_DATA}/container;
+    chmod 777 ${OS_LOGS};
+    # Apache
+    chmod 777 ${HTTPD_DATA};
+    chmod 777 ${HTTPD_DATA}/run;
+    chmod 777 ${HTTPD_DATA}/run/mutex;
+    chmod 777 ${HTTPD_LOGS};
+    # PHP
+    chmod 777 ${PHP_DATA};
+    chmod 777 ${PHP_DATA}/tmp;
+    chmod 777 ${PHP_LOGS};
+    chmod 777 ${PHP_LOGS}/xdebug;
+    # Application
+    chmod 777 ${APP_ROOT};
+    chmod 777 ${APP_ROOT}/public;
+
+
+    touch "${OS_DATA}/container/setup-done"
+    chmod 777 "${OS_DATA}/container/setup-done"
+    echo "[DONE]"
+
+fi

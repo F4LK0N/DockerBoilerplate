@@ -225,5 +225,5 @@ COPY --chmod=777 "./php/php.ini" "${PHP_CONF}"
 ### DOCKER ###
 ########################################################################################################################
 STOPSIGNAL SIGWINCH
-ENTRYPOINT ["/docker/entrypoint.sh"]
+ENTRYPOINT ["container-entrypoint"]
 CMD ["RUN"]
