@@ -10,6 +10,15 @@ indent_size = 4
 [*.md]
 indent_style = tab
 
-[{package.json,.travis.yml,*compose.y*ml}]
+[.gitignore]
+insert_final_newline = false
+
+[*compose.y*ml]
 indent_size = 2
+insert_final_newline = false
+
+[*.phtml]
+insert_final_newline = false
+
+[*.css]
 insert_final_newline = false
