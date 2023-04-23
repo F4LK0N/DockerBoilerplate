@@ -52,7 +52,7 @@ ENV APP_ROOT="/src"
 ########################################################################################################################
 ### IMAGES ###
 COPY --from=fkn-data /data/adm/stable /adm
-COPY --from=fkn-data /data/composer/latest /usr/local/bin/composer
+COPY --from=fkn-data /data/composer/latest/composer /usr/local/bin/composer
 
 ### PACKAGES ###
 RUN set -eux; \
@@ -160,10 +160,7 @@ RUN set -eux; \
         ${PHP_LOGS} \
         # Application
         ${APP_ROOT} \
-    ; \
-    chmod 755 ${OS_RUN}; \
-    chmod 755 ${HTTPD_RUN}; \
-    chmod 755 ${PHP_RUN};
+    ;
 
 ########################################################################################################################
 ### CONFIG ###

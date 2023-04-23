@@ -16,6 +16,20 @@ else
     fi
 
 
+    echo "LOGS - APACHE";
+    if [[ -f "${HTTPD_LOGS}/access.log" ]]; then
+        truncate -s 0 ${HTTPD_LOGS}/access.log;
+    fi
+
+
+    echo "LOGS - PHP";
+    #...
+
+
+    echo "COMPOSER - UPDATE";
+    composer update -d ${APP_ROOT};
+
+
     touch "${OS_DATA}/container/start-done"
     chmod 777 "${OS_DATA}/container/start-done"
     echo "[DONE]"

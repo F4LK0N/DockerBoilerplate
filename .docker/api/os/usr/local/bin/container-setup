@@ -59,6 +59,10 @@ else
     chmod 777 ${APP_ROOT}/public;
 
 
+    echo "COMPOSER - INSTALL";
+    composer install -d ${APP_ROOT};
+
+
     touch "${OS_DATA}/container/setup-done"
     chmod 777 "${OS_DATA}/container/setup-done"
     echo "[DONE]"
