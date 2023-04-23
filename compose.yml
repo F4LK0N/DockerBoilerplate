@@ -1,0 +1,11 @@
+services:
+  data:
+    container_name: ${COMPOSE_PREFIX}data
+    build: 
+      context: ./.docker/data
+      args:
+        - ARG_HOST=data
+        - ARG_DOMAIN=${PROJECT_DOMAIN}
+        - ARG_TIMEZONE=${PROJECT_TIMEZONE}
+        - ARG_OS_VERSION=3.17
+        - ARG_OS_APK_MIRROR=${ALPINE_APK_MIRROR}
