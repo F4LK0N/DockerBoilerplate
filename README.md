@@ -1,5 +1,6 @@
-# Boilerplate
-**by Otavio Bernardes Soria (aka. F4lk0n)**
+# F4lk0n's Docker Boilerplate
+
+by `F4lk0n` <otaviosoria@gmail.com>
 
 ---
 
