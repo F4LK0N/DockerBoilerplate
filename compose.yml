@@ -1,7 +1,14 @@
 services:
   api:
     container_name: ${COMPOSE_PREFIX}api
-    build: ./.docker/api
+    build: 
+      context: ./.docker/api
+      args:
+        - ARG_HOST=api
+        - ARG_DOMAIN=${PROJECT_DOMAIN}
+        - ARG_TIMEZONE=${PROJECT_TIMEZONE}
+        - ARG_OS_VERSION=3.17
+        - ARG_OS_APK_MIRROR=${ALPINE_APK_MIRROR}
     depends_on:
       - mysql
     deploy:
@@ -10,15 +17,13 @@ services:
           memory: 256M
     memswap_limit: 256M
     volumes:
-      # Application
-      - ./src/:/src/
       # Data
       - ./data/api/:/data/
       # Logs
       - ./logs/api/:/logs/
+      # Application
+      - ./src/:/src/
       # Dev
-      - ./.docker/api/os/docker/:/docker/
-      - ./.docker/api/os/adm/:/adm/
       - ./.docker/api/apache/httpd.conf:/etc/apache2/httpd.conf
       - ./.docker/api/apache/conf.d:/etc/apache2/conf.d
       - ./.docker/api/php/php.ini:/etc/php81/php.ini
