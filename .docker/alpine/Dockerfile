@@ -15,14 +15,11 @@ ARG ARG_OS_APK_MIRROR
 ### CONTAINER ###
 ENV HOST="${ARG_HOST}"
 ENV DOMAIN="${ARG_DOMAIN}"
-ENV TIMEZONE="${ARG_TIMEZONE}"
 ENV ROOT_DATA="/data"
 ENV ROOT_LOGS="/logs"
 
 ### OS ###
 ENV ENV="/root/.ashrc"
-ENV OS_VERSION="${ARG_OS_VERSION}"
-ENV OS_APK_MIRROR="${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}"
 ENV OS_DATA="${ROOT_DATA}/os"
 ENV OS_LOGS="${ROOT_LOGS}/os"
 
@@ -39,8 +36,8 @@ COPY --from=fkn-data /data/adm/stable /adm
 RUN set -eux; \
     # Mirrors
     truncate -s 0 /etc/apk/repositories; \
-    echo "${OS_APK_MIRROR}/main" >> /etc/apk/repositories; \
-    echo "${OS_APK_MIRROR}/community" >> /etc/apk/repositories; \
+    echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/main" >> /etc/apk/repositories; \
+    echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/community" >> /etc/apk/repositories; \
     # Update
     apk update; \
     apk add --no-cache \
@@ -61,8 +58,8 @@ RUN set -eux; \
         tzdata \
     ;\
     # OS - Timezone
-        cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime; \
-        echo "${TIMEZONE}" > /etc/timezone; \
+        cp "/usr/share/zoneinfo/${ARG_TIMEZONE}" /etc/localtime; \
+        echo "${ARG_TIMEZONE}" > /etc/timezone; \
     # Clean
     apk del temp_dependencies; \
     rm -r -f /var/cache/apk/*; \
