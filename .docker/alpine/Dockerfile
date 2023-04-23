@@ -40,11 +40,15 @@ RUN set -eux; \
     echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/community" >> /etc/apk/repositories; \
     # Update
     apk update; \
+    apk upgrade; \
+    # Install
     apk add --no-cache \
         \
         # OS - Core
         openrc \
         iftop; \
+    # Update
+    apk upgrade; \
     # Clean
     rm -r -f /var/cache/apk/*; \
     rm -r -f /var/lib/apk/*; \
@@ -54,6 +58,7 @@ RUN set -eux; \
 RUN set -eux; \
     # Dependencies
     apk update; \
+    apk upgrade; \
     apk add --virtual temp_dependencies \
         tzdata \
     ;\
@@ -61,6 +66,7 @@ RUN set -eux; \
         cp "/usr/share/zoneinfo/${ARG_TIMEZONE}" /etc/localtime; \
         echo "${ARG_TIMEZONE}" > /etc/timezone; \
     # Clean
+    apk upgrade; \
     apk del temp_dependencies; \
     rm -r -f /var/cache/apk/*; \
     rm -r -f /var/lib/apk/*; \
