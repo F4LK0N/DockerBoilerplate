@@ -23,24 +23,24 @@ Dockerfile
 ARG ARG_DOMAIN
 ENV DOMAIN="${ARG_DOMAIN}"
 ```
-
-### References
-https://docs.docker.com/compose/environment-variables/set-environment-variables/#compose-file
-https://docs.docker.com/compose/compose-file/compose-file-v3/#args
-https://stackoverflow.com/questions/58695423/pass-args-to-the-dockerfile-from-docker-compose
+- https://docs.docker.com/compose/environment-variables/set-environment-variables/#compose-file
+- https://docs.docker.com/compose/compose-file/compose-file-v3/#args
+- https://stackoverflow.com/questions/58695423/pass-args-to-the-dockerfile-from-docker-compose
 
 
 
 
 
 # Shell Config
-
-https://stackoverflow.com/questions/38024160/how-to-get-etc-profile-to-run-automatically-in-alpine-docker
-
 Dockerfile:
 ```
 ENV ENV="/root/.ashrc"
 ```
+- https://stackoverflow.com/questions/38024160/how-to-get-etc-profile-to-run-automatically-in-alpine-docker
+
+
+
+
 
 # APK Mirrors
 https://wiki.alpinelinux.org/wiki/Alpine_Package_Keeper
@@ -50,3 +50,11 @@ https://mirror.uepg.br/alpine/v3.17/main/
 https://mirror.uepg.br/alpine/v3.17/community/
 
 
+
+
+
+# Phalcon Version
+php -r "echo Phalcon\Version::get();"
+
+
+https://blog.victor.com.au/php-phalcon-version-check/

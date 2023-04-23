@@ -21,7 +21,7 @@ do
     echo -n "Enter option: "
     read -r -s -n 1 option
 
-    if [ "$option" == "1" ]; then /adm/system.sh; fi
+    if [ "$option" == "1" ]; then /adm/system_info.sh; fi
     if [ "$option" == "2" ]; then /adm/users_groups.sh; fi
     if [ "$option" == "3" ]; then /adm/processes.sh; fi
     if [ "$option" == "4" ]; then /adm/services.sh; fi
