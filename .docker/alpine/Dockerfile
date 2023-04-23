@@ -33,7 +33,7 @@ ENV APP_ROOT="/src"
 ### DATA ###
 ########################################################################################################################
 ### IMAGES ###
-COPY --chmod=755 --from=fkn-data /data/adm/stable /adm
+COPY --from=fkn-data /data/adm/stable /adm
 
 ### PACKAGES ###
 RUN set -eux; \
