@@ -3,13 +3,21 @@ set -e
 
 echo "### CONTAINER START ###";
 
-if [[ -f "/tmp/container-setup" ]]; then
+if [[ -f "${OS_DATA}/container/start-done" ]]; then
+
+    echo "[OK]";
+
+else
     
-    echo "OK";
+    echo "LOGS - OS";
+    if [[ ! -e "${OS_LOGS}/logs-link" ]]; then
+        ln -s "/var/log" "${OS_LOGS}/logs-link"
+        chmod 777 "${OS_LOGS}/logs-link"
+    fi
+
+
+    touch "${OS_DATA}/container/start-done"
+    chmod 777 "${OS_DATA}/container/start-done"
+    echo "[DONE]"
 
 fi
-
-#echo "OS - Logs Folder"
-#rm -r -f /logs/alpine/
-#mkdir -p /logs/alpine/
-#ln -s /var/log/ /logs/alpine/

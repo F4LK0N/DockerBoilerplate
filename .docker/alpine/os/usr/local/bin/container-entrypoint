@@ -1,6 +1,9 @@
 #!/bin/sh
 set -e
 
+clear;
+echo ' ';
+
 container-setup
 container-start
 exec container-run "$@"
