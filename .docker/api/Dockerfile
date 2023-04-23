@@ -1,23 +1,27 @@
 FROM alpine:3.17
-
 LABEL "org.opencontainers.image.authors"="F4LK0N"
-LABEL "org.opencontainers.image.version"="1.0"
+LABEL "org.opencontainers.image.version"="1.1"
 
 ########################################################################################################################
 ### SETUP ###
 ########################################################################################################################
-### CONTAINER ###
 WORKDIR /
+ARG ARG_HOST
+ARG ARG_DOMAIN
+ARG ARG_TIMEZONE
+ARG ARG_OS_VERSION
+ARG ARG_OS_APK_MIRROR
+
+### CONTAINER ###
+ENV HOST="${ARG_HOST}"
+ENV DOMAIN="${ARG_DOMAIN}"
 ENV ROOT_DATA="/data"
 ENV ROOT_LOGS="/logs"
-ENV ROOT_RUN="/run"
 
 ### OS ###
 ENV ENV="/root/.ashrc"
-ENV OS_VERSION="3.17"
 ENV OS_DATA="${ROOT_DATA}/os"
 ENV OS_LOGS="${ROOT_LOGS}/os"
-ENV OS_RUN="${ROOT_RUN}/os"
 
 ### APACHE ###
 ENV HTTPD_VERSION="2.4"
@@ -27,7 +31,6 @@ ENV HTTPD_CONFD="${HTTPD_ROOT}/conf.d"
 ENV HTTPD_MODULES="/usr/lib/apache2"
 ENV HTTPD_DATA="${ROOT_DATA}/apache"
 ENV HTTPD_LOGS="${ROOT_LOGS}/apache"
-ENV HTTPD_RUN="${ROOT_RUN}/apache"
 
 ### PHP ###
 ENV PHP_VERSION="8.1"
@@ -37,7 +40,6 @@ ENV PHP_CONFD="${PHP_ROOT}/conf.d"
 ENV PHP_MODULES="/usr/lib/php81/modules"
 ENV PHP_DATA="${ROOT_DATA}/php"
 ENV PHP_LOGS="${ROOT_LOGS}/php"
-ENV PHP_RUN="${ROOT_RUN}/php"
 
 ### PHALCON ###
 ENV PHALCON_VERSION="5.2.1"
@@ -49,11 +51,19 @@ ENV APP_ROOT="/src"
 ### DATA ###
 ########################################################################################################################
 ### IMAGES ###
-COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
+COPY --from=fkn-data /data/adm/stable /adm
+COPY --from=fkn-data /data/composer/latest /usr/local/bin/composer
 
 ### PACKAGES ###
 RUN set -eux; \
+     # Mirrors
+    truncate -s 0 /etc/apk/repositories; \
+    echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/main" >> /etc/apk/repositories; \
+    echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/community" >> /etc/apk/repositories; \
+    # Update
     apk update; \
+    apk upgrade; \
+    # Install
     apk add --no-cache \
         \
         ### OS ###
@@ -93,20 +103,25 @@ RUN set -eux; \
         php81-session \
         php81-pecl-psr \
         php81-pecl-xdebug; \
+    # Update
+    apk upgrade; \
     # Clean
-    rm -r -f /var/cache/apk/*;
+    rm -r -f /var/cache/apk/*; \
+    rm -r -f /var/lib/apk/*; \
+    rm -r -f /etc/apk/cache/*;
 
 ### DOWNLOADS ###
 RUN set -eux; \
     # Dependencies
     apk update; \
+    apk upgrade; \
     apk add --virtual temp_deps \
         tzdata \
         7zip; \
     \
     # OS - Timezone
-        cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime; \
-        echo "America/Sao_Paulo" > /etc/timezone; \
+        cp "/usr/share/zoneinfo/${ARG_TIMEZONE}" /etc/localtime; \
+        echo "${ARG_TIMEZONE}" > /etc/timezone; \
     # PHP - Phalcon
         # Source
         mkdir -p /tmp/phalcon/; \
@@ -120,31 +135,29 @@ RUN set -eux; \
         chmod 755 ${PHP_MODULES}/phalcon.so; \
         cd /; \
     # Clean
+    apk upgrade; \
     apk del temp_deps; \
-    rm -fr /var/cache/apk/*; \
-    rm -fr /tmp/phalcon/;
+    rm -r -f /tmp/phalcon/; \
+    rm -r -f /var/cache/apk/*; \
+    rm -r -f /var/lib/apk/*; \
+    rm -r -f /etc/apk/cache/*;
 
 ### FILESYSTEM ###
 RUN set -eux; \
     mkdir --mode=777 --parents \
         # Container
-        /docker \
         /adm \
         ${ROOT_DATA} \
         ${ROOT_LOGS} \
-        ${ROOT_RUN} \
         # OS
         ${OS_DATA} \
         ${OS_LOGS} \
-        ${OS_RUN} \
         # Apache
         ${HTTPD_DATA} \
         ${HTTPD_LOGS} \
-        ${HTTPD_RUN} \
         # PHP
         ${PHP_DATA} \
         ${PHP_LOGS} \
-        ${PHP_RUN} \
         # Application
         ${APP_ROOT} \
     ; \
@@ -156,13 +169,6 @@ RUN set -eux; \
 ### CONFIG ###
 ########################################################################################################################
 RUN set -eux; \
-    ### OS ###
-        # Logs
-        ln -s "/var/log" "${OS_LOGS}/logs"; \
-        chmod 777 "${OS_LOGS}/logs"; \
-        # Clean
-        rm -r "/srv/"; \
-    \
     ### APACHE ###
         # Conf File and Dir
         mkdir --mode=777 "${HTTPD_ROOT}/original"; \
@@ -178,9 +184,10 @@ RUN set -eux; \
         # Run
         rm "/var/www/run"; \
         rm -r "/run/apache2/"; \
-        ln -s "${HTTPD_RUN}" "/var/www/run"; \
+        mkdir --mode=755 "${HTTPD_DATA}/run"; \
+        ln -s "${HTTPD_DATA}/run" "/var/www/run"; \
         chmod 777 "/var/www/run"; \
-        mkdir --mode=755 "${HTTPD_RUN}/mutex"; \
+        mkdir --mode=755 "${HTTPD_DATA}/run/mutex"; \
         # SSL
         chmod 755 "/etc/ssl/apache2/server.pem"; \
         chmod 755 "/etc/ssl/apache2/server.key"; \
@@ -201,13 +208,13 @@ RUN set -eux; \
     \
     ### APPLICATION ###
         chmod 777 "${APP_ROOT}"; \
-        mkdir --mode=777 "${APP_ROOT}/public";
+        mkdir --mode=777 "${APP_ROOT}/public"; \
+        chmod 777 "${APP_ROOT}/public";
 
 ### IMPORT ###
 # OS
-COPY --chmod=777 "./os/root/.ashrc" "/root/.ashrc"
-COPY --chmod=777 "./os/docker/" "/docker/"
-COPY --chmod=777 "./os/adm/" "/adm/"
+COPY --chmod=755 "./os/root/.ashrc" "/root/.ashrc"
+COPY --chmod=755 "./os/usr/local/bin/" "/usr/local/bin/"
 # APACHE
 COPY --chmod=644 "./apache/httpd.conf" "${HTTPD_CONF}"
 COPY --chmod=644 "./apache/conf.d/*" "${HTTPD_CONFD}/"
