@@ -16,6 +16,3 @@ services:
       - ./logs/:/logs/
       # Application
       - ./src/:/src/
-      # Dev
-      - ./.docker/alpine/os/docker/:/docker/
-      - ./.docker/alpine/os/adm/:/adm/

@@ -1,0 +1,15 @@
+#!/bin/sh
+set -e
+
+echo "### CONTAINER START ###";
+
+if [[ -f "/tmp/container-setup" ]]; then
+    
+    echo "OK";
+
+fi
+
+#echo "OS - Logs Folder"
+#rm -r -f /logs/alpine/
+#mkdir -p /logs/alpine/
+#ln -s /var/log/ /logs/alpine/

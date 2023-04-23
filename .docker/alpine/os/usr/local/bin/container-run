@@ -3,6 +3,10 @@ set -e
 
 trap "echo '### CONTAINER STOP ###'; exit" SIGWINCH
 
+
+
+echo "### CONTAINER RUN ###";
+
 while true; do
     sleep 1
 done

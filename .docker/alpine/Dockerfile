@@ -70,7 +70,6 @@ RUN set -eux; \
 RUN set -eux; \
     mkdir --mode=777 --parents \
         # Container
-        /docker \
         /adm \
         ${ROOT_DATA} \
         ${ROOT_LOGS} \
@@ -87,12 +86,12 @@ RUN set -eux; \
 ### IMPORT ###
 # OS
 COPY --chmod=755 "./os/root/.ashrc" "/root/.ashrc"
-COPY --chmod=755 "./os/docker/" "/docker/"
+COPY --chmod=755 "./os/usr/local/bin/" "/usr/local/bin/"
 COPY --chmod=755 "./os/adm/" "/adm/"
 
 ########################################################################################################################
 ### CONTAINER ###
 ########################################################################################################################
 STOPSIGNAL SIGWINCH
-ENTRYPOINT ["/docker/entrypoint.sh"]
+ENTRYPOINT ["container-entrypoint"]
 CMD ["RUN"]
