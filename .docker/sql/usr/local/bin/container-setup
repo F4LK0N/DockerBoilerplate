@@ -10,6 +10,14 @@ mysql_config()
     mysqld --validate-config;
 }
 
+mysql_get_config()
+{
+    mysqld --verbose --help | grep ${1};
+
+   # value=${mysqld --verbose --help 2>/dev/null \
+    #    | awk -v conf="$conf" '$1 == conf && /^[^ \t]/ { sub(/^[^ \t]+[ \t]+/, ""); print; exit }'
+}
+
 mysql_initialize()
 {
     if [[ -d "/data/sql/storage/mysql" ]]; then
@@ -120,10 +128,14 @@ else
     mkdir -p --mode=777 ${OS_DATA}/container;
     mkdir -p --mode=777 ${OS_LOGS};
     # SQL
+    rm -rf "${SQL_DATA}/storage";
+    rm -rf "${SQL_DATA}/mysql-files";
     mkdir -p --mode=750 ${SQL_DATA};
     mkdir -p --mode=750 ${SQL_DATA}/storage;
+    mkdir -p --mode=750 ${SQL_DATA}/mysql-files;
     mkdir -p --mode=750 ${SQL_LOGS};
     mkdir -p --mode=750 ${SQL_LOGS}/tmp;
+
 
 
 
@@ -138,23 +150,39 @@ else
     # SQL
     chmod 750 ${SQL_DATA};
     chmod 750 ${SQL_DATA}/storage;
+    chmod 750 ${SQL_DATA}/mysql-files;
     chmod 750 ${SQL_LOGS};
     chmod 750 ${SQL_LOGS}/tmp;
     chmod 664 /etc/mysql/my.cnf;
     chmod 664 /etc/mysql/conf.d/mysql.cnf;
-    
     chown mysql:mysql ${SQL_DATA};
     chown mysql:mysql ${SQL_DATA}/storage;
+    chown mysql:mysql ${SQL_DATA}/mysql-files;
     chown mysql:mysql ${SQL_LOGS};
     chown mysql:mysql ${SQL_LOGS}/tmp;
 
 
 
-    echo "SQL - CONFIG";
+    echo "### SQL - CONFIG ###";
+    echo "root:";
+    mysqld --validate-config --user=root
+    echo "mysql:";
     mysqld --validate-config --user=mysql
 
-    echo "SQL - INITIALIZE";
-    #mysql_initialize
+
+    echo "### SQL - INITIALIZE ###";
+    mysqld --initialize --user=root
+    
+
+    echo "### SQL - TEMP SERVER ###";
+    mysql_get_config general-log-file
+    mysql_get_config keyring_file_data
+    mysql_get_config pid-file
+    mysql_get_config secure-file-priv
+    mysql_get_config slow-query-log-file
+
+    echo "### SQL - ROOT USER ###";
+
     
     
     #mysql_core_databases

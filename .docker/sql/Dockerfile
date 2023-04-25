@@ -106,7 +106,7 @@ RUN set -eux; \
 COPY --chmod=664 "./etc/mysql/my.cnf" "/etc/mysql/my.cnf"
 COPY --chmod=664 "./etc/mysql/conf.d/mysql.cnf" "/etc/mysql/conf.d/mysql.cnf"
 
-VOLUME /data/sql
+#VOLUME /data/sql
 
 ########################################################################################################################
 ### CONTAINER ###
