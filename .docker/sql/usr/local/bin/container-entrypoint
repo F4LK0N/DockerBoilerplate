@@ -5,5 +5,5 @@ clear;
 echo ' ';
 
 container-setup
-container-start
+#container-start
 exec container-run "$@"

@@ -15,12 +15,13 @@ services:
     volumes:
       # Data
       #- ./data/sql:/data/sql
+      - ./data/sql:/var/lib/mysql
       # Logs
       # ./logs/sql:/logs/sql
       # Dev
-      - ./.docker/sql/usr/local/bin/:/usr/local/bin/
-      - ./.docker/sql/etc/mysql/my.cnf:/etc/mysql/my.cnf
-      - ./.docker/sql/etc/mysql/conf.d/:/etc/mysql/conf.d/
+      #- ./.docker/sql/usr/local/bin/:/usr/local/bin/
+      #- ./.docker/sql/etc/mysql/my.cnf:/etc/mysql/my.cnf
+      #- ./.docker/sql/etc/mysql/conf.d/:/etc/mysql/conf.d/
 
   #sql-panel:
   #  image: f4lk0n/fkn:sql-panel

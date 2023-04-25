@@ -5,105 +5,105 @@ echo "### CONTAINER SETUP ###";
 
 
 
-mysql_config()
-{
-    mysqld --validate-config;
-}
-
-mysql_get_config()
-{
-    mysqld --verbose --help | grep ${1};
-
-   # value=${mysqld --verbose --help 2>/dev/null \
-    #    | awk -v conf="$conf" '$1 == conf && /^[^ \t]/ { sub(/^[^ \t]+[ \t]+/, ""); print; exit }'
-}
-
-mysql_initialize()
-{
-    if [[ -d "/data/sql/storage/mysql" ]]; then
-		
-        echo "Table exists";
-        return;
-
-    fi
-    
-    echo "Create table";
-    mysqld --initialize --user=mysql
-
-}
-
-mysql_core_databases()
-{
-    core_database_exists=0;
-    if [ -d "/data/sql/storage/mysql" ]; then
-		core_database_exists=1;
-	else
-
-        echo "SQL - CORE INIT";
-        mysql_core_init
-
-        echo "SQL - TEMP SERVER [START]";
-        mysql_temp_server_start
-        
-        echo "SQL - TIMEZONE";
-
-        
-        echo "SQL - ROOT USER";
-
-
-        echo "SQL - APP DATABASES";
-        
-        
-        echo "SQL - APP USER";
-
-
-        echo "SQL - TEMP SERVER [STOP]";
-        mysql_temp_server_stop
-
-    fi
-}
-
-mysql_core_init()
-{
-    mysqld --initialize-insecure --default-time-zone=SYSTEM
-}
-
-mysql_temp_server_start()
-{
-    mysqld --daemonize --skip-networking --default-time-zone=SYSTEM --socket="/run/mysqld/mysqld.sock"
-}
-
-mysql_timezone()
-{
-    mysql> SELECT @@global.time_zone;
-    echo 0;
-    mysql> SET GLOBAL time_zone = '-03:00';
-    echo 1;
-    mysql> SELECT @@global.time_zone;
-    echo 2;
-}
-
-mysql_temp_server_stop()
-{
-    mysqladmin shutdown -uroot --socket="/run/mysqld/mysqld.sock";
-}
-
-
-
-#mysql_get_config() {
-#    # Fetch value from server config
-#    # We use mysqld --verbose --help instead of my_print_defaults because the
-#    # latter only show values present in config files, and not server defaults
-#	local conf="$1"; shift
-#	"$@" "${_verboseHelpArgs[@]}" 2>/dev/null \
-#		| awk -v conf="$conf" '$1 == conf && /^[^ \t]/ { sub(/^[^ \t]+[ \t]+/, ""); print; exit }'
-#	# match "datadir      /some/path with/spaces in/it here" but not "--xyz=abc\n     datadir (xyz)"
-#    mysqld --verbose --help | grep dir;
-#    echo '';
-#    echo '';
-#    echo '';
-#    echo '';
+#mysql_config()
+#{
+#    mysqld --validate-config;
 #}
+
+##mysql_get_config()
+##{
+##    mysqld --verbose --help | grep ${1};
+
+##   # value=${mysqld --verbose --help 2>/dev/null \
+##    #    | awk -v conf="$conf" '$1 == conf && /^[^ \t]/ { sub(/^[^ \t]+[ \t]+/, ""); print; exit }'
+##}
+
+##mysql_initialize()
+##{
+##    if [[ -d "/data/sql/storage/mysql" ]]; then
+		
+##        echo "Table exists";
+##        return;
+
+##    fi
+    
+##    echo "Create table";
+##    mysqld --initialize --user=mysql
+
+##}
+
+##mysql_core_databases()
+##{
+##    core_database_exists=0;
+##    if [ -d "/data/sql/storage/mysql" ]; then
+##		core_database_exists=1;
+##	else
+
+##        echo "SQL - CORE INIT";
+##        mysql_core_init
+
+##        echo "SQL - TEMP SERVER [START]";
+##        mysql_temp_server_start
+        
+##        echo "SQL - TIMEZONE";
+
+        
+##        echo "SQL - ROOT USER";
+
+
+##        echo "SQL - APP DATABASES";
+        
+        
+##        echo "SQL - APP USER";
+
+
+##        echo "SQL - TEMP SERVER [STOP]";
+##        mysql_temp_server_stop
+
+##    fi
+##}
+
+##mysql_core_init()
+##{
+##    mysqld --initialize-insecure --default-time-zone=SYSTEM
+##}
+
+##mysql_temp_server_start()
+##{
+##    mysqld --daemonize --skip-networking --default-time-zone=SYSTEM --socket="/run/mysqld/mysqld.sock"
+##}
+
+##mysql_timezone()
+##{
+##    mysql> SELECT @@global.time_zone;
+##    echo 0;
+##    mysql> SET GLOBAL time_zone = '-03:00';
+##    echo 1;
+##    mysql> SELECT @@global.time_zone;
+##    echo 2;
+##}
+
+##mysql_temp_server_stop()
+##{
+##    mysqladmin shutdown -uroot --socket="/run/mysqld/mysqld.sock";
+##}
+
+
+
+##mysql_get_config() {
+##    # Fetch value from server config
+##    # We use mysqld --verbose --help instead of my_print_defaults because the
+##    # latter only show values present in config files, and not server defaults
+##	local conf="$1"; shift
+##	"$@" "${_verboseHelpArgs[@]}" 2>/dev/null \
+##		| awk -v conf="$conf" '$1 == conf && /^[^ \t]/ { sub(/^[^ \t]+[ \t]+/, ""); print; exit }'
+##	# match "datadir      /some/path with/spaces in/it here" but not "--xyz=abc\n     datadir (xyz)"
+##    mysqld --verbose --help | grep dir;
+##    echo '';
+##    echo '';
+##    echo '';
+##    echo '';
+##}
 
 
 
@@ -117,6 +117,8 @@ else
     
     echo "FILESYSTEM - CLEAR";
     rm -rf ${OS_DATA}/container;
+    rm -rf ${SQL_DATA}/storage;
+    rm -rf ${SQL_DATA}/mysql-files;
     
     
     echo "FILESYSTEM - CREATE";
@@ -128,14 +130,11 @@ else
     mkdir -p --mode=777 ${OS_DATA}/container;
     mkdir -p --mode=777 ${OS_LOGS};
     # SQL
-    rm -rf "${SQL_DATA}/storage";
-    rm -rf "${SQL_DATA}/mysql-files";
     mkdir -p --mode=750 ${SQL_DATA};
     mkdir -p --mode=750 ${SQL_DATA}/storage;
     mkdir -p --mode=750 ${SQL_DATA}/mysql-files;
     mkdir -p --mode=750 ${SQL_LOGS};
     mkdir -p --mode=750 ${SQL_LOGS}/tmp;
-
 
 
 
@@ -170,16 +169,27 @@ else
     mysqld --validate-config --user=mysql
 
 
+
+    echo "### SQL - CREATE DB DIRS ###";
+    #docker_create_db_directories2 mysqld
+
+
+
     echo "### SQL - INITIALIZE ###";
-    mysqld --initialize --user=root
+    #mysqld --initialize --default-time-zone=SYSTEM --user=root
     
 
+
     echo "### SQL - TEMP SERVER ###";
-    mysql_get_config general-log-file
-    mysql_get_config keyring_file_data
-    mysql_get_config pid-file
-    mysql_get_config secure-file-priv
-    mysql_get_config slow-query-log-file
+    #mysqld --user=mysql --daemonize --skip-networking --default-time-zone=SYSTEM --socket=/run/mysqld/mysqld.socket
+
+
+
+    #mysql_get_config general-log-file
+    #mysql_get_config keyring_file_data
+    #mysql_get_config pid-file
+    #mysql_get_config secure-file-priv
+    #mysql_get_config slow-query-log-file
 
     echo "### SQL - ROOT USER ###";
 

@@ -99,12 +99,12 @@ COPY --chmod=755 --from=f4lk0n/fkn:data "/data/adm/latest/bash/*" "/usr/local/bi
 COPY --chmod=755 "./usr/local/bin/*" "/usr/local/bin/"
 
 ### SQL CONF ###
-RUN set -eux; \
-    rm -f /etc/mysql/my.cnf; \
-    rm -f /etc/mysql/my.cnf.fallback; \
-    rm -rf /etc/mysql/conf.d/*;
-COPY --chmod=664 "./etc/mysql/my.cnf" "/etc/mysql/my.cnf"
-COPY --chmod=664 "./etc/mysql/conf.d/mysql.cnf" "/etc/mysql/conf.d/mysql.cnf"
+#RUN set -eux; \
+#    rm -f /etc/mysql/my.cnf; \
+#    rm -f /etc/mysql/my.cnf.fallback; \
+#    rm -rf /etc/mysql/conf.d/*;
+#COPY --chmod=664 "./etc/mysql/my.cnf" "/etc/mysql/my.cnf"
+#COPY --chmod=664 "./etc/mysql/conf.d/mysql.cnf" "/etc/mysql/conf.d/mysql.cnf"
 
 #VOLUME /data/sql
 
@@ -112,5 +112,5 @@ COPY --chmod=664 "./etc/mysql/conf.d/mysql.cnf" "/etc/mysql/conf.d/mysql.cnf"
 ### CONTAINER ###
 ########################################################################################################################
 STOPSIGNAL SIGWINCH
-ENTRYPOINT ["container-entrypoint"]
-CMD ["RUN"]
+ENTRYPOINT ["docker-entrypoint.sh"]
+CMD ["mysqld"]

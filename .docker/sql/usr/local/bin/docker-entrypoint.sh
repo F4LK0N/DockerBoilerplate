@@ -121,7 +121,7 @@ mysql_socket_fix() {
 # Do a temporary startup of the MySQL server, for init purposes
 docker_temp_server_start() {
 	if [ "${MYSQL_MAJOR}" = '5.7' ]; then
-		"$@" --initialize-insecure --skip-networking --default-time-zone=SYSTEM --socket="${SOCKET}" &
+		"$@" --skip-networking --default-time-zone=SYSTEM --socket="${SOCKET}" &
 		mysql_note "Waiting for server startup"
 		local i
 		for i in {30..0}; do
@@ -244,23 +244,15 @@ docker_init_database_dir() {
 docker_setup_env() {
 	# Get config
 	declare -g DATADIR SOCKET
-	#DATADIR="$(mysql_get_config 'datadir' "$@")"
-	DATADIR="/data/sql/storage"
-	#SOCKET="$(mysql_get_config 'socket' "$@")"
-	SOCKET="/run/mysqld/mysqld.sock"
+	DATADIR="$(mysql_get_config 'datadir' "$@")"
+	SOCKET="$(mysql_get_config 'socket' "$@")"
 
 	# Initialize values that might be stored in a file
-	#file_env 'MYSQL_ROOT_HOST' '%'
-	#file_env 'MYSQL_DATABASE'
-	#file_env 'MYSQL_USER'
-	#file_env 'MYSQL_PASSWORD'
-	#file_env 'MYSQL_ROOT_PASSWORD'
-
-    MYSQL_ROOT_HOST='%'
-	MYSQL_DATABASE='app'
-	MYSQL_USER='app'
-	MYSQL_PASSWORD='pass'
-	MYSQL_ROOT_PASSWORD='root'
+	file_env 'MYSQL_ROOT_HOST' '%'
+	file_env 'MYSQL_DATABASE'
+	file_env 'MYSQL_USER'
+	file_env 'MYSQL_PASSWORD'
+	file_env 'MYSQL_ROOT_PASSWORD'
 
 	declare -g DATABASE_ALREADY_EXISTS
 	if [ -d "$DATADIR/mysql" ]; then
@@ -274,17 +266,16 @@ docker_setup_env() {
 #    ie: docker_process_sql --dont-use-mysql-root-password --database=mydb <my-file.sql
 docker_process_sql() {
 	passfileArgs=()
-	#if [ '--dont-use-mysql-root-password' = "$1" ]; then
-	#	passfileArgs+=( "$1" )
-	#	shift
-	#fi
+	if [ '--dont-use-mysql-root-password' = "$1" ]; then
+		passfileArgs+=( "$1" )
+		shift
+	fi
 	# args sent in can override this db, since they will be later in the command
 	if [ -n "$MYSQL_DATABASE" ]; then
 		set -- --database="$MYSQL_DATABASE" "$@"
 	fi
 
-	#mysql --defaults-extra-file=<( _mysql_passfile "${passfileArgs[@]}") --protocol=socket -uroot -hlocalhost --socket="${SOCKET}" --comments "$@"
-	mysql --initialize-insecure --protocol=socket -uroot -hlocalhost --socket="${SOCKET}" --comments "$@"
+	mysql --defaults-extra-file=<( _mysql_passfile "${passfileArgs[@]}") --protocol=socket -uroot -hlocalhost --socket="${SOCKET}" --comments "$@"
 }
 
 # Initializes database with timezone info and root password, plus optional extra db/user
@@ -402,11 +393,10 @@ _main() {
 		docker_create_db_directories "$@"
 
 		# If container is started as root user, restart as dedicated mysql user
-		#if [ "$(id -u)" = "0" ]; then
-		#	mysql_note "Switching to dedicated user 'mysql'"
-		#	#exec gosu mysql "$BASH_SOURCE" "$@"
-		#	#su -l mysql "$BASH_SOURCE" "$@"
-		#fi
+		if [ "$(id -u)" = "0" ]; then
+			mysql_note "Switching to dedicated user 'mysql'"
+			exec gosu mysql "$BASH_SOURCE" "$@"
+		fi
 
 		# there's no database, so it needs to be initialized
 		if [ -z "$DATABASE_ALREADY_EXISTS" ]; then
