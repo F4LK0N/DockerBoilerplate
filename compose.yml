@@ -1,5 +1,6 @@
 services:
   data:
+    image: f4lk0n/fkn:data
     container_name: ${COMPOSE_PREFIX}data
     build: 
       context: ./.docker/data

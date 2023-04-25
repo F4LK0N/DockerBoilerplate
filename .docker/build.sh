@@ -1,21 +1,23 @@
 #!/bin/bash
 
 DockerHubRepo="f4lk0n/fkn"
-DockerfileDir="data"
 ImageTag="data"
 
 echo "--- --- --- --- --- --- --- --- ---"
 echo "### DOCKER - IMAGE BUILD ###"
 echo "--- --- --- --- --- --- --- --- ---"
 
-echo "Dockerfile:"
-DockerfilePath=$(dirname "$0")
-DockerfilePath="$DockerfilePath\\$DockerfileDir\\"
-echo "$DockerfilePath\\Dockerfile"
+ComposeDir=$(dirname "$0")
+ComposeDir=$(dirname "${ComposeDir}")
+ComposeFile="${ComposeDir}\\compose.yml"
+ComposeEnv="${ComposeDir}\\.env"
+echo "Compose dir : ${ComposeDir}"
+echo "Compose file: ${ComposeFile}"
+echo "Compose env : ${ComposeEnv}"
 echo "--- --- --- --- --- --- --- --- ---"
 
 echo "Build Started..."
-docker build --tag "$DockerHubRepo:$ImageTag" "$DockerfilePath"
+docker compose --project-directory="${ComposeFilePath}" --env-file="${ComposeEnv}" build
 echo "Build Finished!"
 echo "--- --- --- --- --- --- --- --- ---"
 
