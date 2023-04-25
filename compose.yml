@@ -18,6 +18,8 @@ services:
       - ./data/:/data/
       # Logs
       - ./logs/:/logs/
+      # Application
+      - ./src/:/src/
       
 networks:
   frontend:
