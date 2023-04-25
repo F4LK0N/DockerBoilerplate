@@ -1,0 +1,23 @@
+#!/bin/bash
+set -e
+
+echo "### CONTAINER START ###";
+
+if [[ -f "${OS_DATA}/container/start-done" ]]; then
+
+    echo "[OK]";
+
+else
+    
+    echo "LOGS - OS";
+    if [[ ! -e "${OS_LOGS}/logs-link" ]]; then
+        ln -s "/var/log" "${OS_LOGS}/logs-link"
+        chmod 777 "${OS_LOGS}/logs-link"
+    fi
+
+
+    touch "${OS_DATA}/container/start-done"
+    chmod 777 "${OS_DATA}/container/start-done"
+    echo "[DONE]"
+
+fi
