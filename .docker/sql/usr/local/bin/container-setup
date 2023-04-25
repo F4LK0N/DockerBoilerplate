@@ -21,8 +21,9 @@ else
     mkdir -p --mode=777 ${OS_DATA};
     mkdir -p --mode=777 ${OS_DATA}/container;
     mkdir -p --mode=777 ${OS_LOGS};
-    # Application
-    mkdir -p --mode=777 ${APP_ROOT};
+    # SQL
+    mkdir -p --mode=777 ${SQL_DATA};
+    mkdir -p --mode=777 ${SQL_LOGS};
 
 
     echo "FILESYSTEM - PERMISSIONS";
@@ -33,8 +34,9 @@ else
     chmod 777 ${OS_DATA};
     chmod 777 ${OS_DATA}/container;
     chmod 777 ${OS_LOGS};
-    # Application
-    chmod 777 ${APP_ROOT};
+    # SQL
+    chmod 777 ${SQL_DATA};
+    chmod 777 ${SQL_LOGS};
 
 
     touch "${OS_DATA}/container/setup-done"

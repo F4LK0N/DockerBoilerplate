@@ -1,7 +1,7 @@
 services:
   sql:
     image: f4lk0n/fkn:sql8
-    container_name: sql
+    container_name: ${COMPOSE_PREFIX}sql
     hostname: sql
     build: 
       context: ./.docker/sql
@@ -20,7 +20,7 @@ services:
 
   sql-panel:
     image: f4lk0n/fkn:sql-panel
-    container_name: sql-panel
+    container_name: ${COMPOSE_PREFIX}sql-panel
     hostname: sql-panel
     build: 
       context: ./.docker/sql-panel
