@@ -81,42 +81,42 @@ RUN set -eux; \
     apk add --no-cache \
         \
         # OS - Core
+        #bash \
         openrc \
-        iftop; \
+        iftop \
+    ; \
     # Clean
     rm -r -f /var/cache/apk/*; \
     rm -r -f /var/lib/apk/*; \
     rm -r -f /etc/apk/cache/*;
 
-#### DOWNLOADS ###
-#RUN set -eux; \
-#    # Dependencies
-#    apk update; \
-#    apk add --virtual temp_deps \
-#        tzdata \
-#        7zip; \
-#    \
-#    # OS - Timezone
-#        cp "/usr/share/zoneinfo/${ARG_TIMEZONE}" /etc/localtime; \
-#        echo "${ARG_TIMEZONE}" > /etc/timezone; \
-#    # PHP - Phalcon
-#        # Source
-#        mkdir -p /tmp/phalcon/; \
-#        cd /tmp/phalcon/; \
-#        curl -LO https://github.com/phalcon/cphalcon/releases/download/v${PHALCON_VERSION}/phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
-#        7z x phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
-#        # Install
-#        mkdir -p ${PHP_MODULES}; \
-#        cp phalcon.so ${PHP_MODULES}; \
-#        chmod 755 ${PHP_MODULES}; \
-#        chmod 755 ${PHP_MODULES}/phalcon.so; \
-#        cd /; \
-#    # Clean
-#    apk del temp_deps; \
-#    rm -r -f /tmp/phalcon/; \
-#    rm -r -f /var/cache/apk/*; \
-#    rm -r -f /var/lib/apk/*; \
-#    rm -r -f /etc/apk/cache/*;
+### SOURCES ###
+RUN set -eux; \
+    # Dependencies
+    apk update; \
+    apk add --virtual temp_sources_dependencies \
+        tzdata \
+        7zip \
+    ; \
+    # Program X
+        # Download
+        mkdir -p /tmp/program-x/; \
+        cd /tmp/program-x/; \
+        curl -LO https://site.com/program-x.zip; \
+        7z x program-x.zip; \
+        # Install
+        mkdir -p /opt/program-x/; \
+        cp program-x.so /opt/program-x/; \
+        chmod 755 /opt/program-x/; \
+        chmod 755 /opt/program-x/program-x.so; \
+        # Clear
+        rm -rf /tmp/program-x/; \
+        cd /; \
+    # Clean
+    apk del temp_sources_dependencies; \
+    rm -r -f /var/cache/apk/*; \
+    rm -r -f /var/lib/apk/*; \
+    rm -r -f /etc/apk/cache/*;
 
 ### IMAGES ###
 #COPY --chmod=755 --from=fkn-data /data/adm/stable/ /adm/
