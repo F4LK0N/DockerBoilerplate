@@ -10,6 +10,9 @@ mysql_check_config() {
     chmod 664 /etc/mysql/my.cnf;
     chmod 664 /etc/mysql/conf.d/mysql.cnf;
     
+    mkdir -p 664 /logs/sql/tmp/;
+    chmod 664 /logs/sql/tmp/;
+    
     mysqld --validate-config;
 }
 
