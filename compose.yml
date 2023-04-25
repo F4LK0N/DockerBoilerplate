@@ -1,32 +1,53 @@
 version: '3'
 services:
-  mysql:
-    container_name: mysql
-    build: ./.docker/mysql
-    command: --default-authentication-plugin=mysql_native_password
+  sql:
+    container_name: sql
+    build: 
+      context: ./.docker/sql
+      args:
+        - ARG_HOST=sql
+        - ARG_DOMAIN=${PROJECT_DOMAIN}
+        - ARG_TIMEZONE=${PROJECT_TIMEZONE}
     networks:
       - backend
-    ports:
-      - "3306:3306"
+    #ports:
+    #  - "3306:3306"
     volumes:
       # Data
-      - ./data/mysql:/var/lib/mysql
+      - ./data/sql:/data/sql
+      # Logs
+      - ./logs/sql:/logs/sql
+      # Dev
 
-  phpmyadmin:
-    container_name: phpmyadmin
-    build: ./.docker/phpmyadmin
+  sql-panel:
+    container_name: sql-panel
+    build: 
+      context: ./.docker/sql-panel
+      args:
+        - ARG_HOST=sql-panel
+        - ARG_DOMAIN=${PROJECT_DOMAIN}
+        - ARG_TIMEZONE=${PROJECT_TIMEZONE}
+    depends_on:
+      - sql
     environment:
       - PMA_ARBITRARY=1
-      - PMA_HOST=mysql
+      - PMA_HOST=sql
+      - PMA_PORT=3306
       - PMA_USER=root
       - PMA_PASSWORD=root
     ports:
       - "8080:80"
     networks:
+      - frontend
       - backend
-    #volumes:
-      # Config
+    volumes:
+      # Data
+      - ./data/sql-panel:/data/sql-panel
+      # Logs
+      - ./logs/sql-panel:/logs/sql-panel
+      # Dev
       #- ./.docker/phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
 
 networks:
+  frontend:
   backend:
