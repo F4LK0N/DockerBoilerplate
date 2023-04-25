@@ -1,5 +1,6 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-
+######################################################################################################
+### PS1 ###
+######################################################################################################
 # Note: PS1 and umask are already set in /etc/profile. You should not
 # need this unless you want different defaults for root.
 # PS1='${debian_chroot:+($debian_chroot)}\h:\w\$ '
@@ -75,22 +76,72 @@
 # |         46 | \033[46m |         |       | cyan             | echo -e "\033[46m####\033[m" |                                      |
 # |         47 | \033[47m |         |       | white            | echo -e "\033[47m####\033[m" |                                      |
 # |------------+----------+---------+-------+------------------+------------------------------+--------------------------------------|
-# |         48 | 8/24     |                    This is for special use of 8-bit or 24-bit                                            |                                                                                       |
+# |         48 | 8/24     |                    This is for special use of 8-bit or 24-bit                                            |
 # |------------+----------+---------+-------+------------------+------------------------------+--------------------------------------|
 
+#PS1_EXAMPLE='\
+#\e[0;1m 1 \e[m\n\
+#\e[0;2m 2 \e[m\n\
+#\
+#\e[0;3m 3 \e[m\n\
+#\e[0;4m 4 \e[m\n\
+#\e[0;5m 5 \e[m\n\
+#\e[0;6m 6 \e[m\n\
+#\e[0;7m 7 \e[m\n\
+#\e[0;8m 8 \e[m\n\
+#\e[0;9m 9 \e[m\n\
+#\
+#\e[0;30m 3 \e[m\n\
+#\e[0;31m 3 \e[m\n\
+#\e[0;32m 3 \e[m\n\
+#\e[0;33m 3 \e[m\n\
+#\e[0;34m 3 \e[m\n\
+#\e[0;35m 3 \e[m\n\
+#\e[0;36m 3 \e[m\n\
+#\e[0;37m 3 \e[m\n\
+#\
+#\e[0;40m 4 \e[m\n\
+#\e[0;41m 4 \e[m\n\
+#\e[0;42m 4 \e[m\n\
+#\e[0;43m 4 \e[m\n\
+#\e[0;44m 4 \e[m\n\
+#\e[0;45m 4 \e[m\n\
+#\e[0;46m 4 \e[m\n\
+#\e[0;47m 4 \e[m\n\
+#';\
 
 
 #Without Color:
 #PS1='\u@\H:\w/\n\u@\W/#'
 
-#With Color:
-PS1_TOP_USER='\e[0;31m\u\e[m'
-PS1_TOP_HOST='\e[0;34m\H\e[m'
-PS1_TOP_PATH='\e[0;33m\w/\e[m'
-PS1_USER='\e[1;31m\u\e[m'
-PS1_PATH='\e[1;33m\W\e[m'
-PS1="$PS1_TOP_USER@$PS1_TOP_HOST:$PS1_TOP_PATH\n$PS1_USER:$PS1_PATH# "
+#With Color - Version 1
+#PS1_TOP_HOST='\e[0;34m\H\e[m'
+#PS1_TOP_PATH='\e[0;33m\w\e[m'
+#PS1_USER='\e[1;31m\u\e[m'
+#PS1_PATH='\e[1;33m\W/\e[m'
+#PS1="[$PS1_TOP_HOST]$PS1_TOP_PATH\n$PS1_USER@$PS1_PATH:"
 
+#With Color - Version 2
+PS1_USER='\e[1;31m\u\e[m';
+PS1_HOST='\e[0;34m\H\e[m';
+PS1_PATH='\e[0;33m\w\e[m';
+PS1_DIR='\e[1;33m\W/\e[m';
+
+#PS1_TOP="${PS1_USER}\e[0;30m@\e[m${PS1_HOST} '${PS1_PATH}'";\
+#PS1_TOP="${PS1_USER}\e[0;30m@\e[m${PS1_HOST} (${PS1_PATH})";\
+#PS1_TOP="${PS1_USER}\e[0;30m@\e[m${PS1_HOST} [${PS1_PATH}]";\
+PS1_TOP="${PS1_USER}\e[0;30m@\e[m${PS1_HOST}:${PS1_PATH}";
+#PS1_TOP="${PS1_USER}\e[0;30m@\e[m${PS1_HOST}";
+
+PS1_LINE="${PS1_DIR}\e[0;30m#\e[m";
+
+PS1="$PS1_TOP\n$PS1_LINE ";
+
+
+
+######################################################################################################
+### ALIAS ###
+######################################################################################################
 # You may uncomment the following lines if you want `ls' to be colorized:
 # export LS_OPTIONS='--color=auto'
 # eval "$(dircolors)"
@@ -103,15 +154,21 @@ PS1="$PS1_TOP_USER@$PS1_TOP_HOST:$PS1_TOP_PATH\n$PS1_USER:$PS1_PATH# "
 # alias cp='cp -i'
 # alias mv='mv -i'
 
-alias ls='ls --color=auto --group-directories-first -lAs'
+alias ls='ls --color=auto --group-directories-first -lAsp'
+alias l='ls'
+
+alias c='cd_ls_tmp(){ cd "$@"; ls; unset -f cd_ls_tmp; }; cd_ls_tmp'
+
+alias logs='c /logs;'
+alias data='c /data;'
+
+alias e='exit'
 
 
 
-###################################################
+######################################################################################################
 ### ADM ###
-###################################################
-alias adm="/adm/panel.sh"
-
+######################################################################################################
 export ADM_LOGO="\
     ______    ___     __     __ __   ____     _   __           ___     ____     __  ___ 
    / ____/   /   |   / /    / //_/  / __ \   / | / /          /   |   / __ \   /  |/  / 
@@ -119,4 +176,8 @@ export ADM_LOGO="\
  / __/     / ___ | / /___ / /| |  / /_/ /  / /|  /          / ___ | / /_/ /  / /  / /   
 /_/       /_/  |_|/_____//_/ |_|  \____/  /_/ |_/          /_/  |_|/_____/  /_/  /_/    "
 
-export ADM_DIVIDER="--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---"
+export ADM_DIVIDER_BOLD="\
+### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ### ###"
+
+export ADM_DIVIDER="\
+--- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- --- ---"
