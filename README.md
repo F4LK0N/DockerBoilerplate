@@ -1,10 +1,8 @@
-# Project Name
-Overview of the project here.
+# SQL
+**by Otavio Bernardes Soria (aka. F4lk0n)**  
+SQL Server Docker Boilerplate  
 
-.
 
-# OS
-Overview of operational system.
 
 # Docker
 ### Build
@@ -15,14 +13,12 @@ Overview of operational system.
 ### Build and Run
 	docker compose up -d --build
 ### Access
-	docker exec -it container-a /bin/bash
-	docker exec -it container-b /bin/bash
+	docker exec -it sql /bin/bash
 
-.  
+
 
 # Development
 ### Run
 	docker compose up -d	
 ### Access
-	docker exec -it container-a /bin/bash
-	docker exec -it container-b /bin/bash
+	docker exec -it sql /bin/bash
