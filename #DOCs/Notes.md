@@ -239,3 +239,33 @@ __/\\\\\\\\\\\\\\\_____/\\\\\\\\\_____/\\\______________/\\\________/\\\_______/
              ░  ░    ░  ░░  ░       ░ ░           ░          ░  ░   ░           ░   
                                                                   ░                 
 ```
+
+
+
+# Package Mirrors
+
+https://www.debian.org/mirror/list
+http://ftp.br.debian.org/debian/
+/etc/apt/sources.list
+
+https://ciromota.tec.br/localize-o-melhor-mirror-para-atualizacoes-do-linux/
+apt install python3-pip python3-setuptools -y
+pip3 install --user apt-smart
+echo "export PATH=\$(python3 -c 'import site; print(site.USER_BASE + \"/bin\")'):\$PATH" >> ~/.bashrc
+source ~/.bashrc
+
+
+https://tracker.debian.org/pkg/netselect
+https://github.com/apenwarr/netselect
+apt install netselect-apt
+
+http://debian.pop-sc.rnp.br/debian
+
+```
+# deb http://snapshot.debian.org/archive/debian/20230411T000000Z bullseye main
+deb http://ftp.br.debian.org/debian bullseye main
+# deb http://snapshot.debian.org/archive/debian-security/20230411T000000Z bullseye-security main
+deb http://deb.debian.org/debian-security bullseye-security main
+# deb http://snapshot.debian.org/archive/debian/20230411T000000Z bullseye-updates main
+deb http://ftp.br.debian.org/debian bullseye-updates main
+```

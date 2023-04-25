@@ -20,7 +20,6 @@ ENV ROOT_LOGS="/logs"
 
 ### OS ###
 ENV TERM="xterm"
-#ARG DEBIAN_FRONTEND="noninteractive"
 ENV OS_DATA="${ROOT_DATA}/os"
 ENV OS_LOGS="${ROOT_LOGS}/os"
 
@@ -42,12 +41,9 @@ RUN set -eux; \
 
 
 ### PACKAGES ###
+# Mirrors
+COPY --chmod=644 "./etc/apt/sources.list" "/etc/apt/sources.list"
 RUN set -eux; \
-    # Mirrors
-    #rm -f /etc/apk/repositories; \
-    #echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/main" >> /etc/apk/repositories; \
-    #echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/community" >> /etc/apk/repositories; \
-    #chmod 644 /etc/apk/repositories; \
     # Update
     apt-get update; \
     apt-get upgrade -y; \
