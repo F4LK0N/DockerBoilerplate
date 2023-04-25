@@ -2,13 +2,12 @@ services:
   debian:
     image: f4lk0n/fkn:debian11
     container_name: ${COMPOSE_PREFIX}debian
+    hostname: debian
     build:
       context: ./.docker/debian
       args:
-        - ARG_HOST=debian
         - ARG_DOMAIN=${PROJECT_DOMAIN}
         - ARG_TIMEZONE=${PROJECT_TIMEZONE}
-        - ARG_OS_APK_MIRROR=${DEBIAN_APK_MIRROR}
     networks:
       - frontend
     #ports:
