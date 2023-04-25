@@ -80,49 +80,51 @@ RUN set -eux; \
     # Install
     apk add --no-cache \
         \
-        # OS - Core
+        # OS
         #bash \
         openrc \
         iftop \
     ; \
     # Clean
-    rm -r -f /var/cache/apk/*; \
-    rm -r -f /var/lib/apk/*; \
-    rm -r -f /etc/apk/cache/*;
+    rm -rf /var/cache/apk/*; \
+    rm -rf /var/lib/apk/*; \
+    rm -rf /etc/apk/cache/*;
 
-### SOURCES ###
-RUN set -eux; \
-    # Dependencies
-    apk update; \
-    apk add --virtual temp_sources_dependencies \
-        tzdata \
-        7zip \
-    ; \
-    # Program X
-        # Download
-        mkdir -p /tmp/program-x/; \
-        cd /tmp/program-x/; \
-        curl -LO https://site.com/program-x.zip; \
-        7z x program-x.zip; \
-        # Install
-        mkdir -p /opt/program-x/; \
-        cp program-x.so /opt/program-x/; \
-        chmod 755 /opt/program-x/; \
-        chmod 755 /opt/program-x/program-x.so; \
-        # Clear
-        rm -rf /tmp/program-x/; \
-        cd /; \
-    # Clean
-    apk del temp_sources_dependencies; \
-    rm -r -f /var/cache/apk/*; \
-    rm -r -f /var/lib/apk/*; \
-    rm -r -f /etc/apk/cache/*;
+#### SOURCES ###
+#RUN set -eux; \
+#    # Dependencies
+#    apk update; \
+#    apk add --virtual temp_sources_dependencies \
+#        7zip \
+#    ; \
+#    ## Program X
+#    #    # Download
+#    #    mkdir -p /tmp/program-x/; \
+#    #    cd /tmp/program-x/; \
+#    #    curl -LO https://site.com/program-x.zip; \
+#    #    7z x program-x.zip; \
+#    #    # Install
+#    #    mkdir -p /opt/program-x/; \
+#    #    cp program-x.so /opt/program-x/; \
+#    #    chmod 755 /opt/program-x/; \
+#    #    chmod 755 /opt/program-x/program-x.so; \
+#    #    # Clear
+#    #    rm -rf /tmp/program-x/; \
+#    #    cd /; \
+#    # Clean
+#    apk del temp_sources_dependencies; \
+#    rm -r -f /var/cache/apk/*; \
+#    rm -r -f /var/lib/apk/*; \
+#    rm -r -f /etc/apk/cache/*;
 
 ### IMAGES ###
+# Adm
 #COPY --chmod=755 --from=fkn-data /data/adm/stable/ /adm/
 
 ### IMPORT ###
-
+# OS
+COPY --chmod=755 "./root/*" "/root/"
+COPY --chmod=755 "./usr/local/bin/*" "/usr/local/bin/"
 
 #### FILESYSTEM ###
 #RUN set -eux; \
@@ -139,16 +141,8 @@ RUN set -eux; \
 #    ;
 
 #########################################################################################################################
-#### CONFIG ###
-#########################################################################################################################
-#### IMPORT ###
-## OS
-#COPY --chmod=755 "./os/root/.ashrc" "/root/.ashrc"
-#COPY --chmod=755 "./os/usr/local/bin/" "/usr/local/bin/"
-
-#########################################################################################################################
 #### CONTAINER ###
 #########################################################################################################################
-#STOPSIGNAL SIGWINCH
-#ENTRYPOINT ["container-entrypoint"]
-#CMD ["RUN"]
+STOPSIGNAL SIGWINCH
+ENTRYPOINT ["container-entrypoint"]
+CMD ["RUN"]
