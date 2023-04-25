@@ -5,24 +5,57 @@ echo "### CONTAINER SETUP ###";
 
 
 
-mysql_filesystem()
-{
-    chmod 664 /etc/mysql/my.cnf;
-    chmod 664 /etc/mysql/conf.d/mysql.cnf;
-    
-    mkdir -p 664 /data/sql/storage/;
-    chmod 664 /data/sql/storage/;
-
-    mkdir -p 664 /logs/sql/tmp/;
-    chmod 664 /logs/sql/tmp/;
-}
-
 mysql_config()
 {
     mysqld --validate-config;
 }
 
+mysql_initialize()
+{
+    if [[ -d "/data/sql/storage/mysql" ]]; then
+		
+        echo "Table exists";
+        return;
+
+    fi
+    
+    echo "Create table";
+    mysqld --initialize --user=mysql
+
+}
+
 mysql_core_databases()
+{
+    core_database_exists=0;
+    if [ -d "/data/sql/storage/mysql" ]; then
+		core_database_exists=1;
+	else
+
+        echo "SQL - CORE INIT";
+        mysql_core_init
+
+        echo "SQL - TEMP SERVER [START]";
+        mysql_temp_server_start
+        
+        echo "SQL - TIMEZONE";
+
+        
+        echo "SQL - ROOT USER";
+
+
+        echo "SQL - APP DATABASES";
+        
+        
+        echo "SQL - APP USER";
+
+
+        echo "SQL - TEMP SERVER [STOP]";
+        mysql_temp_server_stop
+
+    fi
+}
+
+mysql_core_init()
 {
     mysqld --initialize-insecure --default-time-zone=SYSTEM
 }
@@ -32,10 +65,22 @@ mysql_temp_server_start()
     mysqld --daemonize --skip-networking --default-time-zone=SYSTEM --socket="/run/mysqld/mysqld.sock"
 }
 
+mysql_timezone()
+{
+    mysql> SELECT @@global.time_zone;
+    echo 0;
+    mysql> SET GLOBAL time_zone = '-03:00';
+    echo 1;
+    mysql> SELECT @@global.time_zone;
+    echo 2;
+}
+
 mysql_temp_server_stop()
 {
     mysqladmin shutdown -uroot --socket="/run/mysqld/mysqld.sock";
 }
+
+
 
 #mysql_get_config() {
 #    # Fetch value from server config
@@ -75,8 +120,11 @@ else
     mkdir -p --mode=777 ${OS_DATA}/container;
     mkdir -p --mode=777 ${OS_LOGS};
     # SQL
-    mkdir -p --mode=777 ${SQL_DATA};
-    mkdir -p --mode=777 ${SQL_LOGS};
+    mkdir -p --mode=750 ${SQL_DATA};
+    mkdir -p --mode=750 ${SQL_DATA}/storage;
+    mkdir -p --mode=750 ${SQL_LOGS};
+    mkdir -p --mode=750 ${SQL_LOGS}/tmp;
+
 
 
     echo "FILESYSTEM - PERMISSIONS";
@@ -88,38 +136,28 @@ else
     chmod 777 ${OS_DATA}/container;
     chmod 777 ${OS_LOGS};
     # SQL
-    chmod 777 ${SQL_DATA};
-    chmod 777 ${SQL_LOGS};
+    chmod 750 ${SQL_DATA};
+    chmod 750 ${SQL_DATA}/storage;
+    chmod 750 ${SQL_LOGS};
+    chmod 750 ${SQL_LOGS}/tmp;
+    chmod 664 /etc/mysql/my.cnf;
+    chmod 664 /etc/mysql/conf.d/mysql.cnf;
+    
+    chown mysql:mysql ${SQL_DATA};
+    chown mysql:mysql ${SQL_DATA}/storage;
+    chown mysql:mysql ${SQL_LOGS};
+    chown mysql:mysql ${SQL_LOGS}/tmp;
 
 
-
-    echo "SQL - FILESYSTEM";
-    mysql_filesystem
 
     echo "SQL - CONFIG";
-    mysql_config
+    mysqld --validate-config --user=mysql
 
-    echo "SQL - CORE DATABASES";
-    mysql_core_databases
-    
-    echo "SQL - TEMP SERVER [START]";
-    mysql_temp_server_start
-    
-    echo "SQL - TIMEZONE";
-
-    
-    echo "SQL - ROOT USER";
-
-
-    echo "SQL - APP DATABASES";
+    echo "SQL - INITIALIZE";
+    #mysql_initialize
     
     
-    echo "SQL - APP USER";
-    
-
-    echo "SQL - TEMP SERVER [STOP]";
-    mysql_temp_server_stop
-    
+    #mysql_core_databases
 
 
     #touch "${OS_DATA}/container/setup-done"

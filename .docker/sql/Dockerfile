@@ -1,4 +1,4 @@
-FROM mysql:8
+FROM mysql:8-debian
 LABEL "org.opencontainers.image.authors"="F4LK0N"
 LABEL "org.opencontainers.image.version"="1.1"
 
@@ -22,11 +22,6 @@ ENV OS_LOGS="${ROOT_LOGS}/os"
 ### SQL ###
 ENV SQL_DATA="${ROOT_DATA}/sql"
 ENV SQL_LOGS="${ROOT_LOGS}/sql"
-#ENV MYSQL_ROOT_PASSWORD=root
-#ENV MYSQL_DATABASE=app
-#ENV MYSQL_USER=user
-#ENV MYSQL_PASSWORD=pass
-#ENV MYSQL_INITDB_SKIP_TZINFO=true
 
 ### FILESYSTEM ###
 RUN set -eux; \
@@ -36,11 +31,16 @@ RUN set -eux; \
         ${ROOT_LOGS} \
         # OS
         ${OS_DATA} \
-        ${OS_LOGS} \
+        ${OS_LOGS}; \
+    mkdir --mode=750 --parents \
         # SQL
         ${SQL_DATA} \
+        ${SQL_DATA}/storage \
         ${SQL_LOGS} \
-    ;
+        ${SQL_LOGS}/tmp;\
+    chown mysql:mysql ${SQL_DATA}; \
+    chown mysql:mysql ${SQL_DATA}/storage; \
+    chown mysql:mysql ${SQL_LOGS}/tmp;
 
 ### PACKAGES ###
 # Mirrors
@@ -105,6 +105,7 @@ RUN set -eux; \
     rm -rf /etc/mysql/conf.d/*;
 COPY --chmod=664 "./etc/mysql/my.cnf" "/etc/mysql/my.cnf"
 COPY --chmod=664 "./etc/mysql/conf.d/mysql.cnf" "/etc/mysql/conf.d/mysql.cnf"
+
 VOLUME /data/sql
 
 ########################################################################################################################

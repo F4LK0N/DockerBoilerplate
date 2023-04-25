@@ -14,9 +14,9 @@ services:
     #  - "3306:3306"
     volumes:
       # Data
-      - ./data/sql:/data/sql
+      #- ./data/sql:/data/sql
       # Logs
-      - ./logs/sql:/logs/sql
+      # ./logs/sql:/logs/sql
       # Dev
       - ./.docker/sql/usr/local/bin/:/usr/local/bin/
       - ./.docker/sql/etc/mysql/my.cnf:/etc/mysql/my.cnf
