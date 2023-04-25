@@ -77,6 +77,18 @@ RUN set -eux; \
     rm -rf /var/lib/apk/*; \
     rm -rf /etc/apk/cache/*;
 
+### IMPORT ###
+# Shell
+COPY --chmod=755 "./root/.ashrc" "/root/.ashrc"
+# Adm
+COPY --chmod=755 "./adm/*" "/usr/local/bin/"
+RUN set -eux; /usr/local/bin/adm-setup;
+# Entrypoint
+COPY --chmod=755 "./usr/local/bin/*" "/usr/local/bin/"
+
+########################################################################################################################
+### DATA ###
+########################################################################################################################
 ### SOURCES ###
 #RUN set -eux; \
 #    # Dependencies
@@ -105,36 +117,13 @@ RUN set -eux; \
 #    rm -rf /etc/apk/cache/*;
 
 ### IMPORT ###
-# OS
-COPY --chmod=755 "./root/.ashrc" "/root/.ashrc"
-COPY --chmod=755 "./root/.bashrc" "/root/.bash"
+# Shell
+COPY --chmod=755 "./root/*" "/data/shell/"
 # Adm
-#COPY --chmod=755 --from=fkn-data "/data/adm/stable/*" "/adm/"
-COPY --chmod=755 "./adm/*" "/usr/local/bin/"
-RUN set -eux; /usr/local/bin/adm-setup;
+COPY --chmod=755 "./adm/*" "/data/adm/"
 
-### FILESYSTEM ###
-RUN set -eux; \
-    mkdir --mode=777 --parents \
-        # Container
-        /adm \
-        ${ROOT_DATA} \
-        ${ROOT_LOGS} \
-        # OS
-        ${OS_DATA} \
-        ${OS_LOGS} \
-        # Application
-        ${APP_ROOT} \
-    ;
 
-########################################################################################################################
-### CONFIG ###
-########################################################################################################################
-### IMPORT ###
-# OS
-COPY --chmod=755 "./os/root/.ashrc" "/root/.ashrc"
-COPY --chmod=755 "./os/usr/local/bin/" "/usr/local/bin/"
-COPY --chmod=755 "./os/adm/" "/adm/"
+
 
 ########################################################################################################################
 ### SOURCE ###
