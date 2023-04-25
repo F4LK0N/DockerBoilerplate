@@ -54,69 +54,75 @@ RUN set -eux; \
     rm -rf /var/lib/apk/*; \
     rm -rf /etc/apk/cache/*;
 
-#### TIMEZONE ###
-#RUN set -eux; \
-#    # Dependencies
-#    apk update; \
-#    apk upgrade; \
-#    apk add --virtual temp_dependencies \
-#        tzdata \
-#    ; \
-#    # Config
-#        cp "/usr/share/zoneinfo/${ARG_TIMEZONE}" /etc/localtime; \
-#        echo "${ARG_TIMEZONE}" > /etc/timezone; \
-#    # Clean
-#    apk upgrade; \
-#    apk del temp_dependencies; \
-#    rm -r -f /var/cache/apk/*; \
-#    rm -r -f /var/lib/apk/*; \
-#    rm -r -f /etc/apk/cache/*;
+### TIMEZONE ###
+RUN set -eux; \
+    # Dependencies
+    apk update; \
+    apk add --virtual temp_dependencies \
+        tzdata \
+    ; \
+    # Config
+        cp "/usr/share/zoneinfo/${ARG_TIMEZONE}" /etc/localtime; \
+        echo "${ARG_TIMEZONE}" > /etc/timezone; \
+    # Clean
+    apk del temp_dependencies; \
+    rm -rf /var/cache/apk/*; \
+    rm -rf /var/lib/apk/*; \
+    rm -rf /etc/apk/cache/*;
 
-#########################################################################################################################
-#### DATA ###
-#########################################################################################################################
-#### IMAGES ###
-#COPY --chmod=755 --from=fkn-data /data/adm/stable/ /adm/
-
-#### PACKAGES ###
-#RUN set -eux; \
-#    # Mirrors
-#    truncate -s 0 /etc/apk/repositories; \
-#    echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/main" >> /etc/apk/repositories; \
-#    echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/community" >> /etc/apk/repositories; \
-#    # Update
-#    apk update; \
-#    apk upgrade; \
-#    # Install
-#    apk add --no-cache \
-#        \
-#        # OS - Core
-#        openrc \
-#        iftop; \
-#    # Update
-#    apk upgrade; \
-#    # Clean
-#    rm -r -f /var/cache/apk/*; \
-#    rm -r -f /var/lib/apk/*; \
-#    rm -r -f /etc/apk/cache/*;
+########################################################################################################################
+### INSTALL ###
+########################################################################################################################
+### PACKAGES ###
+RUN set -eux; \
+    # Update
+    apk update; \
+    # Install
+    apk add --no-cache \
+        \
+        # OS - Core
+        openrc \
+        iftop; \
+    # Clean
+    rm -r -f /var/cache/apk/*; \
+    rm -r -f /var/lib/apk/*; \
+    rm -r -f /etc/apk/cache/*;
 
 #### DOWNLOADS ###
 #RUN set -eux; \
 #    # Dependencies
 #    apk update; \
-#    apk upgrade; \
-#    apk add --virtual temp_dependencies \
+#    apk add --virtual temp_deps \
 #        tzdata \
-#    ;\
+#        7zip; \
+#    \
 #    # OS - Timezone
 #        cp "/usr/share/zoneinfo/${ARG_TIMEZONE}" /etc/localtime; \
 #        echo "${ARG_TIMEZONE}" > /etc/timezone; \
+#    # PHP - Phalcon
+#        # Source
+#        mkdir -p /tmp/phalcon/; \
+#        cd /tmp/phalcon/; \
+#        curl -LO https://github.com/phalcon/cphalcon/releases/download/v${PHALCON_VERSION}/phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
+#        7z x phalcon-php8.1-nts-ubuntu-gcc-x64.zip; \
+#        # Install
+#        mkdir -p ${PHP_MODULES}; \
+#        cp phalcon.so ${PHP_MODULES}; \
+#        chmod 755 ${PHP_MODULES}; \
+#        chmod 755 ${PHP_MODULES}/phalcon.so; \
+#        cd /; \
 #    # Clean
-#    apk upgrade; \
-#    apk del temp_dependencies; \
+#    apk del temp_deps; \
+#    rm -r -f /tmp/phalcon/; \
 #    rm -r -f /var/cache/apk/*; \
 #    rm -r -f /var/lib/apk/*; \
 #    rm -r -f /etc/apk/cache/*;
+
+### IMAGES ###
+#COPY --chmod=755 --from=fkn-data /data/adm/stable/ /adm/
+
+### IMPORT ###
+
 
 #### FILESYSTEM ###
 #RUN set -eux; \
