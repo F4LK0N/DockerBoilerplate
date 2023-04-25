@@ -116,29 +116,24 @@ COPY --chmod=755 "./usr/local/bin/*" "/usr/local/bin/"
 #    rm -rf /var/lib/apk/*; \
 #    rm -rf /etc/apk/cache/*;
 
-### IMPORT ###
-# Shell
-COPY --chmod=755 "./root/*" "/data/shell/"
-# Adm
-COPY --chmod=755 "./adm/*" "/data/adm/"
-
-
-
-
-########################################################################################################################
-### SOURCE ###
-########################################################################################################################
-### ADM ###
-RUN set -eux; \
-    mkdir --mode=777 --parents ${ROOT_DATA}/adm/1.0/; \
-    ln -s "${ROOT_DATA}/adm/1.0/" "${ROOT_DATA}/adm/latest"; \
-    ln -s "${ROOT_DATA}/adm/1.0/" "${ROOT_DATA}/adm/stable";
-COPY --chmod=755 "./os/adm/*" "${ROOT_DATA}/adm/1.0/"
-
-### COMPOSER ###
+### IMAGES ###
+# Composer
+COPY --chmod=777--from=composer:latest /usr/bin/composer ${ROOT_DATA}/composer/latest/
 RUN set -eux; \
     mkdir --mode=777 --parents ${ROOT_DATA}/composer/latest/;
-COPY --from=composer:latest /usr/bin/composer ${ROOT_DATA}/composer/latest/
+
+### IMPORT ###
+# Shell
+#COPY --chmod=755 "./root/*" "/data/shell/"
+COPY --chmod=777 "./data/shell/*" "${ROOT_DATA}/shell/"
+RUN set -eux; \
+    ln -s "${ROOT_DATA}/shell/1.0/" "${ROOT_DATA}/shell/latest"; \
+    ln -s "${ROOT_DATA}/shell/1.0/" "${ROOT_DATA}/shell/stable";
+# Adm
+COPY --chmod=777 "./data/adm/*" "${ROOT_DATA}/adm/"
+RUN set -eux; \
+    ln -s "${ROOT_DATA}/adm/1.0/" "${ROOT_DATA}/adm/latest"; \
+    ln -s "${ROOT_DATA}/adm/1.0/" "${ROOT_DATA}/adm/stable";
 
 ########################################################################################################################
 ### CONTAINER ###
