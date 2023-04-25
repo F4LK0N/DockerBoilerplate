@@ -1,28 +1,45 @@
 #!/bin/bash
 
 DockerHubRepo="f4lk0n/fkn"
-DockerfileDir="alpine"
 ImageTag="alpine3.17"
 
 echo "--- --- --- --- --- --- --- --- ---"
 echo "### DOCKER - IMAGE BUILD ###"
 echo "--- --- --- --- --- --- --- --- ---"
 
-echo "Dockerfile:"
-DockerfilePath=$(dirname "$0")
-DockerfilePath="$DockerfilePath\\$DockerfileDir\\"
-echo "$DockerfilePath\\Dockerfile"
+ComposeDir=$(dirname "$0")
+ComposeDir=$(dirname "${ComposeDir}")
+ComposeFile="${ComposeDir}\\compose.yml"
+ComposeEnv="${ComposeDir}\\.env"
+echo "Compose dir : ${ComposeDir}"
+echo "Compose file: ${ComposeFile}"
+echo "Compose env : ${ComposeEnv}"
 echo "--- --- --- --- --- --- --- --- ---"
 
+
 echo "Build Started..."
-docker build --tag "$DockerHubRepo:$ImageTag" "$DockerfilePath"
+docker compose --project-directory="${ComposeFilePath}" --env-file="${ComposeEnv}" build
+if [[ "$?" != "0" ]]; then
+  echo '!!! ERROR BUILDING !!!';
+  echo -ne '\007';
+  read option;
+  exit 1;
+fi
 echo "Build Finished!"
 echo "--- --- --- --- --- --- --- --- ---"
 
+
 echo "Push Started..."
 docker push "$DockerHubRepo:$ImageTag"
+if [[ "$?" != "0" ]]; then
+  echo '!!! ERROR PUSHING !!!';
+  echo -ne '\007';
+  read option;
+  exit 1;
+fi
 echo "Push Finished!"
 echo "--- --- --- --- --- --- --- --- ---"
+
 
 echo -n "Exiting"
 timeout=50
