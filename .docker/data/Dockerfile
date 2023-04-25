@@ -9,62 +9,109 @@ WORKDIR /
 ARG ARG_HOST
 ARG ARG_DOMAIN
 ARG ARG_TIMEZONE
-ARG ARG_OS_VERSION
+ARG ARG_OS_VERSION='3.17'
 ARG ARG_OS_APK_MIRROR
 
 ### CONTAINER ###
 ENV HOST="${ARG_HOST}"
 ENV DOMAIN="${ARG_DOMAIN}"
-ENV TIMEZONE="${ARG_TIMEZONE}"
 ENV ROOT_DATA="/data"
-ENV ROOT_LOGS="/logs"
 
 ### OS ###
 ENV ENV="/root/.ashrc"
-ENV OS_VERSION="${ARG_OS_VERSION}"
-ENV OS_APK_MIRROR="${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}"
-ENV OS_DATA="${ROOT_DATA}/os"
-ENV OS_LOGS="${ROOT_LOGS}/os"
 
-### APPLICATION ###
-ENV APP_ROOT="/src"
+### FILESYSTEM ###
+RUN set -eux; \
+    mkdir --mode=777 --parents \
+        # Container
+        ${ROOT_DATA} \
+    ;
 
-########################################################################################################################
-### DATA ###
-########################################################################################################################
 ### PACKAGES ###
 RUN set -eux; \
     # Mirrors
-    truncate -s 0 /etc/apk/repositories; \
-    echo "${OS_APK_MIRROR}/main" >> /etc/apk/repositories; \
-    echo "${OS_APK_MIRROR}/community" >> /etc/apk/repositories; \
+    rm -f /etc/apk/repositories; \
+    echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/main" >> /etc/apk/repositories; \
+    echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/community" >> /etc/apk/repositories; \
+    chmod 644 /etc/apk/repositories; \
     # Update
     apk update; \
-    apk add --no-cache \
-        \
-        # OS - Core
-        openrc \
-        iftop; \
+    apk upgrade; \
     # Clean
-    rm -r -f /var/cache/apk/*; \
-    rm -r -f /var/lib/apk/*; \
-    rm -r -f /etc/apk/cache/*;
+    rm -rf /var/cache/apk/*; \
+    rm -rf /var/lib/apk/*; \
+    rm -rf /etc/apk/cache/*;
 
-### DOWNLOADS ###
+### TIMEZONE ###
 RUN set -eux; \
     # Dependencies
     apk update; \
     apk add --virtual temp_dependencies \
         tzdata \
-    ;\
-    # OS - Timezone
-        cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime; \
-        echo "${TIMEZONE}" > /etc/timezone; \
+    ; \
+    # Config
+        cp "/usr/share/zoneinfo/${ARG_TIMEZONE}" /etc/localtime; \
+        echo "${ARG_TIMEZONE}" > /etc/timezone; \
     # Clean
     apk del temp_dependencies; \
-    rm -r -f /var/cache/apk/*; \
-    rm -r -f /var/lib/apk/*; \
-    rm -r -f /etc/apk/cache/*;
+    rm -rf /var/cache/apk/*; \
+    rm -rf /var/lib/apk/*; \
+    rm -rf /etc/apk/cache/*;
+
+########################################################################################################################
+### INSTALL ###
+########################################################################################################################
+### PACKAGES ###
+RUN set -eux; \
+    # Update
+    apk update; \
+    # Install
+    apk add --no-cache \
+        \
+        # OS
+        openrc \
+        iftop \
+    ; \
+    # Clean
+    rm -rf /var/cache/apk/*; \
+    rm -rf /var/lib/apk/*; \
+    rm -rf /etc/apk/cache/*;
+
+### SOURCES ###
+#RUN set -eux; \
+#    # Dependencies
+#    apk update; \
+#    apk add --virtual temp_sources_dependencies \
+#        7zip \
+#    ; \
+#    # Program Example
+#        # Download
+#        mkdir -p /tmp/program-example/; \
+#        cd /tmp/program-example/; \
+#        curl -LO https://site.com/program-example.zip; \
+#        7z x program-example.zip; \
+#        # Install
+#        mkdir -p /opt/program-example/; \
+#        cp program-x.so /opt/program-example/; \
+#        chmod 755 /opt/program-example/; \
+#        chmod 755 /opt/program-example/program-example.so; \
+#        # Clear
+#        rm -rf /tmp/program-example/; \
+#        cd /; \
+#    # Clean
+#    apk del temp_sources_dependencies; \
+#    rm -rf /var/cache/apk/*; \
+#    rm -rf /var/lib/apk/*; \
+#    rm -rf /etc/apk/cache/*;
+
+### IMPORT ###
+# OS
+COPY --chmod=755 "./root/.ashrc" "/root/.ashrc"
+COPY --chmod=755 "./root/.bashrc" "/root/.bash"
+# Adm
+#COPY --chmod=755 --from=fkn-data "/data/adm/stable/*" "/adm/"
+COPY --chmod=755 "./adm/*" "/usr/local/bin/"
+RUN set -eux; /usr/local/bin/adm-setup;
 
 ### FILESYSTEM ###
 RUN set -eux; \
@@ -98,6 +145,11 @@ RUN set -eux; \
     ln -s "${ROOT_DATA}/adm/1.0/" "${ROOT_DATA}/adm/latest"; \
     ln -s "${ROOT_DATA}/adm/1.0/" "${ROOT_DATA}/adm/stable";
 COPY --chmod=755 "./os/adm/*" "${ROOT_DATA}/adm/1.0/"
+
+### COMPOSER ###
+RUN set -eux; \
+    mkdir --mode=777 --parents ${ROOT_DATA}/composer/latest/;
+COPY --from=composer:latest /usr/bin/composer ${ROOT_DATA}/composer/latest/
 
 ########################################################################################################################
 ### CONTAINER ###
