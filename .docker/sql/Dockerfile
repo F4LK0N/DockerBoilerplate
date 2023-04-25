@@ -37,8 +37,9 @@ RUN set -eux; \
         # OS
         ${OS_DATA} \
         ${OS_LOGS} \
-        # Application
-        ${APP_ROOT} \
+        # SQL
+        ${SQL_DATA} \
+        ${SQL_LOGS} \
     ;
 
 
@@ -68,5 +69,39 @@ RUN set -eux; \
     rm -f /etc/localtime /etc/timezone; \
     dpkg-reconfigure -f noninteractive tzdata;
 
+########################################################################################################################
+### INSTALL ###
+########################################################################################################################
+### PACKAGES ###
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends \
+        procps \
+        net-tools \
+        iftop \
+    ; \
+    apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
+    apt-get autoremove --purge; \
+    apt-get clean; \
+    apt-get autoclean; \
+    rm -rf \
+        /tmp/* \
+        /var/tmp/* \
+        /var/lib/apt/lists/* \
+        /usr/share/doc/* \
+    ;
 
+### IMPORT ###
+# Shell
+COPY --chmod=755 --from=f4lk0n/fkn:data "/data/shell/latest/.bashrc" "/root/.bashrc"
+# Adm
+COPY --chmod=755 --from=f4lk0n/fkn:data "/data/adm/latest/bash/*" "/usr/local/bin/"
+# Entrypoint
+COPY --chmod=755 "./usr/local/bin/*" "/usr/local/bin/"
 
+########################################################################################################################
+### CONTAINER ###
+########################################################################################################################
+STOPSIGNAL SIGWINCH
+ENTRYPOINT ["container-entrypoint"]
+CMD ["RUN"]
