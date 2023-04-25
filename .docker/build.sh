@@ -16,15 +16,30 @@ echo "Compose file: ${ComposeFile}"
 echo "Compose env : ${ComposeEnv}"
 echo "--- --- --- --- --- --- --- --- ---"
 
+
 echo "Build Started..."
 docker compose --project-directory="${ComposeFilePath}" --env-file="${ComposeEnv}" build
+if [[ "$?" != "0" ]]; then
+  echo '!!! ERROR BUILDING !!!';
+  echo -ne '\007';
+  read option;
+  exit 1;
+fi
 echo "Build Finished!"
 echo "--- --- --- --- --- --- --- --- ---"
 
+
 echo "Push Started..."
 docker push "$DockerHubRepo:$ImageTag"
+if [[ "$?" != "0" ]]; then
+  echo '!!! ERROR PUSHING !!!';
+  echo -ne '\007';
+  read option;
+  exit 1;
+fi
 echo "Push Finished!"
 echo "--- --- --- --- --- --- --- --- ---"
+
 
 echo -n "Exiting"
 timeout=50
