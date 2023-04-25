@@ -121,13 +121,13 @@ COPY --chmod=755 "./usr/local/bin/*" "/usr/local/bin/"
 
 ### IMPORT ###
 # Shell
-COPY --chmod=777 "./data/shell/*" "${ROOT_DATA}/shell/"
+COPY --chmod=777 "./data/shell/" "${ROOT_DATA}/shell/"
 RUN set -eux; \
     ln -s "${ROOT_DATA}/shell/1.0/" "${ROOT_DATA}/shell/latest"; \
     ln -s "${ROOT_DATA}/shell/1.0/" "${ROOT_DATA}/shell/stable";
 
 # Adm
-COPY --chmod=777 "./data/adm/*" "${ROOT_DATA}/adm/"
+COPY --chmod=777 "./data/adm/" "${ROOT_DATA}/adm/"
 RUN set -eux; \
     ln -s "${ROOT_DATA}/adm/1.0/" "${ROOT_DATA}/adm/latest"; \
     ln -s "${ROOT_DATA}/adm/1.0/" "${ROOT_DATA}/adm/stable";
