@@ -2,7 +2,7 @@
 
 DockerHubRepo="f4lk0n/fkn"
 DockerfileDir="data"
-ImageTag="data1.1"
+ImageTag="data"
 
 echo "--- --- --- --- --- --- --- --- ---"
 echo "### DOCKER - IMAGE BUILD ###"
