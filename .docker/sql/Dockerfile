@@ -104,6 +104,7 @@ RUN set -eux; \
     rm -f /etc/mysql/my.cnf.fallback; \
     rm -rf /etc/mysql/conf.d/*;
 COPY --chmod=664 "./etc/mysql/my.cnf" "/etc/mysql/my.cnf"
+COPY --chmod=664 "./etc/mysql/conf.d/mysql.cnf" "/etc/mysql/conf.d/mysql.cnf"
 
 ########################################################################################################################
 ### CONTAINER ###

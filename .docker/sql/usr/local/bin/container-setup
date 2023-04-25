@@ -6,31 +6,11 @@ echo "### CONTAINER SETUP ###";
 
 
 mysql_check_config() {
-    #mysqld --verbose --help
-    #local toRun=( "mysqld" "--verbose --help" ) errors
-	#if ! errors="$("${toRun[@]}" 2>&1 >/dev/null)"; then
-	#	echo '!!! ERROR !!!';
-    #    echo ${errors};
-    #    #echo $'mysqld failed while attempting to check config\n\tcommand was: '"${toRun[*]}"$'\n\t'"$errors"
-    #    exit 1;
-	#fi
-
-    chmod 664 /etc/mysql/my.cnf;
-    mysqld --validate-config;
     
-    error=$?;
-
-    echo "RESULT:${result}";
-    echo "ERROR:${error}";
-
-    #result3="$( mysqld --verbose --help )";
-    #erro3r=$?;
-
-    #echo "RESULT:\n${result3}\n";
-    #echo "ERROR:${error3}";
-
-    #local toRun=( "mysqld" "${--verbose --help}" ) errors2
-    #echo "ERROR:${erros2}";
+    chmod 664 /etc/mysql/my.cnf;
+    chmod 664 /etc/mysql/conf.d/mysql.cnf;
+    
+    mysqld --validate-config;
 }
 
 mysql_get_config() {

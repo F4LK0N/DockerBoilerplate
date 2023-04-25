@@ -20,6 +20,7 @@ services:
       # Dev
       - ./.docker/sql/usr/local/bin/container-setup:/usr/local/bin/container-setup
       - ./.docker/sql/etc/mysql/my.cnf:/etc/mysql/my.cnf
+      - ./.docker/sql/etc/mysql/conf.d/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
 
   #sql-panel:
   #  image: f4lk0n/fkn:sql-panel
