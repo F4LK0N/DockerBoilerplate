@@ -1,4 +1,4 @@
-FROM mysql:8-debian
+FROM mysql:8
 LABEL "org.opencontainers.image.authors"="F4LK0N"
 LABEL "org.opencontainers.image.version"="1.1"
 
@@ -105,6 +105,7 @@ RUN set -eux; \
     rm -rf /etc/mysql/conf.d/*;
 COPY --chmod=664 "./etc/mysql/my.cnf" "/etc/mysql/my.cnf"
 COPY --chmod=664 "./etc/mysql/conf.d/mysql.cnf" "/etc/mysql/conf.d/mysql.cnf"
+VOLUME /data/sql
 
 ########################################################################################################################
 ### CONTAINER ###

@@ -18,9 +18,9 @@ services:
       # Logs
       - ./logs/sql:/logs/sql
       # Dev
-      - ./.docker/sql/usr/local/bin/container-setup:/usr/local/bin/container-setup
+      - ./.docker/sql/usr/local/bin/:/usr/local/bin/
       - ./.docker/sql/etc/mysql/my.cnf:/etc/mysql/my.cnf
-      - ./.docker/sql/etc/mysql/conf.d/mysql.cnf:/etc/mysql/conf.d/mysql.cnf
+      - ./.docker/sql/etc/mysql/conf.d/:/etc/mysql/conf.d/
 
   #sql-panel:
   #  image: f4lk0n/fkn:sql-panel
