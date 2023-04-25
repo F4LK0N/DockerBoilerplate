@@ -81,7 +81,6 @@ RUN set -eux; \
     apk add --no-cache \
         \
         # OS
-        #bash \
         openrc \
         iftop \
     ; \
@@ -90,55 +89,40 @@ RUN set -eux; \
     rm -rf /var/lib/apk/*; \
     rm -rf /etc/apk/cache/*;
 
-#### SOURCES ###
+### SOURCES ###
 #RUN set -eux; \
 #    # Dependencies
 #    apk update; \
 #    apk add --virtual temp_sources_dependencies \
 #        7zip \
 #    ; \
-#    ## Program X
-#    #    # Download
-#    #    mkdir -p /tmp/program-x/; \
-#    #    cd /tmp/program-x/; \
-#    #    curl -LO https://site.com/program-x.zip; \
-#    #    7z x program-x.zip; \
-#    #    # Install
-#    #    mkdir -p /opt/program-x/; \
-#    #    cp program-x.so /opt/program-x/; \
-#    #    chmod 755 /opt/program-x/; \
-#    #    chmod 755 /opt/program-x/program-x.so; \
-#    #    # Clear
-#    #    rm -rf /tmp/program-x/; \
-#    #    cd /; \
+#    # Program Example
+#        # Download
+#        mkdir -p /tmp/program-example/; \
+#        cd /tmp/program-example/; \
+#        curl -LO https://site.com/program-example.zip; \
+#        7z x program-example.zip; \
+#        # Install
+#        mkdir -p /opt/program-example/; \
+#        cp program-x.so /opt/program-example/; \
+#        chmod 755 /opt/program-example/; \
+#        chmod 755 /opt/program-example/program-example.so; \
+#        # Clear
+#        rm -rf /tmp/program-example/; \
+#        cd /; \
 #    # Clean
 #    apk del temp_sources_dependencies; \
-#    rm -r -f /var/cache/apk/*; \
-#    rm -r -f /var/lib/apk/*; \
-#    rm -r -f /etc/apk/cache/*;
-
-### IMAGES ###
-# Adm
-#COPY --chmod=755 --from=fkn-data /data/adm/stable/ /adm/
+#    rm -rf /var/cache/apk/*; \
+#    rm -rf /var/lib/apk/*; \
+#    rm -rf /etc/apk/cache/*;
 
 ### IMPORT ###
-# OS
-COPY --chmod=755 "./root/*" "/root/"
+# Shell
+COPY --chmod=755 "./root/.ashrc" "/root/.ashrc"
+# Adm
+COPY --chmod=755 --from=fkn-data "/data/adm/stable/sh/*" "/usr/local/bin/"
+# Entrypoint
 COPY --chmod=755 "./usr/local/bin/*" "/usr/local/bin/"
-
-#### FILESYSTEM ###
-#RUN set -eux; \
-#    mkdir --mode=777 --parents \
-#        # Container
-#        /adm \
-#        ${ROOT_DATA} \
-#        ${ROOT_LOGS} \
-#        # OS
-#        ${OS_DATA} \
-#        ${OS_LOGS} \
-#        # Application
-#        ${APP_ROOT} \
-#    ;
 
 #########################################################################################################################
 #### CONTAINER ###
