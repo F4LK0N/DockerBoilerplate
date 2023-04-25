@@ -3,6 +3,33 @@ set -e
 
 echo "### CONTAINER SETUP ###";
 
+
+
+mysql_check_config() {
+    mysqld --verbose --help
+    local toRun=( "mysqld" "--verbose --help" ) errors
+	if ! errors="$("${toRun[@]}" 2>&1 >/dev/null)"; then
+		echo '!!! ERROR !!!';
+        echo ${errors};
+        #echo $'mysqld failed while attempting to check config\n\tcommand was: '"${toRun[*]}"$'\n\t'"$errors"
+        exit 1;
+	fi
+}
+
+mysql_get_config() {
+    # Fetch value from server config
+    # We use mysqld --verbose --help instead of my_print_defaults because the
+    # latter only show values present in config files, and not server defaults
+	local conf="$1"; shift
+	"$@" "${_verboseHelpArgs[@]}" 2>/dev/null \
+		| awk -v conf="$conf" '$1 == conf && /^[^ \t]/ { sub(/^[^ \t]+[ \t]+/, ""); print; exit }'
+	# match "datadir      /some/path with/spaces in/it here" but not "--xyz=abc\n     datadir (xyz)"
+}
+
+
+
+
+
 if [[ -f "${OS_DATA}/container/setup-done" ]]; then
 
     echo "[OK]";
@@ -39,8 +66,19 @@ else
     chmod 777 ${SQL_LOGS};
 
 
-    touch "${OS_DATA}/container/setup-done"
-    chmod 777 "${OS_DATA}/container/setup-done"
+
+    echo "SQL - CHECK CONFIG";
+    #mysql_check_config
+    
+
+    echo "SQL - SOCKET";
+
+    echo "SQL - DATA DIR";
+    
+    echo "SQL - DATABASES DIR";
+
+    #touch "${OS_DATA}/container/setup-done"
+    #chmod 777 "${OS_DATA}/container/setup-done"
     echo "[DONE]"
 
 fi

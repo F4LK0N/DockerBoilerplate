@@ -74,8 +74,8 @@ mysqld_tmpdir = '/logs/mysql/tmp/'
 pid_file = '/data/mysql/run.pid'
 mysqld_socket = ''
 
-# port = 3306
-# user = ''
+port = 3306
+user = 'mysql'
 
 mysqld_symbolic-links = 0
 

@@ -17,6 +17,8 @@ services:
       - ./data/sql:/data/sql
       # Logs
       - ./logs/sql:/logs/sql
+      # Dev
+      - ./.docker/sql/usr/local/bin/container-setup:/usr/local/bin/container-setup
 
   sql-panel:
     image: f4lk0n/fkn:sql-panel
