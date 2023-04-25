@@ -10,7 +10,7 @@ if [[ -f "${OS_DATA}/container/setup-done" ]]; then
 else
     
     echo "FILESYSTEM - CLEAR";
-    rm -r -f ${OS_DATA}/container;
+    rm -rf ${OS_DATA}/container;
     
     
     echo "FILESYSTEM - CREATE";
