@@ -1,7 +1,8 @@
 services:
   alpine:
+    image: f4lk0n/fkn:alpine3.17
     container_name: ${COMPOSE_PREFIX}alpine
-    build: 
+    build:
       context: ./.docker/alpine
       args:
         - ARG_HOST=alpine
