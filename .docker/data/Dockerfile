@@ -82,10 +82,9 @@ RUN set -eux; \
 
 ### IMPORT ###
 # Shell
-COPY --chmod=755 "./root/.ashrc" "/root/.ashrc"
+COPY --chmod=755 "./data/shell/1.0/.ashrc" "/root/.ashrc"
 # Adm
-COPY --chmod=755 "./adm/*" "/usr/local/bin/"
-RUN set -eux; /usr/local/bin/adm-setup;
+COPY --chmod=755 "./data/adm/1.0/sh/*" "/usr/local/bin/"
 # Entrypoint
 COPY --chmod=755 "./usr/local/bin/*" "/usr/local/bin/"
 
@@ -120,6 +119,9 @@ COPY --chmod=755 "./usr/local/bin/*" "/usr/local/bin/"
 #    rm -rf /etc/apk/cache/*;
 
 ### IMPORT ###
+# Composer
+COPY --chmod=777 --from=composer:latest "/usr/bin/composer" "${ROOT_DATA}/composer/latest/"
+
 # Shell
 COPY --chmod=777 "./data/shell/" "${ROOT_DATA}/shell/"
 RUN set -eux; \
@@ -132,10 +134,7 @@ RUN set -eux; \
     ln -s "${ROOT_DATA}/adm/1.0/" "${ROOT_DATA}/adm/latest"; \
     ln -s "${ROOT_DATA}/adm/1.0/" "${ROOT_DATA}/adm/stable";
 
-# Composer
-COPY --chmod=777 --from=composer:latest "/usr/bin/composer" "${ROOT_DATA}/composer/latest/"
-RUN set -eux; \
-    mkdir --mode=777 --parents "${ROOT_DATA}/composer/latest/";
+
 
 ########################################################################################################################
 ### CONTAINER ###
