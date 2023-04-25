@@ -42,7 +42,6 @@ RUN set -eux; \
         ${SQL_LOGS} \
     ;
 
-
 ### PACKAGES ###
 # Mirrors
 COPY --chmod=644 "./etc/apt/sources.list" "/etc/apt/sources.list"
@@ -98,6 +97,13 @@ COPY --chmod=755 --from=f4lk0n/fkn:data "/data/shell/latest/.bashrc" "/root/.bas
 COPY --chmod=755 --from=f4lk0n/fkn:data "/data/adm/latest/bash/*" "/usr/local/bin/"
 # Entrypoint
 COPY --chmod=755 "./usr/local/bin/*" "/usr/local/bin/"
+
+### SQL CONF ###
+RUN set -eux; \
+    rm -f /etc/mysql/my.cnf; \
+    rm -f /etc/mysql/my.cnf.fallback; \
+    rm -rf /etc/mysql/conf.d/*;
+COPY --chmod=664 "./etc/mysql/my.cnf" "/etc/mysql/my.cnf"
 
 ########################################################################################################################
 ### CONTAINER ###
