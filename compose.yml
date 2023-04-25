@@ -1,11 +1,11 @@
-version: '3'
 services:
   sql:
+    image: f4lk0n/fkn:sql8
     container_name: sql
+    hostname: sql
     build: 
       context: ./.docker/sql
       args:
-        - ARG_HOST=sql
         - ARG_DOMAIN=${PROJECT_DOMAIN}
         - ARG_TIMEZONE=${PROJECT_TIMEZONE}
     networks:
@@ -17,14 +17,14 @@ services:
       - ./data/sql:/data/sql
       # Logs
       - ./logs/sql:/logs/sql
-      # Dev
 
   sql-panel:
+    image: f4lk0n/fkn:sql-panel
     container_name: sql-panel
+    hostname: sql-panel
     build: 
       context: ./.docker/sql-panel
       args:
-        - ARG_HOST=sql-panel
         - ARG_DOMAIN=${PROJECT_DOMAIN}
         - ARG_TIMEZONE=${PROJECT_TIMEZONE}
     depends_on:
@@ -36,7 +36,8 @@ services:
       - PMA_USER=root
       - PMA_PASSWORD=root
     ports:
-      - "8080:80"
+      - "8081:80"
+      - "8444:443"
     networks:
       - frontend
       - backend
@@ -45,8 +46,6 @@ services:
       - ./data/sql-panel:/data/sql-panel
       # Logs
       - ./logs/sql-panel:/logs/sql-panel
-      # Dev
-      #- ./.docker/phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/php-phpmyadmin.ini
 
 networks:
   frontend:
