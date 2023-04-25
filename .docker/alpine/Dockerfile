@@ -118,7 +118,7 @@ RUN set -eux; \
 
 ### IMPORT ###
 # Shell
-COPY --chmod=755 "./root/.ashrc" "/root/.ashrc"
+COPY --chmod=755 --from=fkn-data "/data/shell/latest/sh/.ashrc" "/root/.ashrc"
 # Adm
 COPY --chmod=755 --from=fkn-data "/data/adm/stable/sh/*" "/usr/local/bin/"
 # Entrypoint
