@@ -19,12 +19,15 @@ ENV ROOT_DATA="/data"
 
 ### OS ###
 ENV ENV="/root/.ashrc"
+ENV OS_DATA="${ROOT_DATA}/os"
 
 ### FILESYSTEM ###
 RUN set -eux; \
     mkdir --mode=777 --parents \
         # Container
         ${ROOT_DATA} \
+        # OS
+        ${OS_DATA} \
     ;
 
 ### PACKAGES ###
