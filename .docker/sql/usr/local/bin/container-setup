@@ -5,26 +5,52 @@ echo "### CONTAINER SETUP ###";
 
 
 
-mysql_check_config() {
-    
+mysql_filesystem()
+{
     chmod 664 /etc/mysql/my.cnf;
     chmod 664 /etc/mysql/conf.d/mysql.cnf;
     
+    mkdir -p 664 /data/sql/storage/;
+    chmod 664 /data/sql/storage/;
+
     mkdir -p 664 /logs/sql/tmp/;
     chmod 664 /logs/sql/tmp/;
-    
+}
+
+mysql_config()
+{
     mysqld --validate-config;
 }
 
-mysql_get_config() {
-    # Fetch value from server config
-    # We use mysqld --verbose --help instead of my_print_defaults because the
-    # latter only show values present in config files, and not server defaults
-	local conf="$1"; shift
-	"$@" "${_verboseHelpArgs[@]}" 2>/dev/null \
-		| awk -v conf="$conf" '$1 == conf && /^[^ \t]/ { sub(/^[^ \t]+[ \t]+/, ""); print; exit }'
-	# match "datadir      /some/path with/spaces in/it here" but not "--xyz=abc\n     datadir (xyz)"
+mysql_core_databases()
+{
+    mysqld --initialize-insecure --default-time-zone=SYSTEM
 }
+
+mysql_temp_server_start()
+{
+    mysqld --daemonize --skip-networking --default-time-zone=SYSTEM --socket="/run/mysqld/mysqld.sock"
+}
+
+mysql_temp_server_stop()
+{
+    mysqladmin shutdown -uroot --socket="/run/mysqld/mysqld.sock";
+}
+
+#mysql_get_config() {
+#    # Fetch value from server config
+#    # We use mysqld --verbose --help instead of my_print_defaults because the
+#    # latter only show values present in config files, and not server defaults
+#	local conf="$1"; shift
+#	"$@" "${_verboseHelpArgs[@]}" 2>/dev/null \
+#		| awk -v conf="$conf" '$1 == conf && /^[^ \t]/ { sub(/^[^ \t]+[ \t]+/, ""); print; exit }'
+#	# match "datadir      /some/path with/spaces in/it here" but not "--xyz=abc\n     datadir (xyz)"
+#    mysqld --verbose --help | grep dir;
+#    echo '';
+#    echo '';
+#    echo '';
+#    echo '';
+#}
 
 
 
@@ -67,15 +93,34 @@ else
 
 
 
-    echo "SQL - CHECK CONFIG";
-    mysql_check_config
+    echo "SQL - FILESYSTEM";
+    mysql_filesystem
+
+    echo "SQL - CONFIG";
+    mysql_config
+
+    echo "SQL - CORE DATABASES";
+    mysql_core_databases
+    
+    echo "SQL - TEMP SERVER [START]";
+    mysql_temp_server_start
+    
+    echo "SQL - TIMEZONE";
+
+    
+    echo "SQL - ROOT USER";
+
+
+    echo "SQL - APP DATABASES";
+    
+    
+    echo "SQL - APP USER";
     
 
-    echo "SQL - SOCKET";
-
-    echo "SQL - DATA DIR";
+    echo "SQL - TEMP SERVER [STOP]";
+    mysql_temp_server_stop
     
-    echo "SQL - DATABASES DIR";
+
 
     #touch "${OS_DATA}/container/setup-done"
     #chmod 777 "${OS_DATA}/container/setup-done"
