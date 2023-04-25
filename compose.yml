@@ -9,3 +9,8 @@ services:
         - ARG_DOMAIN=${PROJECT_DOMAIN}
         - ARG_TIMEZONE=${PROJECT_TIMEZONE}
         - ARG_OS_APK_MIRROR=${ALPINE_APK_MIRROR}
+    networks:
+      - frontend
+      
+networks:
+  frontend:
