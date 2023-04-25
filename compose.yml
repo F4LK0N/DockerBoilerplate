@@ -2,10 +2,10 @@ services:
   data:
     image: f4lk0n/fkn:data
     container_name: ${COMPOSE_PREFIX}data
+    hostname: data
     build: 
       context: ./.docker/data
       args:
-        - ARG_HOST=data
         - ARG_DOMAIN=${PROJECT_DOMAIN}
         - ARG_TIMEZONE=${PROJECT_TIMEZONE}
         - ARG_OS_APK_MIRROR=${ALPINE_APK_MIRROR}

@@ -6,14 +6,12 @@ LABEL "org.opencontainers.image.version"="1.1"
 ### SETUP ###
 ########################################################################################################################
 WORKDIR /
-ARG ARG_HOST
 ARG ARG_DOMAIN
 ARG ARG_TIMEZONE
 ARG ARG_OS_VERSION='3.17'
 ARG ARG_OS_APK_MIRROR
 
 ### CONTAINER ###
-ENV HOST="${ARG_HOST}"
 ENV DOMAIN="${ARG_DOMAIN}"
 ENV ROOT_DATA="/data"
 
