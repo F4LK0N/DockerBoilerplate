@@ -5,7 +5,7 @@ while [ "$option" != "" ] && [ "$option" != "0" ]
 do
 
     clear
-    echo "$ADM_DIVIDER"
+    echo "$ADM_DIVIDER_BOLD"
     echo "$ADM_LOGO"
     echo "$ADM_DIVIDER"
     echo "### STORAGE ###"
@@ -18,7 +18,7 @@ do
         echo " 2 = Storage Usage (GB)"
         echo " 3 = Directories Size Tree (KB)"
         echo " 4 = FileSystem Size Tree (KB)"
-        echo "$ADM_DIVIDER"
+        echo "$ADM_DIVIDER_BOLD"
 
         echo -n "Enter option: "
         read -r -s -n 1 option

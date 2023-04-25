@@ -5,7 +5,7 @@ while [ "$option" != "" ] && [ "$option" != "0" ]
 do
 
     clear
-    echo "$ADM_DIVIDER"
+    echo "$ADM_DIVIDER_BOLD"
     echo "$ADM_LOGO"
     echo "$ADM_DIVIDER"
     echo "### PROCESSES ###"
@@ -18,7 +18,7 @@ do
         echo " 2 = Processes"
         echo " 3 = [REALTIME] Processes"
         echo " 4 = [REALTIME] Processes (top)"
-        echo "$ADM_DIVIDER"
+        echo "$ADM_DIVIDER_BOLD"
 
         echo -n "Enter option: "
         read -r -s -n 1 option

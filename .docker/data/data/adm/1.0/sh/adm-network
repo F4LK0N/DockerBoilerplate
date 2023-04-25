@@ -5,7 +5,7 @@ while [ "$option" != "" ] && [ "$option" != "0" ]
 do
 
     clear
-    echo "$ADM_DIVIDER"
+    echo "$ADM_DIVIDER_BOLD"
     echo "$ADM_LOGO"
     echo "$ADM_DIVIDER"
     echo "### NETWORK ###"
@@ -21,7 +21,7 @@ do
         echo " 5 = Ports Binded"
         echo " 6 = Total Traffic"
         echo " 7 = [REALTIME] Traffic (iftop)"
-        echo "$ADM_DIVIDER"
+        echo "$ADM_DIVIDER_BOLD"
 
         echo -n "Enter option: "
         read -r -s -n 1 option

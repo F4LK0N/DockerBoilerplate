@@ -5,7 +5,7 @@ while [ "$option" != "" ] && [ "$option" != "0" ]
 do
 
     clear
-    echo "$ADM_DIVIDER"
+    echo "$ADM_DIVIDER_BOLD"
     echo "$ADM_LOGO"
     echo "$ADM_DIVIDER"
     echo "### SERVICES ###"
@@ -20,7 +20,7 @@ do
         echo " 4 = Services Running"
         echo " 5 = Services Full List"
         echo " 6 = [REALTIME] Services Running"
-        echo "$ADM_DIVIDER"
+        echo "$ADM_DIVIDER_BOLD"
 
         echo -n "Enter option: "
         read -r -s -n 1 option
