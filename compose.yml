@@ -2,10 +2,10 @@ services:
   alpine:
     image: f4lk0n/fkn:alpine3.17
     container_name: ${COMPOSE_PREFIX}alpine
+    hostname: alpine
     build:
       context: ./.docker/alpine
       args:
-        - ARG_HOST=alpine
         - ARG_DOMAIN=${PROJECT_DOMAIN}
         - ARG_TIMEZONE=${PROJECT_TIMEZONE}
         - ARG_OS_APK_MIRROR=${ALPINE_APK_MIRROR}
