@@ -16,6 +16,8 @@ ENV ROOT_LOGS="/logs"
 
 ### OS ###
 ENV TERM="xterm"
+ENV ENV="/root/.ashrc"
+ENV TZ=${ARG_TIMEZONE}
 ENV OS_DATA="${ROOT_DATA}/os"
 ENV OS_LOGS="${ROOT_LOGS}/os"
 
