@@ -48,5 +48,4 @@ cat /etc/apache2/httpd.conf
 - [ ] \Task List Item Optional
 
 This is a emoji :+1:  
-This is a emoji :+1:  
-This is a emoji :+1:  
+This is a emoji :warning:  
