@@ -1,8 +1,8 @@
-# Heading 1
+# HEADING 1
 
-## Heading 2
+## HEADING 2
 
-### Heading 3
+### HEADING 3
 
 Text **bold**
 Text *italic*
@@ -14,6 +14,16 @@ Text ***bold italic***
 > > Text quote nested
 
 Text `code`
+
+```php
+<?php
+  $somePHP = "Code Code Code";
+?>
+```
+
+```shell
+asd
+```
 
 [LinkText](https://www.google.com/)
 [LinkText](/repository/relative/path/to/markdown.md)
