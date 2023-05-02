@@ -4,16 +4,18 @@
 
 ### HEADING 3
 
-Text **bold**
-Text *italic*
-Text ***bold italic***
+Text **bold**  
+Text *italic*  
+Text ***bold italic***  
 
-> Text quote
-> Text quote
-> > Text quote nested
-> > Text quote nested
+> Text quote  
+> Text quote  
+> > Text quote nested  
+> > Text quote nested  
 
-Text `code`
+Text `code`  
+Text `code`  
+Text `code`  
 
 ```php
 <?php
@@ -22,15 +24,15 @@ Text `code`
 ```
 
 ```shell
-asd
+cat /etc/apache2/httpd.conf
 ```
 
-[LinkText](https://www.google.com/)
-[LinkText](/repository/relative/path/to/markdown.md)
-[LinkText](current/file/relative/path/to/markdown.md)
+[LinkText](https://www.google.com/)  
+[LinkText](/repository/relative/path/to/markdown.md)  
+[LinkText](current/file/relative/path/to/markdown.md)  
 
-![AltImageText](path/to.image)
-![AltImageText](path/to.image "Hover Text")
+![AltImageText](path/to.image)  
+![AltImageText](path/to.image "Hover Text")  
 
 - List
 - List
@@ -40,5 +42,8 @@ asd
 
 - [x] Task List Item
 - [ ] Task List Item
+- [ ] \Task List Item Optional
 
-This is a emoji :+1:
+This is a emoji :+1:  
+This is a emoji :+1:  
+This is a emoji :+1:  
