@@ -1,20 +1,15 @@
-# VS CODE
-
-## PHP Optimization
-
+# PHP OPTIMIZATION
 <https://blog.theodo.com/2019/07/vscode-php-development/>
 <https://codevoweb.com/top-10-best-vs-code-extensions-for-php-developers/>
 
 
 
-## SHORTCUTS
-
+# SHORTCUTS
 <https://code.visualstudio.com/docs/getstarted/keybindings#:~:text=All%20keyboard%20shortcuts%20in%20VS,of%20the%20editor%20title%20bar.>
 
 
 
-## SPELL CHECKER
-
+# SPELL CHECKER
 ```php
 /* spellchecker: enable */
 /* spellchecker: disable */
@@ -22,8 +17,7 @@
 
 
 
-## INTELLISENSE
-
+# INTELLISENSE
 ```json
 [
   {
@@ -43,20 +37,17 @@
   }
 ]
 ```
-
 <https://code.visualstudio.com/docs/editor/intellisense>
 
 
 
-## INTELLIPHENSE
-
+# INTELLIPHENSE
 ```php
   <?php
   /** @var callable $var */
   $var = 'is_numeric'; //$var is callable instead of string
   $var = 1; //$var is now an int
 ```
-
 <https://github.com/bmewburn/vscode-intelephense>
 <https://github.com/bmewburn/intelephense-docs>
 <https://github.com/bmewburn/intelephense-docs/blob/master/installation.md>
@@ -64,16 +55,15 @@
 
 
 
-## MARKDOWN
-
+# MARKDOWN
+:warning: Not Working
 - Install the font `Segoe UI`
 - Put the file `markdown-github.css` on your VS Code config root folder:
   - (WINDOWS) `C:\Users\{user-name}\AppData\Roaming\Code\User`
 - Add to the VS Code settings file `settings.json`:
-
 ```json
 "markdown.styles": [
-"github.css"
+  "github.css"
 ]
 ```
 
