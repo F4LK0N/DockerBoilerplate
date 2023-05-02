@@ -27,9 +27,9 @@ Text `code`
 cat /etc/apache2/httpd.conf
 ```
 
-[LinkText](https://www.google.com/)  
-[LinkText](/repository/relative/path/to/markdown.md)  
-[LinkText](current/file/relative/path/to/markdown.md)  
+[ExternalLink](https://www.google.com/)  
+[RelativeLink](MarkdownSyntax.md)  
+[RepositoryLink](/%23DOCs/GitHub/Notes.md)  
 
 ![AltImageText](path/to.image)  
 ![AltImageText](path/to.image "Hover Text")  

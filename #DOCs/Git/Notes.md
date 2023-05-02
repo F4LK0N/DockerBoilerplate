@@ -14,10 +14,13 @@ Merge `main` into `feature`:
   git merge feature main
 ```
 
+![IMAGE](img/merge-vs-rebase_merge-feature-into-master.png "IMAGE")
 ![IMAGE](img/merge-vs-rebase_merge-feature-into-master.svg "IMAGE")
 
+![IMAGE](img/merge-vs-rebase_merge-feature-into-master.png "")
 ![IMAGE](img/merge-vs-rebase_merge-feature-into-master.svg "")
 
+![IMAGE](img/merge-vs-rebase_merge-feature-into-master.png)
 ![IMAGE](img/merge-vs-rebase_merge-feature-into-master.svg)
 
 <https://www.atlassian.com/git/tutorials/merging-vs-rebasing>
