@@ -1,24 +1,47 @@
 root = true
 
+### GENERAL ###
 [*]
 charset = utf-8
 end_of_line = lf
-insert_final_newline = true
-indent_style = space
 indent_size = 4
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
 
-[.gitignore]
-insert_final_newline = false
-
-[.md]
+### TEXT ###
+[*.{md,txt}]
 indent_size = 2
 
-[*compose.y*ml]
+### GIT ###
+[.{gitignore,gitconfig}]
+insert_final_newline = false
+
+### DOCKER ###
+[Dockerfile]
+insert_final_newline = false
+
+[*compose.{yaml,yml}]
 indent_size = 2
 insert_final_newline = false
 
-[*.phtml]
+[*.htm*]
 insert_final_newline = false
 
 [*.css]
 insert_final_newline = false
+
+[*.js]
+insert_final_newline = false
+
+[*.json]
+indent_size = 2
+insert_final_newline = false
+
+[*.php]
+trim_trailing_whitespace = true
+
+[*.phtml]
+insert_final_newline = false
+
+
