@@ -602,8 +602,8 @@
       "command": "runCommands",
       "args": {
           "commands": [
-              "git.commitStaged",
               "workbench.explorer.fileView.focus",
+              "git.commitStaged",
               "workbench.action.focusActiveEditorGroup",
               "git.push"
           ]
