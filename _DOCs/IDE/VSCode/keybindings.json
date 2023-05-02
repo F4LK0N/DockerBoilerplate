@@ -603,8 +603,8 @@
       "args": {
           "commands": [
               "git.commitStaged",
-              "workbench.action.focusActiveEditorGroup",
               "workbench.explorer.fileView.focus",
+              "workbench.action.focusActiveEditorGroup",
               "git.push"
           ]
       },
@@ -618,7 +618,8 @@
           "commands": [
               "workbench.scm.focus",
               "git.push",
-              "workbench.explorer.fileView.focus"
+              "workbench.explorer.fileView.focus",
+              "workbench.action.focusActiveEditorGroup"
           ]
       }
   },
@@ -630,7 +631,8 @@
           "commands": [
               "workbench.scm.focus",
               "git.pull",
-              "workbench.explorer.fileView.focus"
+              "workbench.explorer.fileView.focus",
+              "workbench.action.focusActiveEditorGroup"
           ]
       }
   },
@@ -642,7 +644,8 @@
           "commands": [
               "workbench.scm.focus",
               "git.fetch",
-              "workbench.explorer.fileView.focus"
+              "workbench.explorer.fileView.focus",
+              "workbench.action.focusActiveEditorGroup"
           ]
       }
   },
