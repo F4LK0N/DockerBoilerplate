@@ -18,7 +18,7 @@ Text `code`
 Text `code`  
 
 ```php
-<?php
+<?
   $somePHP = "Code Code Code";
 ?>
 ```
@@ -29,12 +29,13 @@ cat /etc/apache2/httpd.conf
 
 [ExternalLink](https://www.google.com/)  
 [RelativeLink](Notes.md)  
-[RepositoryLink](/%23DOCs/GitHub/Notes.md)  
+[RepositoryLink](/_DOCs/GitHub/Notes.md)  
 
 ![Alt Text](img/github-mark.png)
 ![Alt Text](img/github-mark.svg "Hover Text")  
-![Alt Text](/%23DOCs/GitHub/img/github-mark-white.png)
-![Alt Text](/%23DOCs/GitHub/img/github-mark-white.svg "Hover Text")  
+
+![Alt Text](/_DOCs/GitHub/img/github-mark-white.png)
+![Alt Text](/_DOCs/GitHub/img/github-mark-white.svg "Hover Text")  
 
 - List
 - List
