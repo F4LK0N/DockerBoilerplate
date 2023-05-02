@@ -1,4 +1,5 @@
 {
+  "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
   "editor.accessibilitySupport": "off",

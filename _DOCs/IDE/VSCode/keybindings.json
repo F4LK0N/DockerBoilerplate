@@ -65,15 +65,20 @@
       "when": "workbench.scm.active && focusedView != 'workbench.scm'"
   },
   //### AUXILIARY (9,6) ###
-  //OUTLINE
-  {
-      "key": "ctrl+alt+numpad9",
-      "command": "outline.focus"
-  },
   //TIMELINE
   {
-      "key": "ctrl+alt+numpad6",
-      "command": "timeline.focus"
+    "key": "ctrl+alt+numpad9",
+    "command": "timeline.focus"
+  },
+  //OUTLINE
+  {
+    "key": "ctrl+alt+numpad6",
+    "command": "outline.focus"
+  },
+  //DATABASE
+  {
+    "key": "ctrl+alt+numpad3",
+    "command": "github.cweijan.mysql.focus"
   },
   //### PANEL (0,1,2) ###
   //TERMINAL
@@ -599,7 +604,8 @@
           "commands": [
               "git.commitStaged",
               "workbench.action.focusActiveEditorGroup",
-              "workbench.action.closeSidebar"
+              "workbench.explorer.fileView.focus",
+              "git.push"
           ]
       },
       "when": "focusedView == 'workbench.scm' && inputFocus"
@@ -611,7 +617,8 @@
       "args": {
           "commands": [
               "workbench.scm.focus",
-              "git.push"
+              "git.push",
+              "workbench.explorer.fileView.focus"
           ]
       }
   },
@@ -622,7 +629,8 @@
       "args": {
           "commands": [
               "workbench.scm.focus",
-              "git.pull"
+              "git.pull",
+              "workbench.explorer.fileView.focus"
           ]
       }
   },
@@ -633,7 +641,8 @@
       "args": {
           "commands": [
               "workbench.scm.focus",
-              "git.fetch"
+              "git.fetch",
+              "workbench.explorer.fileView.focus"
           ]
       }
   },
