@@ -10,6 +10,9 @@ indent_size = 4
 [.gitignore]
 insert_final_newline = false
 
+[.md]
+indent_size = 2
+
 [*compose.y*ml]
 indent_size = 2
 insert_final_newline = false
