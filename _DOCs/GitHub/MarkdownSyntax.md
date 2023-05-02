@@ -1,17 +1,6 @@
 # HEADING 1
-Test
-
-# HEADING 1
-Test
-
-# HEADING 1
-Test
-
 ## HEADING 2
-Test
-
 ### HEADING 3
-Test
 
 Text **bold**  
 Text *italic*  
