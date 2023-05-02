@@ -28,8 +28,8 @@ cat /etc/apache2/httpd.conf
 ```
 
 [ExternalLink](https://www.google.com/)  
-[RelativeLink](Notes.md)  
-[RepositoryLink](/_DOCs/GitHub/Notes.md)  
+[RelativeLink](MarkdownEmoji.md)  
+[RepositoryLink](/_DOCs/GitHub/MarkdownEmoji.md)  
 
 ![Alt Text](img/github-mark.png)
 ![Alt Text](img/github-mark.svg "Hover Text")  
