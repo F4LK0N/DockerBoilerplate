@@ -219,7 +219,6 @@
       "*.phtml"
   ],
   "intelephense.files.exclude": [],
-  "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
   "editor.foldingImportsByDefault": true,
   "editor.glyphMargin": false,
   "editor.gotoLocation.alternativeDeclarationCommand": "editor.action.referenceSearch.trigger",
@@ -549,7 +548,7 @@
   "markdown.preview.typographer": true,
   "markdown.suggest.paths.includeWorkspaceHeaderCompletions": "onSingleOrDoubleHash",
   "[php]": {
-    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client",
+    "editor.defaultFormatter": "bmewburn.vscode-intelephense-client"
   },
   "vsintellicode.modify.editor.suggestSelection": "choseToUpdateConfiguration",
   "markdown.preview.lineHeight": 1.5,
