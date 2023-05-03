@@ -36,6 +36,12 @@ else
     fsSetup 777 daemon daemon2 /tmp/tst/testDir/;
     fsSetup 777 daemon daemon2 /tmp/tst/testDir;
 
+
+    fsSetup 777 root root /tmp/tst/dir1/;
+    fsSetup 777 root root /tmp/tst/dir1/a;
+    fsSetup 777 root root /tmp/tst/dir1/a TRUNCATE;
+    fsSetup 777 root root /tmp/tst/dir1/b TRUNCATE;
+
     #if [[ "$( fsSetup_has-error )" == "1" ]]; then
     #    echo "ERROR"; fsSetup_clear-error; exit 1;
     #fi;

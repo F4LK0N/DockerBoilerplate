@@ -251,6 +251,52 @@ fsGroup ()
 
 
 
+fsTruncate ()
+{
+    pathType=$1;
+    truncate=$2;
+    path=$3;
+
+
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "-";
+        return;
+    fi;
+
+
+    if [ "${truncate}" == 'N'  ]; then
+        echo -n "=";
+        return;
+    fi;
+
+
+    if [[ "D" == "${pathType}" ]]; then
+        fsTruncateDir ${path};
+    else
+        fsTruncateFile ${path};
+    fi;
+}
+fsTruncateDir ()
+{
+    path=$1;
+}
+fsTruncateFile ()
+{
+    path=$1;
+
+    if ! [[ -f "${path}" ]]; then
+        setError "Can't truncate, path not a FILE!";
+        echo -n "!";
+        return;
+    fi;
+
+    #truncate -s 0 ${path};
+
+
+}
+
+
+
 ### ARGUMENTS ###
 mode=$1;
 user=$2
@@ -278,34 +324,25 @@ echo -n "[";
     fsMode "${mode}" "${path}";
     fsUser "${user}" "${path}";
     fsGroup "${group}" "${path}";
-    
-    #
-    #
-    #### GROUP ###
-    #if [[ "${setupFsError}" == "" ]]; then
-    #    echo -n "-";
-    #elif [[ "${group}" == "$( stat -c %G ${path} )" ]]; then
-    #    echo -n "=";
-    #else
-    #    setupFsError=$( chown :${group} "${path}" 2>&1 );
-    #    if [[ "${group}" != "$( stat -c %G ${path} )" ]]; then echo -n "!"; else echo -n "+"; fi;
-    #fi;
-    #
-    #
-    #
-    #### TRUNCATE ###
-    #if [[ "${setupFsError}" == "" ]]; then
-    #    echo -n "-";
-    #elif [[ "${truncate}" == "N" ]]; then
-    #    echo -n "=";
-    #else
-    #    truncate -s 0 ${path};
-    #    echo -n "+";
-    #fi
+    fsTruncate "${pathType}" "${truncate}" "${path}";
 echo -n "]";
 
 
+
 #### PATH ###
+if [[ "${path}" == '' ]]; then
+    path='!!!';
+fi;
+
+### RESULT ###
+if [ $(hasError;) == '1' ]; then
+    str_pad_right " ${path} " 60 "_";
+    echoError;
+else
+    echo -n " ${path} ";
+fi;
+
+
 #padding=" ______________________________________________________________________";
 #printf "] %s %s" "$path" "${padding:${#path}}";
 #
