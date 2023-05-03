@@ -154,15 +154,17 @@ PS1="$PS1_TOP\n$PS1_LINE ";
 # alias cp='cp -i'
 # alias mv='mv -i'
 
+alias e='exit'
+
 alias ls='ls --color=auto --group-directories-first -lAsp'
 alias l='ls'
 
-alias c='cd_ls_tmp(){ cd "$@"; ls; unset -f cd_ls_tmp; }; cd_ls_tmp'
+alias cd='cd_ls_tmp(){ cd "$@"; ls; unset -f cd_ls_tmp; }; cd_ls_tmp'
+alias c='cd'
 
 alias logs='c /logs;'
 alias data='c /data;'
 
-alias e='exit'
 
 ######################################################################################################
 ### ADM ###
