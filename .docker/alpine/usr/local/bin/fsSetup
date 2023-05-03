@@ -41,50 +41,89 @@ runCmd ()
 }
 
 
-create ()
+
+fsCreate ()
 {
     if [ $(hasError;) == '1'  ]; then
-        echo -n "=";
+        echo -n "-";
         return;
     fi;
 
+
     if [[ "D" == "${1}" ]]; then
-        createDir ${2};
+        fsCreateDir ${2};
     else
-        createFile ${2};
+        fsCreateFile ${2};
     fi;
 }
-
-createDir ()
+fsCreateDir ()
 {
     if [[ -d "${1}" ]]; then
         echo -n "=";
         return;
     fi;
-       
-    runCmd  "mkdir -p --mode=777 ${path}";
-    if [[ ! -d "${path}" ]]; then 
+
+
+    runCmd mkdir -p --mode=777 "${path}";
+    if [[ ! -d "${path}" ]]; then
         echo -n "!";
     else
         echo -n "+";
     fi;
 }
-
-createFile ()
+fsCreateFile ()
 {
     if [[ -f "${path}" ]]; then
         echo -n "=";
         return;
     fi;
-    
-    runCmd "touch ${path}";
-    if [[ ! -f "${path}" ]]; then
+
+
+    if [[ -d "${path}" ]]; then
+        setError "This path is a directory!";
         echo -n "!";
-    else
-        echo -n "+";
+        return;
     fi;
+    
+
+    runCmd touch "${path}";
+    if [ $(hasError;) == '1' ]; then
+        echo -n "!";
+        return;
+    fi;
+    
+
+    if [[ ! -f "${path}" ]]; then
+        setError "Can't create file!";
+        echo -n "!";
+        return;
+    fi;
+
+
+    echo -n "+";
 }
 
+
+
+fsMode ()
+{
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "-";
+        return;
+    fi;
+
+    
+    if [[ "${1}" == "$( stat -c %a ${2} )" ]]; then
+        echo -n "=";
+    else
+        runCmd chmod ${1} "${2}" 2>&1;
+        if [[ "${mode}" != "$( stat -c %a ${path} )" ]]; then 
+            echo -n "!"; 
+        else
+             echo -n "+"; 
+        fi;
+    fi;
+}
 
 
 mode=$1;
@@ -113,26 +152,8 @@ echo -n "[${pathType}]";
 
 
 echo -n "[";
-    create "${pathType}" "${path}";
-
-    #### CREATE ###
-    #if [[ "D" == "${pathType}" ]]; then
-    #    # DIR #
-    #    if [[ -d "${path}" ]]; then
-    #        echo -n "=";
-    #    else
-    #        fsSetupRun  "mkdir -p --mode=777 ${path}";
-    #        if [[ ! -d "${path}" ]]; then echo -n "!"; else echo -n "+"; fi;
-    #    fi;
-    #else
-    #    # FILE #
-    #    if [[ -f "${path}" ]]; then
-    #        echo -n "=";
-    #    else
-    #        fsSetupRun="touch '${path}'";
-    #        if [[ ! -f "${path}" ]]; then echo -n "!"; else echo -n "+"; fi;
-    #    fi;
-    #fi;
+    fsCreate "${pathType}" "${path}";
+    fsMode "${mode}" "${path}";
 
 
 
@@ -197,5 +218,8 @@ echo -n "]";
 #    echo "[OK]";
 #fi;
 
-
+if [ $(hasError;) == '1' ]; then
+    echoError;
+    return;
+fi;
 echo '';
