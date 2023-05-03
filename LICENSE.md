@@ -1,3 +1,5 @@
+# LICENSE
+
 BSD 3-Clause License
 
 Copyright (c) 2023 - F4lk0n <otaviosoria@gmail.com>
