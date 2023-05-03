@@ -7,15 +7,16 @@ padChar='#';
 if [ "${1}" == 'h6' ] || [ "${1}" == 'h5' ]; then
     headerLevel="${1}";
     columns=40;
-    padChar='#';
 elif [ "${1}" == 'h4' ] || [ "${1}" == 'h3' ]; then
     headerLevel="${1}";
     columns=80;
-    padChar='=';
 elif [ "${1}" == 'h2' ] || [ "${1}" == 'h1' ]; then
     headerLevel="${1}";
     columns=120;
-    padChar='#';
+fi;
+
+if [ "${1}" == 'h2' ] || [ "${1}" == 'h4' ] || [ "${1}" == 'h6' ]; then
+    padChar='=';
 fi;
 
 echo_${headerLevel} "FILESYSTEM";
