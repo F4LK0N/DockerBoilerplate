@@ -1,0 +1,153 @@
+#!/bin/sh
+set -e
+
+## CLEAR CURRENT STATE
+#rm -rf /tmp/fsSetup/error;
+rm -rf /tmp/fsSetup/message;
+
+setError ()
+{
+    mkdir -p --mode=777 /tmp/fsSetup/error;
+    
+    message="${@}";
+    if [[ "${message}" == '' ]]; then
+        message="ERROR";
+    fi;
+    echo -n "${message} " >> /tmp/fsSetup/message;
+    chmod 777 /tmp/fsSetup/message;
+}
+
+hasError ()
+{
+    if [[ -f "/tmp/fsSetup/message" ]]; then
+        echo 1;
+    else
+        echo 0;
+    fi
+}
+
+echoError ()
+{
+    cat /tmp/fsSetup/message;
+    #echo $( cat /tmp/fsSetup/message );
+}
+
+#runCmd ()
+#{
+#    result=`$@ 2>&1 `;
+#
+#    if [[ "${result}" != '' ]]; then
+#        fsSetup_setError "${result}";
+#    fi;
+#}
+
+
+
+mode=$1;
+user=$2
+group=$3;
+path=$4;
+truncate='N';
+if [[ "$1" == '' ]]; then setError "'MODE' required!"; fi;
+if [[ "$2" == '' ]]; then setError "'USER' required!"; fi;
+if [[ "$3" == '' ]]; then setError "'GROUP' required!"; fi;
+if [[ "$4" == '' ]]; then setError "'PATH' required!"; fi;
+if [[ "$5" != '' ]]; then truncate='Y'; return; fi;
+if [ $(hasError;) == '1'  ]; then
+    echoError;
+    return;
+fi;
+
+return 1;
+
+
+#### PATH TYPE (DIR|FILE) ###
+#pathType='F';
+#if [[ "/" == "${path: -1}" ]]; then
+#    pathType='D';
+#fi;
+#echo -n "[${pathType}]";
+#
+#
+#
+#### CREATE ###
+#if [[ "D" == "${pathType}" ]]; then
+#    # DIR #
+#    if [[ -d "${path}" ]]; then
+#        echo -n "=";
+#    else
+#        fsSetupRun  "mkdir -p --mode=777 ${path}";
+#        if [[ ! -d "${path}" ]]; then echo -n "!"; else echo -n "+"; fi;
+#    fi;
+#else
+#    # FILE #
+#    if [[ -f "${path}" ]]; then
+#        echo -n "=";
+#    else
+#        fsSetupRun="touch '${path}'";
+#        if [[ ! -f "${path}" ]]; then echo -n "!"; else echo -n "+"; fi;
+#    fi;
+#fi;
+
+
+
+#### MODE ###
+#if [[ "${setupFsError}" == "" ]]; then
+#    echo -n "-";
+#elif [[ "${mode}" == "$( stat -c %a ${path} )" ]]; then
+#    echo -n "=";
+#else
+#    setupFsError=$( chmod ${mode} "${path}" 2>&1 );
+#    if [[ "${mode}" != "$( stat -c %a ${path} )" ]]; then echo -n "!"; else echo -n "+"; fi;
+#fi;
+#
+#
+#
+#### USER ###
+#if [[ "${setupFsError}" == "" ]]; then
+#    echo -n "-";
+#elif [[ "${user}" == "$( stat -c %U ${path} )" ]]; then
+#    echo -n "=";
+#else
+#    setupFsError=$( chown "${user}" "${path}" 2>&1 );
+#    if [[ "${user}" != "$( stat -c %U ${path} )" ]]; then echo -n "!"; else echo -n "+"; fi;
+#fi;
+#
+#
+#
+#### GROUP ###
+#if [[ "${setupFsError}" == "" ]]; then
+#    echo -n "-";
+#elif [[ "${group}" == "$( stat -c %G ${path} )" ]]; then
+#    echo -n "=";
+#else
+#    setupFsError=$( chown :${group} "${path}" 2>&1 );
+#    if [[ "${group}" != "$( stat -c %G ${path} )" ]]; then echo -n "!"; else echo -n "+"; fi;
+#fi;
+#
+#
+#
+#### TRUNCATE ###
+#if [[ "${setupFsError}" == "" ]]; then
+#    echo -n "-";
+#elif [[ "${truncate}" == "N" ]]; then
+#    echo -n "=";
+#else
+#    truncate -s 0 ${path};
+#    echo -n "+";
+#fi
+
+
+
+### PATH ###
+padding=" ______________________________________________________________________";
+printf "] %s %s" "$path" "${padding:${#path}}";
+
+
+
+### RESULT ###
+if [[ "${setupFsError}" != "" ]]; then
+    echo "[ERROR] ${setupFsError}";
+else
+    echo "[OK]";
+fi;

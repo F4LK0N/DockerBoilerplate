@@ -16,8 +16,8 @@ else
     fi
 
 
-    touch "${OS_DATA}/container/start-done"
-    chmod 777 "${OS_DATA}/container/start-done"
+    #touch "${OS_DATA}/container/start-done"
+    #chmod 777 "${OS_DATA}/container/start-done"
     echo "[DONE]"
 
 fi

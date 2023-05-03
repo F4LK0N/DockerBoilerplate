@@ -54,3 +54,6 @@ This image is based on the oficial Docker image of the Alpine Operational System
 	docker compose up -d
 ## Access
 	docker compose exec -it alpine /bin/sh
+
+
+docker compose logs alpine

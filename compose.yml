@@ -20,6 +20,9 @@ services:
       - ./logs/:/logs/
       # Application
       - ./src/:/src/
+      - ./.docker/alpine/usr/local/bin/:/usr/local/bin/
+
+
       
 networks:
   frontend:

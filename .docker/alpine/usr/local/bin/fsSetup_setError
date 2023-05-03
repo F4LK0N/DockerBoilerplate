@@ -1,0 +1,14 @@
+#!/bin/sh
+
+if [[ "${@}" == "[CLEAR]" ]]; then
+    rm -rf /tmp/fsSetup;
+else
+    mkdir -p 777 /tmp/fsSetup/error;
+    mkdir -p 777 /tmp/fsSetup/errorCurrent;
+    
+    message="${@}";
+    if [[ "${message}" == '' ]]; then
+        message="ERROR";
+    fi;
+    echo "${MESSAGE}" >> /tmp/fsSetup/message;
+fi;
