@@ -1,3 +1,8 @@
+# READ ABOUT CONFIG
+https://docs.oracle.com/cd/E19120-01/open.solaris/819-2379/userconcept-26/index.html
+
+
+
 # Shell Config
 
 https://stackoverflow.com/questions/38024160/how-to-get-etc-profile-to-run-automatically-in-alpine-docker
