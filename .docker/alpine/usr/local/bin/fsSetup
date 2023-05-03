@@ -13,9 +13,11 @@ setError ()
         message="ERROR";
     fi;
 
-    oldMessage="$( cat /tmp/fsSetup/message )";
-    if [[ "${oldMessage}" != '' ]]; then
-        message="${message} <== ${oldMessage}";
+    if [[ -f "/tmp/fsSetup/message" ]]; then
+        oldMessage="$( cat /tmp/fsSetup/message )";
+        if [[ "${oldMessage}" != '' ]]; then
+            message="${message} <== ${oldMessage}";
+        fi;
     fi;
 
     echo -n "${message} " > /tmp/fsSetup/message;
