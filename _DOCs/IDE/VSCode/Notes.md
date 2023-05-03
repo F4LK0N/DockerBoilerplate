@@ -1,5 +1,5 @@
 # MONOSPACE FONT
-
+Consolas Ligaturized v3 - Ultimate Programmers :rage: :heart:
 `'Consolas ligaturized v3', monospace`  
 ```json
   "editor.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
@@ -15,12 +15,6 @@ Consolas - Best Vanilla Font :heart::heart::heart:
 
 Lucida Console - 2º Best Vanilla Font :heart:  
 `'Lucida Console', monospace`  
-
-JetBrains Mono - with Ligatures  
-`'JetBrains Mono', monospace`  
-<https://github.com/JetBrains/JetBrainsMono>  
-
-
 
 
 
