@@ -7,54 +7,30 @@ if [[ -f "/run/container/setup-done" ]]; then
 else
     fsSetup_echoHeader h2;
     
-    fsSetup 777 daemon daemon  /tmp/tst/testDir/;
-    fsSetup 777 daemon daemon  /tmp/tst/testDir;
-
-    fsSetup 777 root   root    /tmp/tst/testFile;
-    fsSetup 777 root   root    /tmp/tst/testFile/;
-    fsSetup 777 root   root    /tmp/tst/testFile/asd/asd/asd;
+    fsSetup_clearErros;
     
-    fsSetup 770 root   root    /tmp/tst/dir5/;
-    fsSetup 660 root   root    /tmp/tst/dir5/;
-    fsSetup 777 root   root    /tmp/tst/dir5/;
-    fsSetup 777 root   root    /tmp/tst/dir5/;
-    fsSetup 779 root   root    /tmp/tst/dir5/;
-
-    fsSetup 777 daemon root    /tmp/tst/testDir/;
-    fsSetup 777 daemon daemon  /tmp/tst/testDir/;
-
-    fsSetup 777 root2  daemon  /tmp/tst/testDir/;
-    fsSetup 777 daemon daemon2 /tmp/tst/testDir/;
-    fsSetup 777 daemon daemon2 /tmp/tst/testDir;
-
-
-    fsSetup 777 root root /tmp/tst/dir1/;
+    
     fsSetup 777 root root /tmp/tst/dir1/a;
-    fsSetup 777 root root /tmp/tst/dir1/a TRUNCATE;
-    fsSetup 777 root root /tmp/tst/dir1/a TRUNCATE;
-    fsSetup 777 root root /tmp/tst/dir1/b TRUNCATE;
-    fsSetup 777 root root /tmp/tst/dir1/b TRUNCATE;
-    fsSetup 777 root root /tmp/ TRUNCATE;
 
     #if [[ "$( fsSetup_has-error )" == "1" ]]; then
     #    echo "ERROR"; fsSetup_clear-error; exit 1;
     #fi;
-    #rm -rf /run/container/;
+    # Container
+    fsSetup 777 root root /run/container/ TRUNCATE;
+    fsSetup 777 root root ${ROOT_DATA}/;
+    fsSetup 777 root root ${ROOT_LOGS}/;
+    # OS
+    fsSetup 777 root root ${OS_DATA}/;
+    fsSetup 777 root root ${OS_LOGS}/;
+    # App
+    fsSetup 777 root root ${APP_ROOT}/;
+    # Container
+    fsSetup 777 root root /run/container/setup-done;
 
-    #fsSetup 777 root root ${ROOT_DATA}/;
-    #fsSetup 777 root root ${ROOT_LOGS}/;
-    #fsSetup 777 root root /run/container/;
-    #fsSetup 777 root root /run/container;
-    ## OS
-    #fsSetup 777 root root ${OS_DATA}/;
-    #fsSetup 777 root root ${OS_LOGS}/;
-    ## App
-    #fsSetup 777 root root ${APP_ROOT}/;
-
-    #if [[ "${CONTAINER_SETUP_ERROR}" == "1" ]]; then
-    #    echo "[ERROR]"; exit 1;
-    #else
-    #    fsSetup 777 root root /run/container/setup-done;
-    #    echo "[DONE]";
-    #fi
+    if [ $(fsSetup_hasErrors) == '1'  ]; then
+        echo "[ERROR]";
+        exit 1;
+    else
+        echo "[DONE]";
+    fi
 fi

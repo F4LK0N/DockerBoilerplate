@@ -1,3 +1,4 @@
 ##!/bin/sh
-#
-#rm -rf /run/container/setup-fs-error;
+
+rm -rf /tmp/fsSetup/error;
+rm -rf /tmp/fsSetup/message;
