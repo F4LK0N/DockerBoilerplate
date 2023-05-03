@@ -111,7 +111,8 @@
   //SIDEBAR
   {
       "key": "escape",
-      "command": "workbench.action.closeSidebar",
+      //"command": "workbench.action.closeSidebar",
+      "command": "workbench.explorer.fileView.focus",
       "when": "sideBarFocus"
   },
   {
@@ -121,7 +122,8 @@
   },
   {
       "key": "ctrl+alt+numpad7",
-      "command": "workbench.action.closeSidebar",
+      //"command": "workbench.action.closeSidebar",
+      "command": "workbench.explorer.fileView.focus",
       "when": "sideBarFocus && focusedView == 'workbench.scm'"
   },
   //AUXILIARY
@@ -147,7 +149,7 @@
   },
   //PANEL
   {
-      "key": "escape",
+      "key": "shift+escape",
       "command": "workbench.action.closePanel",
       "when": "panelFocus"
   },
@@ -573,6 +575,27 @@
       "when": "searchViewletFocus && replaceActive"
   },
   //##########################################################################
+  //### EDITOR DIFF ###
+  //##########################################################################
+  {
+    "key": "ctrl+f3",
+    "command": "workbench.action.editor.nextChange",
+    "when": "editorTextFocus && !textCompareEditorActive"
+  },
+  {
+    "key": "ctrl+shift+f3",
+    "command": "workbench.action.editor.previousChange",
+    "when": "editorTextFocus && !textCompareEditorActive"
+  },
+  {
+    "key": "alt+f3",
+    "command": "editor.action.dirtydiff.next"
+  },
+  {
+    "key": "alt+shift+f3",
+    "command": "editor.action.dirtydiff.previous"
+  },
+  //##########################################################################
   //### SOURCE CONTROL MANAGER (GIT) ###
   //##########################################################################
   //STAGE FILE
@@ -590,9 +613,24 @@
       },
       "when": "editorTextFocus && workbench.scm.active"
   },
-  //FILE CHANGES
+  //STAGE ALL
   {
       "key": "ctrl+shift+alt+k",
+      "command": "runCommands",
+      "args": {
+          "commands": [
+              "git.stageAll",
+              "git.openChange",
+              "workbench.scm.focus",
+              "list.focusFirst",
+              "list.select"
+          ]
+      },
+      "when": "editorTextFocus && workbench.scm.active"
+  },
+  //CHANGES
+  {
+      "key": "ctrl+shift+alt+F3",
       "command": "git.openChange",
       "when": "editorTextFocus"
   },
@@ -603,8 +641,23 @@
       "args": {
           "commands": [
               "workbench.explorer.fileView.focus",
-              "git.commitStaged",
               "workbench.action.focusActiveEditorGroup",
+              "git.commitStaged",
+              "git.push"
+          ]
+      },
+      "when": "focusedView == 'workbench.scm' && inputFocus"
+  },
+  //COMMIT ALL CHANGES
+  {
+      "key": "ctrl+shift+enter",
+      "command": "runCommands",
+      "args": {
+          "commands": [
+              "workbench.explorer.fileView.focus",
+              "workbench.action.focusActiveEditorGroup",
+              "git.stageAll",
+              "git.commitStaged",
               "git.push"
           ]
       },
@@ -653,6 +706,29 @@
   {
       "key": "alt+z",
       "command": "git.clean"
+  },
+  //##########################################################################
+  //### COMPARE EDITOR ###
+  //##########################################################################
+  {
+    "key": "f3",
+    "command": "editor.action.diffReview.next",
+    "when": "isInDiffEditor"
+  },
+  {
+      "key": "shift+f3",
+      "command": "editor.action.diffReview.prev",
+      "when": "isInDiffEditor"
+  },
+  {
+      "key": "f3",
+      "command": "workbench.action.compareEditor.nextChange",
+      "when": "textCompareEditorVisible"
+  },
+  {
+    "key": "shift+f3",
+    "command": "workbench.action.compareEditor.previousChange",
+    "when": "textCompareEditorVisible"
   },
   //##########################################################################
   //### KEYBINDINGS CLEAR ###
@@ -1568,21 +1644,6 @@
       "when": "scmRepository"
   },
   {
-      "key": "f3",
-      "command": "editor.action.diffReview.next",
-      "when": "isInDiffEditor"
-  },
-  {
-      "key": "shift+f3",
-      "command": "editor.action.diffReview.prev",
-      "when": "isInDiffEditor"
-  },
-  {
-      "key": "f3",
-      "command": "workbench.action.compareEditor.nextChange",
-      "when": "textCompareEditorVisible"
-  },
-  {
       "key": "f7",
       "command": "-editor.action.diffReview.next",
       "when": "isInDiffEditor"
@@ -1598,19 +1659,9 @@
       "when": "textCompareEditorVisible"
   },
   {
-      "key": "alt+f3",
-      "command": "workbench.action.editor.nextChange",
-      "when": "editorTextFocus && !textCompareEditorActive"
-  },
-  {
-      "key": "alt+f5",
-      "command": "-workbench.action.editor.nextChange",
-      "when": "editorTextFocus && !textCompareEditorActive"
-  },
-  {
-      "key": "shift+f3",
-      "command": "workbench.action.compareEditor.previousChange",
-      "when": "textCompareEditorVisible"
+    "key": "alt+f5",
+    "command": "-workbench.action.editor.nextChange",
+    "when": "editorTextFocus && !textCompareEditorActive"
   },
   {
       "key": "shift+alt+f5",
@@ -1618,14 +1669,9 @@
       "when": "textCompareEditorVisible"
   },
   {
-      "key": "ctrl+alt+c",
-      "command": "-mysql.db.active",
-      "when": "editorLangId == 'sql'"
-  },
-  {
-      "key": "shift+alt+f3",
-      "command": "workbench.action.editor.previousChange",
-      "when": "editorTextFocus && !textCompareEditorActive"
+    "key": "ctrl+alt+c",
+    "command": "-mysql.db.active",
+    "when": "editorLangId == 'sql'"
   },
   {
       "key": "shift+alt+f5",
@@ -1686,5 +1732,15 @@
       "key": "ctrl+shift+v",
       "command": "-markdown-preview-enhanced.openPreview",
       "when": "editorLangId == 'markdown'"
+  },
+  {
+      "key": "ctrl+f3",
+      "command": "-editor.action.nextSelectionMatchFindAction",
+      "when": "editorFocus"
+  },
+  {
+      "key": "ctrl+shift+f3",
+      "command": "-editor.action.previousSelectionMatchFindAction",
+      "when": "editorFocus"
   }
 ]
