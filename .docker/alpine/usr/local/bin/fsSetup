@@ -159,17 +159,21 @@ fsMode ()
     runCmd chmod ${mode} "${path}";
     if [ $(hasError;) == '1' ]; then
         echo -n "!";
+        setError "Can't set MODE!";
         return;
     fi;
 
 
     if [[ "${mode}" != "$( stat -c %a ${path} )" ]]; then
         echo -n "!";
+        setError "Can't set MODE!";
+        return;
     fi;
 
 
     echo -n "+";
 }
+
 
 
 fsUser ()
@@ -190,10 +194,11 @@ fsUser ()
 
 
     runCmd chown "${user}" "${path}";
-    #if [ $(hasError;) == '1'  ]; then
-    #    echo -n "!";
-    #    return;
-    #fi;
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "!";
+        setError "Can't set USER!";
+        return;
+    fi;
 
 
     if [[ "${user}" != "$( stat -c %U ${path} )" ]]; then
