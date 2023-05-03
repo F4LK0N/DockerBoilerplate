@@ -506,7 +506,7 @@
   "editor.wordSeparators": "-,.'\"`´;:\\|/!@#%&*()=+[]{}<>^~",
   "editor.wrappingIndent": "indent",
   "editor.cursorSmoothCaretAnimation": "on",
-  "editor.cursorSurroundingLines": 5,
+  "editor.cursorSurroundingLines": 3,
   "editor.cursorSurroundingLinesStyle": "all",
   "editor.cursorWidth": 3,
   "editor.cursorBlinking": "phase",
@@ -594,12 +594,12 @@
   "editor.codeLensFontFamily": "'Consolas ligaturized v3', Consolas, monospace",
   "debug.console.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
   "interactiveSession.editor.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
-  "editor.fontSize": 16,
-  "editor.codeLensFontSize": 16,
-  "editor.inlayHints.fontSize": 16,
-  "debug.console.fontSize": 16,
-  "terminal.integrated.fontSize": 16,
-  "interactiveSession.editor.fontSize": 16,
+  "editor.fontSize": 14,
+  "editor.codeLensFontSize": 14,
+  "editor.inlayHints.fontSize": 14,
+  "debug.console.fontSize": 14,
+  "terminal.integrated.fontSize": 14,
+  "interactiveSession.editor.fontSize": 14,
   "editor.fontLigatures": true,
-  "window.zoomLevel": 0
+  "diffEditor.ignoreTrimWhitespace": false
 }
