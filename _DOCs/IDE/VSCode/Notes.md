@@ -6,7 +6,7 @@ Consolas Ligaturized v3 - Ultimate Programmers :rage: :heart:
   "editor.codeLensFontFamily": "'Consolas ligaturized v3', Consolas, monospace",
   "debug.console.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
   "interactiveSession.editor.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
-  "editor.fontLigatures": true`
+  "editor.fontLigatures": true
 ```
 <https://github.com/somq/consolas-ligaturized>
 
