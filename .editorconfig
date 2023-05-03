@@ -47,5 +47,3 @@ trim_trailing_whitespace = true
 
 [*.phtml]
 insert_final_newline = false
-
-
