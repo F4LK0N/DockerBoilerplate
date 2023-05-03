@@ -1,0 +1,37 @@
+#!/bin/sh
+set -e;
+
+headerLevel="h1";
+columns=120;
+padChar='#';
+if [ "${1}" == 'h6' ] || [ "${1}" == 'h5' ]; then
+    headerLevel="${1}";
+    columns=40;
+elif [ "${1}" == 'h4' ] || [ "${1}" == 'h3' ]; then
+    headerLevel="${1}";
+    columns=80;
+elif [ "${1}" == 'h2' ] || [ "${1}" == 'h1' ]; then
+    headerLevel="${1}";
+    columns=120;
+fi;
+
+if [ "${1}" == 'h2' ] || [ "${1}" == 'h4' ] || [ "${1}" == 'h6' ]; then
+    padChar='=';
+fi;
+
+echo_${headerLevel} "FILESYSTEM ${padChar}${padChar}${padChar} Create Mode User Group Truncate";
+
+#echo -n "___Create_Mode_User_Group_Truncate"; str_pad_left "_" $(($columns-36)) "_"; echo "";
+
+#echo -n "[#][CMUGT]${padChar}/PATH/";
+#str_pad_left "[RESULT]" $(($columns-59)) "${padChar}"; 
+#str_pad_left "${padChar}" $(($columns-78)) "${padChar}"; 
+#echo "";
+
+echo -n "[#][CMUGT]-/PATH/";
+str_pad_left "[RESULT]" $(($columns-59)) "-"; 
+str_pad_left "-" $(($columns-78)) "-"; 
+echo "";
+
+echo_${headerLevel};
+#str_pad_right "_" ${columns} "_"; echo "";

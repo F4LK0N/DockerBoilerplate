@@ -1,0 +1,25 @@
+#!/bin/sh
+set -e
+
+if [[ "$1" == '' ]]; then echo "'STRING' is required!" >&2; exit 1; fi;
+if [[ "$2" == '' ]]; then echo "'SIZE' is required!" >&2; exit 1; fi;
+if [[ "$3" == '' ]]; then echo "'CHAR' is required!" >&2; exit 1; fi;
+if ! [[ "$2" =~ '^[0-9]+$' ]]; then echo "'SIZE' must be an integer!" >&2; exit 1; fi;
+
+textString="${1}";
+totalSize="$(($2 + 0))";
+padChar="${3}";
+#echo "'$textString'";
+#echo "'$totalSize'";
+#echo "'$padChar'";
+
+leftSize=${#textString};
+leftSize="$(($totalSize - $leftSize))";
+#echo "'$leftSize'";
+
+echo -n "${textString}";
+while [ $leftSize -gt 0 ]
+do
+    echo -n "${padChar}";
+    leftSize="$(($leftSize - 1))";
+done

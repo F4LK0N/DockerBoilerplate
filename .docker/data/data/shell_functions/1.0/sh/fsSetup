@@ -1,0 +1,366 @@
+#!/bin/sh
+
+## CLEAR CURRENT STATE
+#rm -rf /tmp/fsSetup/error;
+rm -rf /tmp/fsSetup/message;
+
+setError ()
+{
+    mkdir -p --mode=777 /tmp/fsSetup/error;
+    
+    message="${@}";
+    if [[ "${message}" == '' ]]; then
+        message="ERROR";
+    fi;
+
+    if [[ -f "/tmp/fsSetup/message" ]]; then
+        oldMessage="$( cat /tmp/fsSetup/message )";
+        if [[ "${oldMessage}" != '' ]]; then
+            message="${message} <== ${oldMessage}";
+        fi;
+    fi;
+
+    echo -n "${message} " > /tmp/fsSetup/message;
+    chmod 777 /tmp/fsSetup/message;
+}
+
+hasError ()
+{
+    if [[ -f "/tmp/fsSetup/message" ]]; then
+        echo 1;
+    else
+        echo 0;
+    fi
+}
+
+echoError ()
+{
+    echo -n "[ERROR] ";
+    echo -n $( cat /tmp/fsSetup/message );
+}
+
+runCmd ()
+{
+    result=`$@ 2>&1;`;
+
+    if [[ "${result}" != '' ]]; then
+        setError "${result}";
+    fi;
+}
+
+
+
+fsCreate ()
+{
+    pathType=$1;
+    path=$2;
+
+
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "-";
+        return;
+    fi;
+
+
+    if [[ "D" == "${pathType}" ]]; then
+        fsCreateDir ${path};
+    else
+        fsCreateFile ${path};
+    fi;
+}
+fsCreateDir ()
+{
+    path=$1;
+
+
+    if [[ -d "${path}" ]]; then
+        echo -n "=";
+        return;
+    fi;
+
+
+    if [[ -f "${path}" ]]; then
+        setError "Can't create DIRECTORY,  path already a FILE!";
+        echo -n "!";
+        return;
+    fi;
+
+    runCmd mkdir -p --mode=777 "${path}";
+    if [ $(hasError;) == '1' ]; then
+        echo -n "!";
+        return;
+    fi;
+
+
+    if [[ ! -d "${path}" ]]; then
+        setError "Can't create DIRECTORY!";
+        echo -n "!";
+        return;
+    fi;
+
+
+    echo -n "+";
+}
+fsCreateFile ()
+{
+    path=$1;
+
+
+    if [[ -f "${path}" ]]; then
+        echo -n "=";
+        return;
+    fi;
+
+
+    if [[ -d "${path}" ]]; then
+        setError "Can't create FILE,  path already a DIRECTORY!";
+        echo -n "!";
+        return;
+    fi;
+    
+
+    runCmd touch "${path}";
+    if [ $(hasError;) == '1' ]; then
+        echo -n "!";
+        return;
+    fi;
+    
+
+    if [[ ! -f "${path}" ]]; then
+        setError "Can't create FILE!";
+        echo -n "!";
+        return;
+    fi;
+
+
+    echo -n "+";
+}
+
+
+
+fsMode ()
+{
+    mode=$1;
+    path=$2;
+
+
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "-";
+        return;
+    fi;
+
+    
+    if [[ "${mode}" == "$( stat -c %a ${path} )" ]]; then
+        echo -n "=";
+        return;
+    fi;
+
+    
+    runCmd chmod ${mode} "${path}";
+    if [ $(hasError;) == '1' ]; then
+        echo -n "!";
+        setError "Can't set MODE!";
+        return;
+    fi;
+
+
+    if [[ "${mode}" != "$( stat -c %a ${path} )" ]]; then
+        echo -n "!";
+        setError "Can't set MODE!";
+        return;
+    fi;
+
+
+    echo -n "+";
+}
+
+
+
+fsUser ()
+{
+    user=$1;
+    path=$2;
+
+
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "-";
+        return;
+    fi;
+
+    if [[ "${user}" == "$( stat -c %U ${path} )" ]]; then
+        echo -n "=";
+        return;
+    fi;
+
+
+    runCmd chown "${user}" "${path}";
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "!";
+        setError "Can't set USER!";
+        return;
+    fi;
+
+
+    if [[ "${user}" != "$( stat -c %U ${path} )" ]]; then
+        echo -n "!";
+        setError "Can't set USER!";
+        return;
+    fi;
+    
+    
+    echo -n "+";
+}
+
+
+
+fsGroup ()
+{
+    group=$1;
+    path=$2;
+
+
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "-";
+        return;
+    fi;
+
+
+    if [[ "${group}" == "$( stat -c %G ${path} )" ]]; then
+        echo -n "=";
+        return;
+    fi;
+
+
+    runCmd chown ":${group}" "${path}";
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "!";
+        setError "Can't set GROUP!";
+        return;
+    fi;
+
+
+    if [[ "${group}" != "$( stat -c %G ${path} )" ]]; then
+        echo -n "!";
+        setError "Can't set GROUP!";
+        return;
+    fi;
+    
+    
+    echo -n "+";
+}
+
+
+
+fsTruncate ()
+{
+    pathType=$1;
+    truncate=$2;
+    path=$3;
+
+
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "-";
+        return;
+    fi;
+
+
+    if [ "${truncate}" == 'N'  ]; then
+        echo -n "=";
+        return;
+    fi;
+
+
+    if [[ "D" == "${pathType}" ]]; then
+        fsTruncateDir ${path};
+    else
+        fsTruncateFile ${path};
+    fi;
+}
+fsTruncateDir ()
+{
+    path=$1;
+
+    if ! [[ -d "${path}" ]]; then
+        setError "Can't truncate, path not a DIRECTORY!";
+        echo -n "!";
+        return;
+    fi;
+
+    runCmd rm -rf "${path}/*";
+    if [ $(hasError;) == '1'  ]; then
+        setError "Can't TRUNCATE directory!"
+        echo -n "!";
+        return;
+    fi;
+
+    echo -n "+";
+}
+fsTruncateFile ()
+{
+    path=$1;
+
+    if ! [[ -f "${path}" ]]; then
+        setError "Can't truncate, path not a FILE!";
+        echo -n "!";
+        return;
+    fi;
+
+    runCmd truncate -s 0 "${path}";
+    if [ $(hasError;) == '1'  ]; then
+        setError "Can't TRUNCATE file!"
+        echo -n "!";
+        return;
+    fi;
+
+    echo -n "+";
+}
+
+
+
+### ARGUMENTS ###
+mode=$1;
+user=$2
+group=$3;
+path=$4;
+truncate='N';
+if [[ "$1" == '' ]]; then setError "'MODE' required!"; fi;
+if [[ "$2" == '' ]]; then setError "'USER' required!"; fi;
+if [[ "$3" == '' ]]; then setError "'GROUP' required!"; fi;
+if [[ "$4" == '' ]]; then setError "'PATH' required!"; fi;
+if [[ "$5" != '' ]]; then truncate='Y'; fi;
+
+
+
+### PATH TYPE (DIR|FILE) ###
+pathType='F';
+if [[ "/" == "${path: -1}" ]]; then
+    pathType='D';
+fi;
+echo -n "[${pathType}]";
+
+
+echo -n "[";
+    fsCreate "${pathType}" "${path}";
+    fsMode "${mode}" "${path}";
+    fsUser "${user}" "${path}";
+    fsGroup "${group}" "${path}";
+    fsTruncate "${pathType}" "${truncate}" "${path}";
+echo -n "]";
+
+
+
+#### PATH ###
+if [[ "${path}" == '' ]]; then
+    path='!!!';
+fi;
+
+### RESULT ###
+if [ $(hasError;) == '1' ]; then
+    str_pad_right " ${path} " 60 "_";
+    echoError;
+else
+    str_pad_right " ${path} " 60 " ";
+    echo -n "[OK]";
+fi;
+
+echo '';

@@ -1,0 +1,4 @@
+##!/bin/sh
+
+rm -rf /tmp/fsSetup/error;
+rm -rf /tmp/fsSetup/message;

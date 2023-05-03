@@ -1,0 +1,29 @@
+#!/bin/sh
+set -e
+
+forceRun=$1;
+
+echo_h1 CONTAINER - SETUP;
+if [[ -f "/run/container/setup-done" ]] && [[ "${forceRun}" == '' ]]; then
+    echo "[===]";
+else
+    fsSetup_echoHeader h2;
+    fsSetup_clearErrors;
+    # Container
+    fsSetup 777 root root /run/container/ TRUNCATE;
+    fsSetup 777 root root ${ROOT_DATA}/;
+    fsSetup 777 root root ${ROOT_LOGS}/;
+    # OS
+    fsSetup 777 root root ${OS_DATA}/;
+    fsSetup 777 root root ${OS_LOGS}/;
+    # App
+    fsSetup 777 root root ${APP_ROOT}/;
+    # Container
+    fsSetup 777 root root /run/container/setup-done;
+
+    echo_h2;
+    if [ $(fsSetup_hasErrors) == '1' ]; then
+        echo "[ERROR]";
+        exit 1;
+    fi
+fi
