@@ -1,0 +1,104 @@
+#!/bin/sh
+set -e
+
+if [[ "$1" == '' ]]; then
+    echo "'MODE' required!";
+    return 1;
+fi
+if [[ "$2" == '' ]]; then
+    echo "'USER' required!";
+    return 1;
+fi
+if [[ "$3" == '' ]]; then
+    echo "'GROUP' required!";
+    return 1;
+fi
+if [[ "$4" == '' ]]; then
+    echo "'PATH' required!";
+    return 1;
+fi
+
+local mode=$1;
+local user=$2;
+local group=$3;
+local path=$4;
+local truncate=$5;
+
+
+
+### PATH TYPE (DIR|FILE) ###
+local pathType='F';
+if [[ "/" == "${path: -1}" ]]; then
+    pathType='D';
+fi
+echo -n "[${pathType}] ";
+
+
+
+### CREATE ###
+if [[ "D" == "${pathType}" ]]; then
+    # DIR
+    if [[ -d "${path}" ]]; then
+        echo -n "=";
+    else
+        mkdir -p --mode=777 $path
+        if [[ ! -d "${path}" ]]; then
+            echo  "!";
+            return;
+        fi
+        echo -n "+";
+    fi
+else
+    # FILE
+    if [[ -f "${path}" ]]; then
+        echo -n "=";
+    else
+        touch "${path}"
+        if [[ ! -f "${path}" ]]; then
+            echo  "!";
+            return;
+        fi
+        echo -n "+";
+    fi
+fi
+
+
+### USER ###
+if [[ "${user}" == "$( stat -c %U ${path} )" ]]; then
+    echo -n "=";
+else
+    chown ${user} $path
+    if [[ "${user}" != "$( stat -c %U ${path} )" ]]; then
+        echo  "!";
+        return;
+    fi
+    echo -n "+";
+fi
+
+
+
+### GROUP ###
+if [[ "${group}" == "$( stat -c %G ${path} )" ]]; then
+    echo -n "=";
+else
+    chown :${group} $path
+    if [[ "${group}" != "$( stat -c %G ${path} )" ]]; then
+        echo  "!";
+        return;
+    fi
+    echo -n "+";
+fi
+
+
+
+### TRUNCATE ###
+if [[ "${truncate}" == "" ]]; then
+    echo -n "=";
+else
+    truncate -s 0 ${path};
+    echo -n "+";
+fi
+
+
+
+echo " ${path}";
