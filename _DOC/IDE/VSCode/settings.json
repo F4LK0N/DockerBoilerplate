@@ -585,7 +585,8 @@
       "MD024": false,
       "MD025": false,
       "MD031": false,
-      "MD032": false
+      "MD032": false,
+      "MD041": false
   },
   "scm.inputFontFamily": "editor",
   "workbench.editor.enablePreview": false,
