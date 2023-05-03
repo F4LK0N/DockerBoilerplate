@@ -27,8 +27,8 @@ hasError ()
 
 echoError ()
 {
-    #cat /tmp/fsSetup/message;
-    echo $( cat /tmp/fsSetup/message );
+    echo -n "[ERROR] ";
+    echo -n $( cat /tmp/fsSetup/message );
 }
 
 runCmd ()
@@ -44,35 +44,60 @@ runCmd ()
 
 fsCreate ()
 {
+    pathType=$1;
+    path=$2;
+
+
     if [ $(hasError;) == '1'  ]; then
         echo -n "-";
         return;
     fi;
 
 
-    if [[ "D" == "${1}" ]]; then
-        fsCreateDir ${2};
+    if [[ "D" == "${pathType}" ]]; then
+        fsCreateDir ${path};
     else
-        fsCreateFile ${2};
+        fsCreateFile ${path};
     fi;
 }
 fsCreateDir ()
 {
-    if [[ -d "${1}" ]]; then
+    path=$1;
+
+
+    if [[ -d "${path}" ]]; then
         echo -n "=";
         return;
     fi;
 
 
-    runCmd mkdir -p --mode=777 "${path}";
-    if [[ ! -d "${path}" ]]; then
+    if [[ -f "${path}" ]]; then
+        setError "Can't create DIRECTORY,  path already a FILE!";
         echo -n "!";
-    else
-        echo -n "+";
+        return;
     fi;
+
+    runCmd mkdir -p --mode=777 "${path}";
+    if [ $(hasError;) == '1' ]; then
+        echo -n "!";
+        return;
+    fi;
+
+
+    if [[ ! -f "${path}" ]]; then
+        setError "Can't create DIRECTORY!";
+        echo -n "!";
+        return;
+    fi;
+
+
+    echo -n "+";
 }
 fsCreateFile ()
 {
+    path=$1;
+
+
     if [[ -f "${path}" ]]; then
         echo -n "=";
         return;
@@ -80,7 +105,7 @@ fsCreateFile ()
 
 
     if [[ -d "${path}" ]]; then
-        setError "This path is a directory!";
+        setError "Can't create FILE,  path already a DIRECTORY!";
         echo -n "!";
         return;
     fi;
@@ -94,7 +119,7 @@ fsCreateFile ()
     
 
     if [[ ! -f "${path}" ]]; then
-        setError "Can't create file!";
+        setError "Can't create FILE!";
         echo -n "!";
         return;
     fi;
@@ -220,6 +245,5 @@ echo -n "]";
 
 if [ $(hasError;) == '1' ]; then
     echoError;
-    return;
 fi;
 echo '';
