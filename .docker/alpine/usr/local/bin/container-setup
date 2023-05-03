@@ -22,6 +22,12 @@ else
     fsSetup 777 root   root    /tmp/tst/testFile;
     fsSetup 777 root   root    /tmp/tst/testFile/;
     fsSetup 777 root   root    /tmp/tst/testFile/asd/asd/asd;
+    
+    fsSetup 770 root   root    /tmp/tst/dir5/;
+    fsSetup 660 root   root    /tmp/tst/dir5/;
+    fsSetup 777 root   root    /tmp/tst/dir5/;
+    fsSetup 777 root   root    /tmp/tst/dir5/;
+    fsSetup 779 root   root    /tmp/tst/dir5/;
 
     fsSetup 777 daemon root    /tmp/tst/testDir/;
     fsSetup 777 daemon daemon  /tmp/tst/testDir/;
@@ -33,20 +39,17 @@ else
     #if [[ "$( fsSetup_has-error )" == "1" ]]; then
     #    echo "ERROR"; fsSetup_clear-error; exit 1;
     #fi;
+    #rm -rf /run/container/;
 
-exit 1;
-
-    rm -rf /run/container/;
-
-    fsSetup 777 root root ${ROOT_DATA}/;
-    fsSetup 777 root root ${ROOT_LOGS}/;
-    fsSetup 777 root root /run/container/;
-    fsSetup 777 root root /run/container;
-    # OS
-    fsSetup 777 root root ${OS_DATA}/;
-    fsSetup 777 root root ${OS_LOGS}/;
-    # App
-    fsSetup 777 root root ${APP_ROOT}/;
+    #fsSetup 777 root root ${ROOT_DATA}/;
+    #fsSetup 777 root root ${ROOT_LOGS}/;
+    #fsSetup 777 root root /run/container/;
+    #fsSetup 777 root root /run/container;
+    ## OS
+    #fsSetup 777 root root ${OS_DATA}/;
+    #fsSetup 777 root root ${OS_LOGS}/;
+    ## App
+    #fsSetup 777 root root ${APP_ROOT}/;
 
     #if [[ "${CONTAINER_SETUP_ERROR}" == "1" ]]; then
     #    echo "[ERROR]"; exit 1;
