@@ -7,15 +7,6 @@ if [[ -f "/run/container/setup-done" ]]; then
 else
     fsSetup_echoHeader h2;
     
-    fsSetup;
-    fsSetup 777;
-    fsSetup 777 daemon;
-    fsSetup 777 daemon daemon;
-
-
-#ls -RlAsp /tmp
-#exit 1;
-
     fsSetup 777 daemon daemon  /tmp/tst/testDir/;
     fsSetup 777 daemon daemon  /tmp/tst/testDir;
 
@@ -40,7 +31,10 @@ else
     fsSetup 777 root root /tmp/tst/dir1/;
     fsSetup 777 root root /tmp/tst/dir1/a;
     fsSetup 777 root root /tmp/tst/dir1/a TRUNCATE;
+    fsSetup 777 root root /tmp/tst/dir1/a TRUNCATE;
     fsSetup 777 root root /tmp/tst/dir1/b TRUNCATE;
+    fsSetup 777 root root /tmp/tst/dir1/b TRUNCATE;
+    fsSetup 777 root root /tmp/ TRUNCATE;
 
     #if [[ "$( fsSetup_has-error )" == "1" ]]; then
     #    echo "ERROR"; fsSetup_clear-error; exit 1;
