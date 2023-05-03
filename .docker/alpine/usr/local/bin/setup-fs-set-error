@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [[ "${1}" == "[CLEAR]" ]]; then
+    rm -rf /run/container/setup-fs-error;
+else
+    echo "${1}";
+    mkdir -p 777 /run/container/setup-fs-error;
+fi;
