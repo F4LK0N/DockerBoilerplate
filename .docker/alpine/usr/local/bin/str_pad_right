@@ -1,4 +1,5 @@
 #!/bin/sh
+set -e
 
 if [[ "$1" == '' ]]; then echo "'STRING' is required!" >&2; exit 1; fi;
 if [[ "$2" == '' ]]; then echo "'SIZE' is required!" >&2; exit 1; fi;
@@ -17,7 +18,7 @@ leftSize="$(($totalSize - $leftSize))";
 #echo "'$leftSize'";
 
 echo -n "${textString}";
-while [[ $leftSize > 0 ]]
+while [ $leftSize -gt 0 ]
 do
     echo -n "${padChar}";
     leftSize="$(($leftSize - 1))";
