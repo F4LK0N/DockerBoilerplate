@@ -26,12 +26,14 @@ insert_final_newline = false
 indent_size = 2
 insert_final_newline = false
 
+### HTML ###
 [*.htm*]
 insert_final_newline = false
 
 [*.css]
 insert_final_newline = false
 
+### JS ###
 [*.js]
 insert_final_newline = false
 
@@ -39,6 +41,7 @@ insert_final_newline = false
 indent_size = 2
 insert_final_newline = false
 
+### PHP ###
 [*.php]
 trim_trailing_whitespace = true
 
