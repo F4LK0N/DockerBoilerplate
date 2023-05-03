@@ -1,24 +1,24 @@
 #!/bin/sh
 
-if [[ "$1" == '' ]]; then setup-fs-set-error "'STRING' required!"; return; fi;
-if [[ "$2" == '' ]]; then setup-fs-set-error "'SIZE' required!"; return; fi;
-if [[ "$3" == '' ]]; then setup-fs-set-error "'CHAR' required!"; return; fi;
-string=${1};
-size=${2}
-char=${3};
+if [[ "$1" == '' ]]; then echo "'STRING' is required!" >&2; exit 1; fi;
+if [[ "$2" == '' ]]; then echo "'SIZE' is required!" >&2; exit 1; fi;
+if [[ "$3" == '' ]]; then echo "'CHAR' is required!" >&2; exit 1; fi;
+if ! [[ "$2" =~ '^[0-9]+$' ]]; then echo "'SIZE' must be an integer!" >&2; exit 1; fi;
 
-while [[ ${#string} -ge 5 ]]
+textString="${1}";
+totalSize="$(($2 + 0))";
+padChar="${3}";
+#echo "'$textString'";
+#echo "'$totalSize'";
+#echo "'$padChar'";
+
+leftSize=${#textString};
+leftSize="$(($totalSize - $leftSize))";
+#echo "'$leftSize'";
+
+echo -n "${textString}";
+while [[ $leftSize > 0 ]]
 do
-    echo -n "$segment";
-    echo -n "$divider";
-    ((size--));
+    echo -n "${padChar}";
+    leftSize="$(($leftSize - 1))";
 done
-
-#printf "%s%s" "$string" "${padding:${#string}}";
-
-#((size=size-#string));
-#while [[ $size > 1 ]]
-#do
-#    echo -n "$char";
-#    ((size=size-1));
-#done

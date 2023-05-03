@@ -4,6 +4,14 @@ echo "##########################################################################
 echo "### CONTAINER SETUP ###";
 echo "##########################################################################";
 
+tempDev=$( str_pad_right "test String " 40 "_" );
+echo $tempDev;
+echo "";
+echo "";
+exit 1;
+return;
+
+
 if [[ -f "/run/container/setup-done" ]]; then
     echo "[===]";
 else
