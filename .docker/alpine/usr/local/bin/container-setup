@@ -1,8 +1,10 @@
 #!/bin/sh
 set -e
 
+forceRun=$1;
+
 echo_h1 CONTAINER - SETUP;
-if [[ -f "/run/container/setup-done" ]]; then
+if [[ -f "/run/container/setup-done" ]] && [[ "${forceRun}" == '' ]]; then
     echo "[===]";
 else
     fsSetup_echoHeader h2;
