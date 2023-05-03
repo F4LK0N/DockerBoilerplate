@@ -9,7 +9,6 @@ if [[ -f "/run/container/setup-done" ]] && [[ "${forceRun}" == '' ]]; then
 else
     fsSetup_echoHeader h2;
     fsSetup_clearErrors;
-    
     # Container
     fsSetup 777 root root /run/container/ TRUNCATE;
     fsSetup 777 root root ${ROOT_DATA}/;
@@ -22,10 +21,9 @@ else
     # Container
     fsSetup 777 root root /run/container/setup-done;
 
-    if [ $(fsSetup_hasErrors) == '1'  ]; then
+    echo_h2;
+    if [ $(fsSetup_hasErrors) == '1' ]; then
         echo "[ERROR]";
         exit 1;
-    else
-        echo "[DONE]";
     fi
 fi
