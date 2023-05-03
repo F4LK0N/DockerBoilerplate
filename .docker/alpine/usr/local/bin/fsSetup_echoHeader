@@ -20,6 +20,6 @@ if [ "${1}" == 'h2' ] || [ "${1}" == 'h4' ] || [ "${1}" == 'h6' ]; then
 fi;
 
 echo_${headerLevel} "FILESYSTEM";
-echo -n "Type(DIR|FILE)"; str_pad_left "Create Mode User Group Truncate" $(($columns-14)) "_"; echo "";
-echo -n "[T]/PATH/"; str_pad_left "[CMUGT][RESULT]" $(($columns-9)) "${padChar}"; echo "";
+echo -n "Type Create Mode User Group Truncate"; str_pad_left "_" $(($columns-36)) "_"; echo "";
+echo -n "[#][CMUGT]/PATH/ "; str_pad_left "[RESULT]" $(($columns-17)) "${padChar}"; echo "";
 #str_pad_right "_" ${columns} "_"; echo "";
