@@ -6,15 +6,8 @@ if [[ -f "/run/container/setup-done" ]]; then
     echo "[===]";
 else
     fsSetup_echoHeader h2;
+    fsSetup_clearErrors;
     
-    fsSetup_clearErros;
-    
-    
-    fsSetup 777 root root /tmp/tst/dir1/a;
-
-    #if [[ "$( fsSetup_has-error )" == "1" ]]; then
-    #    echo "ERROR"; fsSetup_clear-error; exit 1;
-    #fi;
     # Container
     fsSetup 777 root root /run/container/ TRUNCATE;
     fsSetup 777 root root ${ROOT_DATA}/;
@@ -26,6 +19,7 @@ else
     fsSetup 777 root root ${APP_ROOT}/;
     # Container
     fsSetup 777 root root /run/container/setup-done;
+    fsSetup 777 root root /run/container/setup-done2;
 
     if [ $(fsSetup_hasErrors) == '1'  ]; then
         echo "[ERROR]";

@@ -92,7 +92,7 @@ fsCreateDir ()
     fi;
 
 
-    if [[ ! -f "${path}" ]]; then
+    if [[ ! -d "${path}" ]]; then
         setError "Can't create DIRECTORY!";
         echo -n "!";
         return;

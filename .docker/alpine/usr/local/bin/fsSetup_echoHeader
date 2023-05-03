@@ -19,7 +19,8 @@ if [ "${1}" == 'h2' ] || [ "${1}" == 'h4' ] || [ "${1}" == 'h6' ]; then
     padChar='=';
 fi;
 
-echo_${headerLevel} "FILESYSTEM";
-echo -n "Type Create Mode User Group Truncate"; str_pad_left "_" $(($columns-36)) "_"; echo "";
-echo -n "[#][CMUGT]/PATH/ "; str_pad_left "[RESULT]" $(($columns-17)) "${padChar}"; echo "";
+echo_${headerLevel} "FILESYSTEM ${padChar}${padChar}${padChar} Create Mode User Group Truncate";
+#echo -n "___Create_Mode_User_Group_Truncate"; str_pad_left "_" $(($columns-36)) "_"; echo "";
+echo -n "[#][CMUGT]${padChar}/PATH/"; str_pad_left "[RESULT]" $(($columns-32)) "${padChar}"; echo "";
+echo_${headerLevel};
 #str_pad_right "_" ${columns} "_"; echo "";
