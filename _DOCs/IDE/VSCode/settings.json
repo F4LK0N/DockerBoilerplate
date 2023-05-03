@@ -99,6 +99,7 @@
       "ipam",
       "ISAM",
       "KINGHOST",
+      "ligaturized",
       "localtime",
       "mbstring",
       "memlock",
@@ -535,7 +536,7 @@
   "workbench.editor.wrapTabs": true,
   "window.restoreWindows": "preserve",
   "scm.diffDecorationsGutterWidth": 5,
-  "scm.inputFontSize": 14,
+  "scm.inputFontSize": 16,
   "scm.providerCountBadge": "visible",
   "scm.repositories.sortOrder": "path",
   "extensions.ignoreRecommendations": true,
@@ -586,5 +587,18 @@
       "MD031": false,
       "MD032": false
   },
-  "workbench.editor.enablePreview": false
+  "scm.inputFontFamily": "editor",
+  "workbench.editor.enablePreview": false,
+  "editor.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
+  "editor.codeLensFontFamily": "'Consolas ligaturized v3', Consolas, monospace",
+  "debug.console.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
+  "interactiveSession.editor.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
+  "editor.fontSize": 16,
+  "editor.codeLensFontSize": 16,
+  "editor.inlayHints.fontSize": 16,
+  "debug.console.fontSize": 16,
+  "terminal.integrated.fontSize": 16,
+  "interactiveSession.editor.fontSize": 16,
+  "editor.fontLigatures": true,
+  "window.zoomLevel": 0
 }

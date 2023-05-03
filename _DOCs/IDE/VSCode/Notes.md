@@ -1,6 +1,32 @@
+# MONOSPACE FONT
+
+`'Consolas ligaturized v3', monospace`  
+```json
+  "editor.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
+  "editor.codeLensFontFamily": "'Consolas ligaturized v3', Consolas, monospace",
+  "debug.console.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
+  "interactiveSession.editor.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
+  "editor.fontLigatures": true`
+```
+<https://github.com/somq/consolas-ligaturized>
+
+Consolas - Best Vanilla Font :heart::heart::heart:  
+`'Lucida Console', monospace`  
+
+Lucida Console - 2º Best Vanilla Font :heart:  
+`'Lucida Console', monospace`  
+
+JetBrains Mono - with Ligatures  
+`'JetBrains Mono', monospace`  
+<https://github.com/JetBrains/JetBrainsMono>  
+
+
+
+
+
 # PHP OPTIMIZATION
-<https://blog.theodo.com/2019/07/vscode-php-development/>
-<https://codevoweb.com/top-10-best-vs-code-extensions-for-php-developers/>
+<https://blog.theodo.com/2019/07/vscode-php-development/>  
+<https://codevoweb.com/top-10-best-vs-code-extensions-for-php-developers/>  
 
 
 
