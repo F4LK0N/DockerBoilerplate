@@ -1,0 +1,24 @@
+#!/bin/sh
+set -e;
+
+headerLevel="h1";
+columns=120;
+padChar='#';
+if [ "${1}" == 'h6' ] || [ "${1}" == 'h5' ]; then
+    headerLevel="${1}";
+    columns=40;
+    padChar='#';
+elif [ "${1}" == 'h4' ] || [ "${1}" == 'h3' ]; then
+    headerLevel="${1}";
+    columns=80;
+    padChar='=';
+elif [ "${1}" == 'h2' ] || [ "${1}" == 'h1' ]; then
+    headerLevel="${1}";
+    columns=120;
+    padChar='#';
+fi;
+
+echo_${headerLevel} "FILESYSTEM";
+echo -n "Type(DIR|FILE)"; str_pad_left "Create Mode User Group Truncate" $(($columns-14)) "_"; echo "";
+echo -n "[T]/PATH/"; str_pad_left "[CMUGT][RESULT]" $(($columns-9)) "${padChar}"; echo "";
+#str_pad_right "_" ${columns} "_"; echo "";
