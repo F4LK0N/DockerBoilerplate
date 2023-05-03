@@ -26,6 +26,18 @@ insert_final_newline = false
 indent_size = 2
 insert_final_newline = false
 
+### APACHE ###
+[**/etc/{apache2,httpd}/**.conf]
+indent_size = 2
+
+### PHP ###
+[**/etc/php*/**.ini]
+indent_size = 2
+
+### MYSQL ###
+[**/etc/*sql*/**.cnf]
+indent_size = 2
+
 ### HTML ###
 [*.htm*]
 insert_final_newline = false
