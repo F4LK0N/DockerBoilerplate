@@ -14,23 +14,25 @@ else
 
 
 #ls -RlAsp /tmp
-exit 1;
+#exit 1;
 
     fsSetup 777 daemon daemon  /tmp/tst/testDir/;
     fsSetup 777 daemon daemon  /tmp/tst/testDir;
 
     fsSetup 777 root   root    /tmp/tst/testFile;
     fsSetup 777 root   root    /tmp/tst/testFile/;
+    fsSetup 777 root   root    /tmp/tst/testFile/asd/asd/asd;
 
     fsSetup 777 daemon root    /tmp/tst/testDir/;
     fsSetup 777 daemon daemon  /tmp/tst/testDir/;
 
     fsSetup 777 root2  daemon  /tmp/tst/testDir/;
     fsSetup 777 daemon daemon2 /tmp/tst/testDir/;
+    fsSetup 777 daemon daemon2 /tmp/tst/testDir;
 
-    if [[ "$( fsSetup_has-error )" == "1" ]]; then
-        echo "ERROR"; fsSetup_clear-error; exit 1;
-    fi;
+    #if [[ "$( fsSetup_has-error )" == "1" ]]; then
+    #    echo "ERROR"; fsSetup_clear-error; exit 1;
+    #fi;
 
 exit 1;
 
