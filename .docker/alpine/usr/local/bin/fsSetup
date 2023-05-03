@@ -213,6 +213,43 @@ fsUser ()
 
 
 
+fsGroup ()
+{
+    group=$1;
+    path=$2;
+
+
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "-";
+        return;
+    fi;
+
+
+    if [[ "${group}" == "$( stat -c %G ${path} )" ]]; then
+        echo -n "=";
+        return;
+    fi;
+
+
+    runCmd chown ":${group}" "${path}";
+    if [ $(hasError;) == '1'  ]; then
+        echo -n "!";
+        setError "Can't set GROUP!";
+        return;
+    fi;
+
+
+    if [[ "${group}" != "$( stat -c %G ${path} )" ]]; then
+        echo -n "!";
+        setError "Can't set GROUP!";
+        return;
+    fi;
+    
+    
+    echo -n "+";
+}
+
+
 
 ### ARGUMENTS ###
 mode=$1;
@@ -240,18 +277,8 @@ echo -n "[";
     fsCreate "${pathType}" "${path}";
     fsMode "${mode}" "${path}";
     fsUser "${user}" "${path}";
+    fsGroup "${group}" "${path}";
     
-    #
-    #### USER ###
-    #if [[ "${setupFsError}" == "" ]]; then
-    #    echo -n "-";
-    #elif [[ "${user}" == "$( stat -c %U ${path} )" ]]; then
-    #    echo -n "=";
-    #else
-    #    setupFsError=$( chown "${user}" "${path}" 2>&1 );
-    #    if [[ "${user}" != "$( stat -c %U ${path} )" ]]; then echo -n "!"; else echo -n "+"; fi;
-    #fi;
-    #
     #
     #
     #### GROUP ###
