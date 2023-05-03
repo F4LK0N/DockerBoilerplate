@@ -126,6 +126,12 @@ RUN set -eux; \
     ln -s "${ROOT_DATA}/shell/1.0/" "${ROOT_DATA}/shell/latest"; \
     ln -s "${ROOT_DATA}/shell/1.0/" "${ROOT_DATA}/shell/stable";
 
+# Shell Functions
+COPY --chmod=777 "./data/shell_functions/" "${ROOT_DATA}/shell_functions/"
+RUN set -eux; \
+    ln -s "${ROOT_DATA}/shell_functions/1.0/" "${ROOT_DATA}/shell_functions/latest"; \
+    ln -s "${ROOT_DATA}/shell_functions/1.0/" "${ROOT_DATA}/shell_functions/stable";
+
 # Adm
 COPY --chmod=777 "./data/adm/" "${ROOT_DATA}/adm/"
 RUN set -eux; \
