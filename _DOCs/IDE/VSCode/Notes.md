@@ -1,5 +1,5 @@
 # MONOSPACE FONT
-Consolas Ligaturized v3 - Ultimate Programmers :rage: :heart:
+Consolas Ligaturized v3 - Ultimate Programmers :heart::heart::heart:  
 `'Consolas ligaturized v3', monospace`  
 ```json
   "editor.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
@@ -8,9 +8,9 @@ Consolas Ligaturized v3 - Ultimate Programmers :rage: :heart:
   "interactiveSession.editor.fontFamily": "'Consolas ligaturized v3', Consolas, monospace",
   "editor.fontLigatures": true
 ```
-<https://github.com/somq/consolas-ligaturized>
+<https://github.com/somq/consolas-ligaturized>  
 
-Consolas - Best Vanilla Font :heart::heart::heart:  
+Consolas - Best Vanilla Font :heart:  
 `'Lucida Console', monospace`  
 
 Lucida Console - 2º Best Vanilla Font :heart:  
