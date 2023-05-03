@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo " [CMUGT] Create Mode User Group Truncate";

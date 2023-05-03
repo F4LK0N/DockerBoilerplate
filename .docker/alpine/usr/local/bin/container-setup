@@ -1,6 +1,5 @@
 #!/bin/sh
 set -e
-
 echo "##########################################################################";
 echo "### CONTAINER SETUP ###";
 echo "##########################################################################";
@@ -9,22 +8,23 @@ if [[ -f "/run/container/setup-done" ]]; then
     echo "[===]";
 else
     echo "### FILESYSTEM ###";
+    setup-fs-header;
+    
     # Container
     rm -rf /run/container/;
-    
-    setup-fs 777 root root /tmp/test;
-    setup-fs 777 root root /tmp/test/;
-    setup-fs 777 root root /tmp/test/;
-    
-    setup-fs 777 daemon daemon /tmp/test2/;
-    setup-fs 777 daemon daemon /tmp/test2;
-    setup-fs 777 daemon daemon /tmp/test2;
 
-    setup-fs 777 root2 daemon /tmp/test2/;
-    setup-fs 777 daemon root2 /tmp/test2/;
-    
-    setup-fs 999 root root /tmp/test3/;
-    
+    setup-fs 777 daemon daemon /tmp/testDir/;
+    setup-fs 777 daemon daemon /tmp/testDir;
+
+    setup-fs 777 root root /tmp/testFile;
+    setup-fs 777 root root /tmp/testFile/;
+
+    setup-fs 777 daemon root /tmp/testDir/;
+    setup-fs 777 daemon daemon /tmp/testDir/;
+
+    setup-fs 777 root2 daemon /tmp/testDir/;
+    setup-fs 777 daemon daemon2 /tmp/testDir/;
+
     setup-fs-clear-error;
     if [[ "$( setup-fs-has-error )" == "1" ]]; then
         echo "ERROR"; setup-fs-clear-error; exit 1;
