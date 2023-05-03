@@ -1,44 +1,51 @@
 #!/bin/sh
 set -e
 
+echo "##########################################################################";
 echo "### CONTAINER SETUP ###";
+echo "##########################################################################";
 
-if [[ -f "${OS_DATA}/container/setup-done" ]]; then
-
-    echo "[OK]";
-
+if [[ -f "/run/container/setup-done" ]]; then
+    echo "[===]";
 else
-    
-    echo "FILESYSTEM - CLEAR";
-    rm -rf ${OS_DATA}/container;
-    
-    
-    echo "FILESYSTEM - CREATE";
+    echo "### FILESYSTEM ###";
     # Container
-    mkdir -p --mode=777 ${ROOT_DATA};
-    mkdir -p --mode=777 ${ROOT_LOGS};
+    rm -rf /run/container/;
+    
+    setup-fs 777 root root /tmp/test;
+    setup-fs 777 root root /tmp/test/;
+    setup-fs 777 root root /tmp/test/;
+    
+    setup-fs 777 daemon daemon /tmp/test2/;
+    setup-fs 777 daemon daemon /tmp/test2;
+    setup-fs 777 daemon daemon /tmp/test2;
+
+    setup-fs 777 root2 daemon /tmp/test2/;
+    setup-fs 777 daemon root2 /tmp/test2/;
+    
+    setup-fs 999 root root /tmp/test3/;
+    
+    setup-fs-clear-error;
+    if [[ "$( setup-fs-has-error )" == "1" ]]; then
+        echo "ERROR"; setup-fs-clear-error; exit 1;
+    fi;
+
+exit 1;
+
+    setup-fs 777 root root ${ROOT_DATA}/;
+    setup-fs 777 root root ${ROOT_LOGS}/;
+    setup-fs 777 root root /run/container/;
+    setup-fs 777 root root /run/container;
     # OS
-    mkdir -p --mode=777 ${OS_DATA};
-    mkdir -p --mode=777 ${OS_DATA}/container;
-    mkdir -p --mode=777 ${OS_LOGS};
-    # Application
-    mkdir -p --mode=777 ${APP_ROOT};
+    setup-fs 777 root root ${OS_DATA}/;
+    setup-fs 777 root root ${OS_LOGS}/;
+    # App
+    setup-fs 777 root root ${APP_ROOT}/;
 
-
-    echo "FILESYSTEM - PERMISSIONS";
-    # Container
-    chmod 777 ${ROOT_DATA};
-    chmod 777 ${ROOT_LOGS};
-    # OS
-    chmod 777 ${OS_DATA};
-    chmod 777 ${OS_DATA}/container;
-    chmod 777 ${OS_LOGS};
-    # Application
-    chmod 777 ${APP_ROOT};
-
-
-    touch "${OS_DATA}/container/setup-done"
-    chmod 777 "${OS_DATA}/container/setup-done"
-    echo "[DONE]"
-
+    #if [[ "${CONTAINER_SETUP_ERROR}" == "1" ]]; then
+    #    echo "[ERROR]"; exit 1;
+    #else
+    #    setup-fs 777 root root /run/container/setup-done;
+    #    echo "[DONE]";
+    #fi
 fi

@@ -1,66 +1,58 @@
 #!/bin/sh
-set -e
 
-if [[ "$1" == '' ]]; then
-    echo "'MODE' required!";
-    return 1;
-fi
-if [[ "$2" == '' ]]; then
-    echo "'USER' required!";
-    return 1;
-fi
-if [[ "$3" == '' ]]; then
-    echo "'GROUP' required!";
-    return 1;
-fi
-if [[ "$4" == '' ]]; then
-    echo "'PATH' required!";
-    return 1;
-fi
-
-local mode=$1;
-local user=$2;
-local group=$3;
-local path=$4;
-local truncate=$5;
-
-
+mode=$1;
+user=$2;
+group=$3;
+path=$4;
+truncate='N';
+if [[ "$1" == '' ]]; then setup-fs-set-error "'MODE' required!"; return; fi;
+if [[ "$2" == '' ]]; then setup-fs-set-error "'USER' required!"; return; fi;
+if [[ "$3" == '' ]]; then setup-fs-set-error "'GROUP' required!"; return; fi;
+if [[ "$4" == '' ]]; then setup-fs-set-error "'PATH' required!"; return; fi;
+if [[ "$5" != '' ]]; then truncate='Y'; return; fi;
 
 ### PATH TYPE (DIR|FILE) ###
-local pathType='F';
+pathType='F';
 if [[ "/" == "${path: -1}" ]]; then
     pathType='D';
-fi
+fi;
 echo -n "[${pathType}] ";
-
-
 
 ### CREATE ###
 if [[ "D" == "${pathType}" ]]; then
-    # DIR
+    # DIR #
     if [[ -d "${path}" ]]; then
         echo -n "=";
     else
-        mkdir -p --mode=777 $path
-        if [[ ! -d "${path}" ]]; then
-            echo  "!";
-            return;
-        fi
+        mkdir -p --mode=777 "${path}" > /dev/null 2>&1
+        if [[ ! -d "${path}" ]]; then setup-fs-set-error "!--- ${path}"; return; fi;
         echo -n "+";
     fi
 else
-    # FILE
+    # FILE #
     if [[ -f "${path}" ]]; then
         echo -n "=";
     else
-        touch "${path}"
-        if [[ ! -f "${path}" ]]; then
-            echo  "!";
-            return;
-        fi
+        touch "${path}" > /dev/null 2>&1
+        if [[ ! -f "${path}" ]]; then setup-fs-set-error "!--- ${path}"; return; fi;
         echo -n "+";
     fi
 fi
+
+### MODE ###
+if [[ "${mode}" == "$( stat -c %a ${path} )" ]]; then
+    echo -n "=";
+else
+    chmod ${mode} "${path}" > /dev/null 2>&1
+    if [[ "${mode}" != "$( stat -c %a ${path} )" ]]; then
+        if [[ ! -f "${path}" ]]; then setup-fs-set-error "!-- ${path}"; return; fi;
+    fi
+    echo -n "+";
+fi
+
+
+echo "   ${path}";
+return;
 
 
 ### USER ###
@@ -69,7 +61,8 @@ if [[ "${user}" == "$( stat -c %U ${path} )" ]]; then
 else
     chown ${user} $path
     if [[ "${user}" != "$( stat -c %U ${path} )" ]]; then
-        echo  "!";
+        export CONTAINER_SETUP_ERROR=1;
+        echo  "! ${$path}";
         return;
     fi
     echo -n "+";
@@ -83,7 +76,8 @@ if [[ "${group}" == "$( stat -c %G ${path} )" ]]; then
 else
     chown :${group} $path
     if [[ "${group}" != "$( stat -c %G ${path} )" ]]; then
-        echo  "!";
+        export CONTAINER_SETUP_ERROR=1;
+        echo  "! ${$path}";
         return;
     fi
     echo -n "+";
