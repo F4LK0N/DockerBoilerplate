@@ -162,7 +162,8 @@ alias c='cd';
 
 alias lg='c /logs';
 alias dt='c /data';
-alias src='c /data';
+alias src='c /src';
+alias s='c /src';
 
 alias e='exit';
 
