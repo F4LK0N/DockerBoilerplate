@@ -21,7 +21,8 @@
   ],
   "terminal.integrated.enableMultiLinePasteWarning": false,
   "workbench.colorCustomizations": {
-      "editorRuler.foreground": "#292929"
+      "editorRuler.foreground": "#292929",
+      "webview.foreground": "#FF0000"
   },
   "editor.tokenColorCustomizations": {
       //"comments": "#9E9E9E",
