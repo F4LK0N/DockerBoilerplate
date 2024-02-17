@@ -1,23 +1,21 @@
-FROM alpine:3.17
+FROM alpine:3.19
 LABEL "org.opencontainers.image.authors"="F4LK0N"
-LABEL "org.opencontainers.image.version"="1.1"
+LABEL "org.opencontainers.image.version"="1.0"
 
 ########################################################################################################################
 ### SETUP ###
 ########################################################################################################################
 WORKDIR /
-ARG ARG_DOMAIN
-ARG ARG_TIMEZONE
-ARG ARG_OS_VERSION="3.17"
-ARG ARG_OS_APK_MIRROR
 
 ### CONTAINER ###
-ENV DOMAIN="${ARG_DOMAIN}"
 ENV ROOT_DATA="/data"
 ENV ROOT_LOGS="/logs"
 
 ### OS ###
 ENV ENV="/root/.ashrc"
+ENV OS_VERSION="3.19"
+ENV OS_APK_MIRROR="https://mirror.uepg.br/alpine"
+ENV OS_TIMEZONE="America/Sao_Paulo"
 ENV OS_DATA="${ROOT_DATA}/os"
 ENV OS_LOGS="${ROOT_LOGS}/os"
 
@@ -41,43 +39,21 @@ RUN set -eux; \
 RUN set -eux; \
     # Mirrors
     rm -f /etc/apk/repositories; \
-    echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/main" >> /etc/apk/repositories; \
-    echo "${ARG_OS_APK_MIRROR}/v${ARG_OS_VERSION}/community" >> /etc/apk/repositories; \
+    echo "${OS_APK_MIRROR}/v${OS_VERSION}/main" >> /etc/apk/repositories; \
+    echo "${OS_APK_MIRROR}/v${OS_VERSION}/community" >> /etc/apk/repositories; \
     chmod 644 /etc/apk/repositories; \
     # Update
     apk update; \
     apk upgrade; \
-    # Clean
-    rm -rf /var/cache/apk/*; \
-    rm -rf /var/lib/apk/*; \
-    rm -rf /etc/apk/cache/*;
-
-### TIMEZONE ###
-RUN set -eux; \
-    # Dependencies
-    apk update; \
+    # Timezone
     apk add --virtual temp_dependencies \
         tzdata \
     ; \
-    # Config
-        cp "/usr/share/zoneinfo/${ARG_TIMEZONE}" /etc/localtime; \
-        echo "${ARG_TIMEZONE}" > /etc/timezone; \
-    # Clean
+    cp "/usr/share/zoneinfo/${OS_TIMEZONE}" /etc/localtime; \
+    echo "${OS_TIMEZONE}" > /etc/timezone; \
     apk del temp_dependencies; \
-    rm -rf /var/cache/apk/*; \
-    rm -rf /var/lib/apk/*; \
-    rm -rf /etc/apk/cache/*;
-
-########################################################################################################################
-### INSTALL ###
-########################################################################################################################
-### PACKAGES ###
-RUN set -eux; \
-    # Update
-    apk update; \
     # Install
     apk add --no-cache \
-        \
         # OS
         openrc \
         iftop \
@@ -86,33 +62,6 @@ RUN set -eux; \
     rm -rf /var/cache/apk/*; \
     rm -rf /var/lib/apk/*; \
     rm -rf /etc/apk/cache/*;
-
-### SOURCES ###
-#RUN set -eux; \
-#    # Dependencies
-#    apk update; \
-#    apk add --virtual temp_sources_dependencies \
-#        7zip \
-#    ; \
-#    # Program Example
-#        # Download
-#        mkdir -p /tmp/program-example/; \
-#        cd /tmp/program-example/; \
-#        curl -LO https://site.com/program-example.zip; \
-#        7z x program-example.zip; \
-#        # Install
-#        mkdir -p /opt/program-example/; \
-#        cp program-x.so /opt/program-example/; \
-#        chmod 755 /opt/program-example/; \
-#        chmod 755 /opt/program-example/program-example.so; \
-#        # Clear
-#        rm -rf /tmp/program-example/; \
-#        cd /; \
-#    # Clean
-#    apk del temp_sources_dependencies; \
-#    rm -rf /var/cache/apk/*; \
-#    rm -rf /var/lib/apk/*; \
-#    rm -rf /etc/apk/cache/*;
 
 ### IMPORT ###
 # Shell

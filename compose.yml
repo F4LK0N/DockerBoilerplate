@@ -1,16 +1,15 @@
 services:
   alpine:
-    image: f4lk0n/fkn:alpine3.17
-    container_name: ${COMPOSE_PREFIX}alpine
+    image: f4lk0n/fkn:alpine3.19
+    container_name: ${COMPOSE_PREFIX}alpine3.19
     hostname: alpine
     build:
       context: ./.docker/alpine
-      args:
-        - ARG_DOMAIN=${PROJECT_DOMAIN}
-        - ARG_TIMEZONE=${PROJECT_TIMEZONE}
-        - ARG_OS_APK_MIRROR=${ALPINE_APK_MIRROR}
     networks:
-      - frontend
+      backend:
+        ipv4_address: 172.20.0.20
+      frontend:
+        ipv4_address: 172.21.0.20
     #ports:
     #  - "hostPort:containerPort"
     volumes:
@@ -22,7 +21,22 @@ services:
       - ./src/:/src/
       - ./.docker/alpine/usr/local/bin/:/usr/local/bin/
 
-
-      
 networks:
+  backend:
+    driver: bridge
+    name: ${COMPOSE_PREFIX}backend
+    internal: false
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/16
+          gateway: 172.20.0.1
   frontend:
+    driver: bridge
+    name: ${COMPOSE_PREFIX}frontend
+    internal: false
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.21.0.0/16
+          gateway: 172.21.0.1

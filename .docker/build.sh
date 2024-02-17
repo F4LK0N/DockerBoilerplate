@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DockerHubRepo="f4lk0n/fkn"
-ImageTag="alpine3.17"
+ImageTag="alpine3.19"
 
 echo "--- --- --- --- --- --- --- --- ---"
 echo "### DOCKER - IMAGE BUILD ###"
